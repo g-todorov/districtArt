@@ -1,0 +1,24 @@
+<div ng-controller="HeaderController">
+  <header class="header clearfix">
+    <div class="home-button pull-left">
+      <a ui-sref="main">DisctrictArt</a>
+    </div>
+    <div class="welcome-text pull-left">
+      {{"Hello," + getUserName()}}
+    </div>
+    <div ng-show="isAuthenticated()" class="pull-left">
+      <button ng-click="logout()">Logout</button>
+    </div>
+    <div ng-hide="isAuthenticated()" class="ng-hide pull-left">
+      <button ng-click="goToLogin()" ng-hide="isActive('/login')">Login</button>
+    </div>
+    <div ng-show="isAuthenticated()" class="upload-artwork-button pull-left">
+      <button ng-click="goToUpload()">Upload Artwork</button>
+    </div>
+    <ul class="nav nav-pills pull-right">
+      <li role="presentation" ng-class="{active: isActive('/artworks')}"><a ui-sref="artworks">Artworks</a></li>
+      <li role="presentation" ng-class="{active: isActive('/users')}"><a ui-sref="users">Users</a></li>
+      <!-- <li role="presentation"><a href="#">Groups</a></li> -->
+    </ul>
+  </header>
+</div>

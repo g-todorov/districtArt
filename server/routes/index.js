@@ -10,7 +10,7 @@ router.use('/artWorks', require('./artworks.server.routes'))
 
 //route for the home screen
 router.get('/', function(req, res) {
-  res.send('home page')
+  res.send('server home page')
 })
 
 module.exports = router

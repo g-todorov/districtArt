@@ -5,6 +5,8 @@
     <title></title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
+    <!-- <base href="http://localhost:9000/"> -->
+    <base href="/">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css(.) styles/vendor.css -->
     <!-- bower:css -->
@@ -21,7 +23,7 @@
     <![endif]-->
 
     <!-- Add your site or application content here -->
-    <div class="header">
+    <!-- <div class="header">
       <div class="navbar navbar-default" role="navigation">
         <div class="container">
           <div class="navbar-header">
@@ -47,17 +49,17 @@
           </div>
         </div>
       </div>
-    </div>
-
-    <div class="container">
+    </div> -->
+    <div ng-include="'scripts/components/header/views/header.view.components.html'"></div>
+    <div class="container-fluid">
       <div ui-view></div>
     </div>
 
-    <div class="footer">
+    <!-- <div class="footer">
       <div class="container">
         <p><span class="glyphicon glyphicon-heart"></span> from the Yeoman team</p>
       </div>
-    </div>
+    </div> -->
 
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
@@ -82,6 +84,7 @@
     <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
     <script src="bower_components/angular-touch/angular-touch.js"></script>
     <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="bower_components/angular-file-upload/dist/angular-file-upload.min.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -89,7 +92,19 @@
         <script src="app.js"></script>
         <script src="scripts/artworks/artworks.js"></script>
         <script src="scripts/artworks/controllers/main.controller.artworks.js"></script>
+        <script src="scripts/artworks/controllers/upload.controller.artworks.js"></script>
         <script src="scripts/artworks/services/main.service.artworks.js"></script>
+        <script src="scripts/users/users.js"></script>
+        <script src="scripts/users/controllers/auth.controller.users.js"></script>
+        <script src="scripts/users/controllers/auth.login.controller.users.js"></script>
+        <script src="scripts/users/controllers/register.controller.users.js"></script>
+        <script src="scripts/users/controllers/users.controller.users.js"></script>
+        <script src="scripts/users/services/auth.service.users.js"></script>
+        <script src="scripts/users/services/users.service.users.js"></script>
+        <script src="scripts/main/main.js"></script>
+        <script src="scripts/main/controllers/layout.controller.main.js"></script>
+        <script src="scripts/components/components.js"></script>
+        <script src="scripts/components/header/controllers/header.controller.components.js"></script>
         <!-- <script src="scripts/controllers/main.js"></script>
         <script src="scripts/controllers/about.js"></script> -->
         <!-- endbuild -->

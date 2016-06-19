@@ -6,6 +6,8 @@ var users = require('./users.server.controller')
 var errorHandler = require('./errors.server.controller')
 var utilities = require ('./utilities.server.controller')
 var _ = require('lodash')
+var util = require('util');
+var fs = require('fs');
 
 // List of ArtWorks
 exports.list = function(req, res) {
@@ -23,18 +25,19 @@ exports.list = function(req, res) {
 
 // Create a ArtWork
 exports.create = function(req, res) {
-	req.body.owners = utilities.remapIds(req.body.owners);
-	var artWork = new ArtWork(req.body);
+	console.log(req.body)
+	console.log(req.file)
 
-	artWork.save(function(err) {
-		if (err) {
-			return res.status(400).send({
-				message: errorHandler.getErrorMessage(err)
-			});
-		} else {
-			res.status(201).json(artWork);
-		}
-	});
+
+	// artWork.save(function(err) {
+	// 	if (err) {
+	// 		return res.status(400).send({
+	// 			message: errorHandler.getErrorMessage(err)
+	// 		});
+	// 	} else {
+	// 		res.status(201).json(artWork);
+	// 	}
+	// });
 };
 
 
