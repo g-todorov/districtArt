@@ -4,15 +4,19 @@
 ApplicationConfiguration.registerModule('artworks')
 
 // Setting up route
-angular.module('artworks').config(function($urlRouterProvider,  $stateProvider) {
-  // Redirect to home view when route not found
-  $urlRouterProvider.otherwise('/');
-
+angular.module('artworks', ['angularFileUpload']).config(function($urlRouterProvider, $stateProvider) {
   // Artworks state routing
-  $stateProvider.
-  state('artworks', {
-    url: '/artworks',
-    templateUrl: 'scripts/artworks/views/main.view.artworks.html'
-  });
+  $stateProvider
+    .state('artworks', {
+      url: '/artworks',
+      templateUrl: 'scripts/artworks/views/main.view.artworks.html'
+    })
+    .state('upload', {
+      url: '/artworks/upload',
+      templateUrl: 'scripts/artworks/views/upload.view.artworks.html'
+    });
+
+    // Redirect to home view when route not found
+    $urlRouterProvider.otherwise('/');
 
 });

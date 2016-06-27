@@ -1,0 +1,15 @@
+<div ng-controller="uploadController">
+  <div>upload artworks form</div>
+  <form>
+    <input type="text" ng-model="fileName">
+    <input type="file" nv-file-select uploader="uploader">
+    <ul>
+      <li ng-repeat="item in uploader.queue">
+          Name: <span ng-bind="item.file.name"></span><br/>
+          <button ng-click="item.upload()">upload</button>
+      </li>
+    </ul>
+    <!-- <input type="submit" ng-click="uploader.uploadAll()"> -->
+    <!-- <input type="submit" ng-click="test()"> -->
+  </form>
+</div>

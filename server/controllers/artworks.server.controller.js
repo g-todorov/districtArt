@@ -1,6 +1,6 @@
 // Module dependencies.
 var mongoose = require('mongoose')
-var ArtWork = mongoose.model('ArtWork')
+var Artwork = mongoose.model('ArtWork')
 var User = mongoose.model('User')
 var users = require('./users.server.controller')
 var errorHandler = require('./errors.server.controller')
@@ -25,19 +25,22 @@ exports.list = function(req, res) {
 
 // Create a ArtWork
 exports.create = function(req, res) {
-	console.log(req.body)
-	console.log(req.file)
+	var artwork = new Artwork({
+		name: req.body.fileName,
+		fileSystemName: req.body.fileSystemName,
+		owners: [req.body.userId]
+	});
 
 
-	// artWork.save(function(err) {
-	// 	if (err) {
-	// 		return res.status(400).send({
-	// 			message: errorHandler.getErrorMessage(err)
-	// 		});
-	// 	} else {
-	// 		res.status(201).json(artWork);
-	// 	}
-	// });
+	artwork.save(function(err) {
+		if (err) {
+			return res.status(400).send({
+				message: errorHandler.getErrorMessage(err)
+			});
+		} else {
+			res.status(201).json(artwork);
+		}
+	});
 };
 
 
