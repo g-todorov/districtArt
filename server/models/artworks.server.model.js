@@ -10,7 +10,7 @@ var ArtworkSchema = new Schema({
     required: true
   },
   fileSystemName: {
-    type: String,
+    type: [],
     required: true
   },
   owners: {

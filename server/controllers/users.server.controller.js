@@ -106,6 +106,7 @@ getToken = function (headers) {
 // };
 
 exports.read = function(req, res) {
+	console.log("read")
   var token = getToken(req.headers);
   if (token) {
     var decoded = jwt.decode(token, config.secret);

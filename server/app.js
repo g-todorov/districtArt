@@ -48,6 +48,9 @@ fs.readdirSync(__dirname + '/models').forEach(function (file) {
   if (~file.indexOf('.js')) require(__dirname + '/models/' + file);
 });
 
+// Make uploaded files static
+app.use(express.static(path.join(__dirname + '/uploads')));
+
 require('./config/passport')(passport); // pass passport for configuration
 // Use the passport package in our application
 app.use(passport.initialize());
@@ -57,6 +60,7 @@ app.use(require('./routes'))
 app.use(function(req, res) {
     res.sendfile(path.join(__dirname, '../client/app/index.html'));
 });
+
 
 console.log('Listening on port 3000...');
 app.listen(3000);

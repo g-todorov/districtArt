@@ -11,7 +11,7 @@ var fs = require('fs');
 
 // List of ArtWorks
 exports.list = function(req, res) {
-	ArtWork.find().sort('artWorkName').exec(function(err, artWorks) {
+	Artwork.find().sort('artWorkName').exec(function(err, artWorks) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
@@ -46,7 +46,8 @@ exports.create = function(req, res) {
 
 // Show the current ArtWork
 exports.read = function(req, res) {
-	res.json(req.artWork);
+	console.log(req.body)
+	res.json(req.artwork);
 };
 
 
@@ -102,22 +103,22 @@ exports.allOwners = function (req, res) {
 
 
 // ArtWork middleware
-exports.artWorkById = function(req, res, next, id) {
-
+exports.artworkById = function(req, res, next, id) {
+	console.log('test')
 	if (!mongoose.Types.ObjectId.isValid(id)) {
 		return res.status(400).send({
 			message: 'ArtWork is invalid'
 		});
 	}
 
-	ArtWork.findById(id).exec(function(err, artWork) {
+	Artwork.findById(id).exec(function(err, artwork) {
 		if (err) return next(err);
-		if (!artWork) {
+		if (!artwork) {
 			return res.status(404).send({
   				message: 'ArtWork not found'
   			});
 		}
-		req.artWork = artWork;
+		req.artwork = artwork;
 		next();
 	});
 };
