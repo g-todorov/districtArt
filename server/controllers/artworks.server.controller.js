@@ -2,12 +2,13 @@
 var mongoose = require('mongoose')
 var Artwork = mongoose.model('ArtWork')
 var User = mongoose.model('User')
-var users = require('./users.server.controller')
+//var users = require('./users.server.controller')
 var errorHandler = require('./errors.server.controller')
 var utilities = require ('./utilities.server.controller')
 var _ = require('lodash')
 var util = require('util');
 var fs = require('fs');
+var upload = require('../config/storage');
 
 // List of ArtWorks
 exports.list = function(req, res) {
@@ -25,22 +26,27 @@ exports.list = function(req, res) {
 
 // Create a ArtWork
 exports.create = function(req, res) {
-	var artwork = new Artwork({
-		name: req.body.fileName,
-		fileSystemName: req.body.fileSystemName,
-		owners: [req.body.userId]
-	});
+  upload(req, res, function (err) {
+    if (err) {
+      // An error occurred when uploading
+      return
+    }
+		var artwork = new Artwork({
+			name: req.body.fileName,
+			fileSystemName: req.body.fileSystemName,
+			owners: [req.body.userId]
+		});
 
-
-	artwork.save(function(err) {
-		if (err) {
-			return res.status(400).send({
-				message: errorHandler.getErrorMessage(err)
-			});
-		} else {
-			res.status(201).json(artwork);
-		}
-	});
+		artwork.save(function(err) {
+			if (err) {
+				return res.status(400).send({
+					message: errorHandler.getErrorMessage(err)
+				});
+			} else {
+				res.status(201).json(artwork);
+			}
+		});
+  })
 };
 
 

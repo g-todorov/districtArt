@@ -38,7 +38,7 @@ angular.module('users').service('AuthService', function($q, $http, API_ENDPOINT)
 
   var register = function(user) {
     return $q(function(resolve, reject) {
-      $http.post(API_ENDPOINT.url + '/users/signup', user).then(function(result) {
+      $http.post(API_ENDPOINT.url + '/users/register', user).then(function(result) {
         if (result.data.success) {
           login(user);
           resolve(result.data.msg);

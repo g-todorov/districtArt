@@ -15,6 +15,10 @@ var UserSchema = new Schema({
     type: String,
     required: true
   },
+  role: {
+    type: String,
+    required: true
+  },
   email: {
     type: String
   },
@@ -22,7 +26,7 @@ var UserSchema = new Schema({
     type: Date,
     default: Date.now
   }
-}, {collection: 'User'});
+});
 
 
 /**
@@ -52,7 +56,7 @@ UserSchema.pre('save', function (next) {
 UserSchema.methods.comparePassword = function (passw, cb) {
    bcrypt.compare(passw, this.password, function (err, isMatch) {
        if (err) {
-           return cb(err);
+          return cb(err);
        }
        cb(null, isMatch);
    });

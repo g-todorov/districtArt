@@ -3,7 +3,8 @@ angular.module('users')
 .controller('RegisterController', function($scope, AuthService, $state) {
   $scope.user = {
     userName: '',
-    password: ''
+    password: '',
+    role: 'user'
   };
 
   $scope.register = function() {

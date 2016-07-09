@@ -3,7 +3,7 @@
     <div class="home-button pull-left">
       <a ui-sref="main">DisctrictArt</a>
     </div>
-    <div class="welcome-text pull-left">
+    <div ng-show="isAuthenticated()" class="welcome-text pull-left">
       {{"Hello," + getUserName()}}
     </div>
     <div ng-show="isAuthenticated()" class="pull-left">

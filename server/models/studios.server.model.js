@@ -2,18 +2,21 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-// Create the ArtworkSchema.
-// mongoose.Schema.Types.ObjectId
-var ArtworkSchema = new Schema({
+// Create the StudioSchema.
+var StudioSchema = new Schema({
   name: {
     type: String,
     required: true
   },
-  fileSystemName: {
-    type: [],
+  creator: {
+    type: mongoose.Schema.Types.ObjectId,
     required: true
   },
-  owners: {
+  admins: {
+    type: [mongoose.Schema.Types.ObjectId],
+    required: true
+  },
+  artworks: {
     type: [mongoose.Schema.Types.ObjectId],
     required: true
   },
@@ -24,4 +27,4 @@ var ArtworkSchema = new Schema({
 });
 
 // Expose the model to other objects (similar to a 'public' setter).
-mongoose.model('ArtWork', ArtworkSchema);
+mongoose.model('Studio', StudioSchema);

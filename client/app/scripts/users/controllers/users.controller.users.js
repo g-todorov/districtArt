@@ -16,7 +16,7 @@ angular.module('users').controller('usersController', ['$scope', '$http', 'users
     };
 
     $scope.getUsers = function() {
-      var test = usersService.query();
+      $scope.users = usersService.query();
     };
   }
 ]);

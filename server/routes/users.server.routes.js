@@ -4,15 +4,16 @@ var passport	= require('passport');
 var router = express.Router();
 var users = require('../../server/controllers/users.server.controller');
 
-//router.route('/').get(users.test);
-router.get('/list', users.list);
-router.post('/', users.create);
+router.route('/')
+  .get(users.list)
+
 router.route('/:userId')
+  .get(passport.authenticate('jwt', {session: false}), users.read)
   .put(users.update)
   .delete(users.delete);
-router.post('/signup', users.signup);
+
 router.post('/authenticate', users.authenticate);
-router.get('/:userId', passport.authenticate('jwt', { session: false}), users.read);
+router.post('/register', users.create);
 
 // Finish by binding the user middleware
 router.param('userId', users.userByID);

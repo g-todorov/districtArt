@@ -5,7 +5,7 @@ var router = express.Router();
 //mount users.server.routes
 router.use('/users', require('./users.server.routes'))
 
-//mount users.server.routes
+//mount artworks.server.routes
 router.use('/artworks', require('./artworks.server.routes'))
 
 //route for the home screen

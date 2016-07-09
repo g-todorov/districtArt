@@ -2,7 +2,7 @@
  
 angular.module('artworks').controller('detailsController', ['$scope', 'Artworks', '$state', 'API_ENDPOINT', function ($scope, Artworks, $state, API_ENDPOINT) {
 
-    // Find a list of Categories
+    // Find a list of Artwork items
     $scope.find = function() {
       //$scope.artwork = Artworks.query({name: $state.params.artworkName});
       Artworks.get({ id: $state.params.artworkId }, function(data) {

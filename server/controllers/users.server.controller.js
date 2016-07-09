@@ -1,10 +1,10 @@
 // Module dependencies.
-var mongoose = require('mongoose')
-var User = mongoose.model('User')
-var ArtWork = mongoose.model('ArtWork')
-var errorHandler = require('./errors.server.controller')
-var _ = require('lodash')
-var jwt = require('jwt-simple')
+var mongoose = require('mongoose');
+var User = mongoose.model('User');
+var ArtWork = mongoose.model('ArtWork');
+var errorHandler = require('./errors.server.controller');
+var _ = require('lodash');
+var jwt = require('jwt-simple');
 var config = require('../config/db'); // get db config file
 
 
@@ -16,6 +16,7 @@ exports.list = function(req, res) {
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
+			console.log(users)
 			res.json(users);
 		}
 	});
@@ -23,30 +24,30 @@ exports.list = function(req, res) {
 
 
 // Create a User
-exports.create = function(req, res) {
-	var user = new User(req.body);
-
-	user.save(function(err) {
-		if (err) {
-			return res.status(400).send({
-				message: errorHandler.getErrorMessage(err)
-			});
-		} else {
-			res.status(201).json(user);
-		}
-	});
-};
+// exports.create = function(req, res) {
+// 	var user = new User(req.body);
+//
+// 	user.save(function(err) {
+// 		if (err) {
+// 			return res.status(400).send({
+// 				message: errorHandler.getErrorMessage(err)
+// 			});
+// 		} else {
+// 			res.status(201).json(user);
+// 		}
+// 	});
+// };
 
 
 // create a new user account (POST http://localhost:8080/api/signup)
-exports.signup = function(req, res) {
-	console.log('signup', req);
+exports.create = function(req, res) {
   if (!req.body.userName || !req.body.password) {
     res.json({success: false, msg: 'Please pass name and password.'});
   } else {
     var newUser = new User({
       userName: req.body.userName,
-      password: req.body.password
+      password: req.body.password,
+			role: req.body.role
     });
     // save the user
     newUser.save(function(err) {
@@ -85,46 +86,45 @@ exports.authenticate = function(req, res) {
 };
 
 
-getToken = function (headers) {
-  if (headers && headers.authorization) {
-    var parted = headers.authorization.split(' ');
-    if (parted.length === 2) {
-      return parted[1];
-    } else {
-      return null;
-    }
-  } else {
-    return null;
-  }
-};
+// getToken = function (headers) {
+//   if (headers && headers.authorization) {
+//     var parted = headers.authorization.split(' ');
+//     if (parted.length === 2) {
+//       return parted[1];
+//     } else {
+//       return null;
+//     }
+//   } else {
+//     return null;
+//   }
+// };
 
 
 // Show the current User
-// exports.read = function(req, res) {
-// 	console.log(req.user)
-// 	res.json(req.user);
-// };
-
 exports.read = function(req, res) {
-	console.log("read")
-  var token = getToken(req.headers);
-  if (token) {
-    var decoded = jwt.decode(token, config.secret);
-    User.findOne({
-      userName: decoded.userName
-    }, function(err, user) {
-        if (err) throw err;
-
-        if (!user) {
-          return res.status(403).send({success: false, msg: 'Authentication failed. User not found.'});
-        } else {
-          res.json(req.user);
-        }
-    });
-  } else {
-    return res.status(403).send({success: false, msg: 'No token provided.'});
-  }
+	res.json(req.user);
 };
+
+// exports.read = function(req, res) {
+// 	res.send('test')
+  // var token = getToken(req.headers);
+  // if (token) {
+  //   var decoded = jwt.decode(token, config.secret);
+  //   User.findOne({
+  //     userName: decoded.userName
+  //   }, function(err, user) {
+  //       if (err) throw err;
+	//
+  //       if (!user) {
+  //         return res.status(403).send({success: false, msg: 'Authentication failed. User not found.'});
+  //       } else {
+  //         res.json(req.user);
+  //       }
+  //   });
+  // } else {
+  //   return res.status(403).send({success: false, msg: 'No token provided.'});
+  // }
+// };
 
 // Update a User
 exports.update = function(req, res) {
