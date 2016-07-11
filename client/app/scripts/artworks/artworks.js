@@ -4,7 +4,7 @@
 ApplicationConfiguration.registerModule('artworks')
 
 // Setting up route
-angular.module('artworks', ['angularFileUpload']).config(function($urlRouterProvider, $stateProvider) {
+angular.module('artworks', ['ngFileUpload']).config(function($urlRouterProvider, $stateProvider) {
   // Artworks state routing
   $stateProvider
     .state('artworks', {

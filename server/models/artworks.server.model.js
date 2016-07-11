@@ -9,8 +9,16 @@ var ArtworkSchema = new Schema({
     type: String,
     required: true
   },
+  details: {
+    type: String,
+    required: true
+  },
   fileSystemName: {
     type: [],
+    required: true
+  },
+  creator: {
+    type: mongoose.Schema.Types.ObjectId,
     required: true
   },
   owners: {

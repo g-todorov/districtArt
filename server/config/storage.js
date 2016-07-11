@@ -5,6 +5,7 @@ var storage = multer.diskStorage({
       cb(null, './uploads/')
   },
   filename: function (req, file, cb) {
+      console.log(req.body)
       console.log(file)
       var datetimestamp = Date.now();
       req.body.fileSystemName = [req.body.fileName + '-' + datetimestamp + '.' + file.originalname.split('.')[file.originalname.split('.').length -1]]
@@ -12,4 +13,4 @@ var storage = multer.diskStorage({
   }
 })
 
-module.exports = multer({ storage: storage }).single('file');
+module.exports = multer({ storage: storage }).array('file', 1);

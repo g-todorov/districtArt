@@ -1,53 +1,27 @@
-'use strict';
- 
-angular.module('artworks').controller('uploadController', ['$scope', 'Artworks', '$state', 'API_ENDPOINT', 'FileUploader', function ($scope, Artworks, $state, API_ENDPOINT, FileUploader) {
+//inject angular file upload directives and services.
+// var app = angular.module('fileUpload', ['ngFileUpload']);
 
-  //$scope.fileName = ''
-
-  var uploader = $scope.uploader = new FileUploader({
-    url: API_ENDPOINT.url + '/artworks',
-    formData: [{userId: window.localStorage.getItem('USER_ID')}],
-    removeAfterUpload: true
-  });
-
-  uploader.filters.push({
-      name: 'imageFilter',
-      fn: function(item /*{File|FileLikeObject}*/, options) {
-          var type = '|' + item.type.slice(item.type.lastIndexOf('/') + 1) + '|';
-          return '|jpg|png|jpeg|bmp|gif|'.indexOf(type) !== -1;
+angular.module('artworks').controller('uploadController', ['$scope', 'Artworks', '$state', 'API_ENDPOINT', 'Upload', '$timeout', function ($scope, Artworks, $state, API_ENDPOINT, Upload, $timeout) {
+  $scope.uploadFiles = function (files) {
+      $scope.files = files;
+      if (files && files.length > 5) {
+          Upload.upload({
+              url: 'https://angular-file-upload-cors-srv.appspot.com/upload',
+              data: {
+                  files: files
+              }
+          }).then(function (response) {
+              $timeout(function () {
+                  $scope.result = response.data;
+              });
+          }, function (response) {
+              if (response.status > 0) {
+                  $scope.errorMsg = response.status + ': ' + response.data;
+              }
+          }, function (evt) {
+              $scope.progress =
+                  Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
+          });
       }
-  });
-
-  uploader.onBeforeUploadItem = function(item) {
-    item.formData.push({fileName: $scope.fileName})
   };
-
-  uploader.onCompleteAll = function () {
-    //document.getElementById('newsfeed-upload').value = null
-  };
-
-  // $scope.test = function () {
-  //   console.log($scope.fileName);
-  // }
-  // $scope.uploadFile = function(){
-  //   console.log('test1')
-  //   debugger
-  //    $scope.fileSelected = function(files) {
-  //        console.log('test2')
-  //        if (files && files.length) {
-  //           $scope.file = files[0];
-  //        }
-  //
-  //        FileUploader.upload({
-  //          url: '/api/upload’', //node.js route
-  //          file: $scope.file
-  //        })
-  //        .success(function(data) {
-  //          console.log(data, 'uploaded');
-  //         });
-  //
-  //       };
-  //   };
-
-
 }]);

@@ -1,10 +1,10 @@
 // Module dependencies.
-var mongoose = require('mongoose')
-var Artwork = mongoose.model('ArtWork')
-var User = mongoose.model('User')
+var mongoose = require('mongoose');
+var Artwork = mongoose.model('ArtWork');
+var User = mongoose.model('User');
 //var users = require('./users.server.controller')
-var errorHandler = require('./errors.server.controller')
-var utilities = require ('./utilities.server.controller')
+var errorHandler = require('./errors.server.controller');
+var utilities = require ('./utilities.server.controller');
 var _ = require('lodash')
 var util = require('util');
 var fs = require('fs');
@@ -24,13 +24,14 @@ exports.list = function(req, res) {
 };
 
 
-// Create a ArtWork
+// Create an Artwork
 exports.create = function(req, res) {
   upload(req, res, function (err) {
     if (err) {
-      // An error occurred when uploading
+      console.log ("An error occurred when uploading")
       return
     }
+
 		var artwork = new Artwork({
 			name: req.body.fileName,
 			fileSystemName: req.body.fileSystemName,
