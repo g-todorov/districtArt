@@ -7,8 +7,12 @@ angular.module('artworks').controller('detailsController', ['$scope', 'Artworks'
       //$scope.artwork = Artworks.query({name: $state.params.artworkName});
       Artworks.get({ id: $state.params.artworkId }, function(data) {
         $scope.artwork = data;
-        $scope.image = [API_ENDPOINT.url + "/" + data.fileSystemName]
-        console.log ($scope.images)
+        $scope.artworkPieces = []
+
+        angular.forEach(data.fileSystemNames, function(value, key) {
+          this.push(API_ENDPOINT.url + '/' + 'static/' + $scope.artwork.creator + '/' + $scope.artwork.artworkName + '/' + value);
+        }, $scope.artworkPieces);
+
       });
     };
   }

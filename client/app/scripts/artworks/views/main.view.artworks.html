@@ -1,6 +1,9 @@
 <div ng-controller="mainController" ng-init="find()">
-  <div>Artworks</div>
-  <div ng-repeat="artwork in artworks">
-    <a ng-bind="artwork.name" ui-sref="details({artworkId: artwork._id})"><a>
+  <div clas="container">
+    <div ng-repeat="artwork in artworks">
+      <div class="thumb">
+        <a ng-bind="artwork.artworkName" ui-sref="details({artworkId: artwork._id})"><a>
+      </div>
+    </div>
   </div>
 </div>

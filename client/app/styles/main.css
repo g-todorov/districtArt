@@ -61,7 +61,13 @@ body {
   border-top: 1px solid #e5e5e5;
 }
 
+
+/* ARTWORK*/
 .upload-artwork-form ul {
   list-style: none;
   padding: 0;
+}
+
+.artwork-details .artwork-piece{
+  width:100%;
 }

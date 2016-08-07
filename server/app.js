@@ -49,7 +49,7 @@ fs.readdirSync(__dirname + '/models').forEach(function (file) {
 });
 
 // Make uploaded files static
-app.use(express.static(path.join(__dirname + '/uploads')));
+app.use('/static', express.static(path.join(__dirname + '/uploads')));
 
 require('./config/passport')(passport); // pass passport for configuration
 // Use the passport package in our application
@@ -58,7 +58,7 @@ app.use(passport.initialize());
 // Load the routes.
 app.use(require('./routes'))
 app.use(function(req, res) {
-    res.sendfile(path.join(__dirname, '../client/app/index.html'));
+    res.sendFile(path.join(__dirname, '../client/app/index.html'));
 });
 
 

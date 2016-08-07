@@ -5,15 +5,15 @@ var Schema = mongoose.Schema;
 // Create the ArtworkSchema.
 // mongoose.Schema.Types.ObjectId
 var ArtworkSchema = new Schema({
-  name: {
+  artworkName: {
     type: String,
     required: true
   },
-  details: {
+  artworkDescription: {
     type: String,
     required: true
   },
-  fileSystemName: {
+  fileSystemNames: {
     type: [],
     required: true
   },

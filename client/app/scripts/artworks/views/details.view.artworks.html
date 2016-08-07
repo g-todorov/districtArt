@@ -1,6 +1,18 @@
-<div ng-controller="detailsController" ng-init="find()">
-  <div>Details</div>
-  <div ng-bind="artwork.name"></div>
-  <img ng-src="{{image[0]}}">
+<div class="artwork-details" ng-controller="detailsController" ng-init="find()">
+
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-6">
+        <h4 ng-bind="artwork.artworkName"></h4>
+      </div>
+      <div class="col-xs-6">
+        <p class="pull-right" ng-bind="artwork.artworkDescription"></p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12" ng-repeat="piece in artworkPieces">
+        <img class="artwork-piece" ng-src="{{piece}}">
+      </div>
+    </div>
   </div>
 </div>
