@@ -4,7 +4,6 @@
 angular.module('artworks').controller('uploadController', ['$scope', 'Artworks', '$state', 'API_ENDPOINT', 'Upload', function ($scope, Artworks, $state, API_ENDPOINT, Upload) {
   $scope.selectFiles = function (files) {
       $scope.files = files;
-      console.log($scope.files);
   };
 
   $scope.removeFile = function (file) {

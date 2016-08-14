@@ -28,5 +28,16 @@ angular.module('Components').controller('HeaderController', ['$scope', 'AuthServ
     $scope.getUserName = function () {
       return window.localStorage.getItem('USER_NAME');
     }
+
+
+    $scope.goTopersonalPage = function () {
+      $state.go('personal-page', {userId: window.localStorage.getItem('USER_ID')});
+    }
+
+
+    $scope.goToCreateStudio = function () {
+      $state.go('create-studio');
+    }
+
   }
 ]);

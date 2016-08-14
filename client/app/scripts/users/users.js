@@ -19,5 +19,9 @@ angular.module('users').config(function($stateProvider, $urlRouterProvider) {
     .state('users', {
       url: '/users',
       templateUrl: 'scripts/users/views/list.view.users.html',
+    })
+   .state('personal-page', {
+      url: '/users/:userId',
+      templateUrl: 'scripts/users/views/personal.page.view.users.html'
     });
 })

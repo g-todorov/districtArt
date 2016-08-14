@@ -9,11 +9,11 @@ angular.module('users').controller('usersController', ['$scope', '$http', 'users
     //   });
     // };
     //Find a list of Categories
-    $scope.findMe = function() {
-      usersService.get({ id: $scope.currentUserId }, function(data) {
-        $scope.currentUser = data;
-      });
-    };
+    // $scope.findMe = function() {
+    //   usersService.get({ id: $scope.currentUserId }, function(data) {
+    //     $scope.currentUser = data;
+    //   });
+    // };
 
     $scope.getUsers = function() {
       $scope.users = usersService.query();

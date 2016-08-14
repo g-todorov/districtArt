@@ -32,11 +32,36 @@ angular.module(ApplicationConfiguration.applicationModuleName, ApplicationConfig
   //  For a simulator use: url: 'http://127.0.0.1:8080/api'
 })
 .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
+	$locationProvider.html5Mode(true);
+	//$httpProvider.interceptors.push('authInterceptor');
+})
 
-		$locationProvider.html5Mode(true);
-		//$httpProvider.interceptors.push('authInterceptor');
-	})
+.factory('socket', ['$rootScope', function($rootScope) {
+  var socket = io.connect('http://localhost:3000');
 
+  return {
+    on: function(eventName, callback){
+      socket.on(eventName, callback);
+    },
+    emit: function(eventName, data) {
+      socket.emit(eventName, data);
+    }
+  };
+}])
+.controller('socketCtrl', function($scope, socket) {
+  $scope.newCustomers = [];
+  $scope.currentCustomer = {};
+
+  $scope.test = function() {
+    socket.emit('send-invitation', $scope.currentCustomer);
+  };
+
+  socket.on('notification', function(data) {
+    $scope.$apply(function () {
+      $scope.newCustomers.push(data.customer);
+    });
+  });
+})
 .run(function ($rootScope, $state, AuthService) {
 	// $rootScope.$on('$stateChangeStart', function (event, next) {
   //   if (!AuthService.isAuthenticated()) {

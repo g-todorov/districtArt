@@ -1,0 +1,10 @@
+<div class="row studios-grid" ng-controller="mainStudiosController" ng-init="find()">
+  <div class="col-xs-offset-2 col-xs-8">
+    <div class="row">
+      <div class="thumb col-sm-2" ng-repeat="studio in studios">
+        <!-- <img class="cover" ng-src="{{artwork.coverUrl}}"> -->
+        <a ng-bind="studio.studioName" ui-sref="studio-details({studioId: studio._id})"><a>
+      </div>
+    </div>
+  </div>
+</div>

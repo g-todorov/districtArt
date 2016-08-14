@@ -1,16 +1,19 @@
-<div ng-controller="personalPageController" ng-init="find()">
-  <div clas="container">
-    <div ng-repeat="artwork in artworks">
-      <div class="thumb">
-        <a ng-bind="artwork.artworkName" ui-sref="details({artworkId: artwork._id})"><a>
-        <button type="button" class="btn btn-default btn-xs">
-          Edit
-          <span class="glyphicon glyphicon-edit"></span>
-        </button>
-        <button type="button" class="btn btn-danger btn-xs">
-          Remove
-          <span class="glyphicon glyphicon-trash"></span>
-        </button>
+<div ng-controller="personalPageController" ng-init="findMe()">
+  <div class="container-fluid">
+    <div class="artwork-grid">
+      <div class="row">
+        <div ng-repeat="artwork in userArtworks">
+          <div class="thumb col-sm-2">
+            <img class="cover" ng-src="{{artwork.coverUrl}}">
+            <a ng-bind="artwork.artworkName" ui-sref="details({artworkId: artwork._id})"></a>
+            <button type="button" class="btn btn-default btn-xs">
+              Edit <span class="glyphicon glyphicon-edit"></span>
+            </button>
+            <button type="button" class="btn btn-danger btn-xs">
+              Remove <span class="glyphicon glyphicon-trash"></span>
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </div>

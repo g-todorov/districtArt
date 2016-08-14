@@ -1,6 +1,6 @@
 // Module dependencies.
 var mongoose = require('mongoose');
-var Artwork = mongoose.model('ArtWork');
+var Artwork = mongoose.model('Artwork');
 var User = mongoose.model('User');
 //var users = require('./users.server.controller')
 var errorHandler = require('./errors.server.controller');
@@ -10,15 +10,15 @@ var util = require('util');
 var fs = require('fs');
 var upload = require('../config/storage');
 
-// List of ArtWorks
+// List of Artworks
 exports.list = function(req, res) {
-  Artwork.find().sort('artWorkName').exec(function(err, artWorks) {
+  Artwork.find().sort('artworkName').exec(function(err, artworks) {
     if (err) {
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
       });
     } else {
-      res.json(artWorks);
+      res.json(artworks);
     }
   });
 };
@@ -55,7 +55,6 @@ exports.create = function(req, res) {
 
 // Show the current ArtWork
 exports.read = function(req, res) {
-  console.log(req.body)
   res.json(req.artwork);
 };
 
@@ -113,7 +112,7 @@ exports.allOwners = function (req, res) {
 
 // ArtWork middleware
 exports.artworkById = function(req, res, next, id) {
-  console.log('test')
+
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(400).send({
       message: 'ArtWork is invalid'

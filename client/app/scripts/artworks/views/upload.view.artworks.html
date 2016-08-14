@@ -1,7 +1,7 @@
 <div ng-controller="uploadController">
   <h4>Create your own artwork</h4>
 
-  <form class="upload-artwork-form" name="uploadForm" ng-submit=uploader.uploadAll() novalidate>
+  <form class="upload-artwork-form" name="uploadForm" novalidate>
     <div class="form-group" ng-class="{'has-error' : uploadForm.artworkName.$invalid && !uploadForm.artworkName.$pristine}">
       <label>Name</label>
       <input type="text" class="form-control" name="artworkName" ng-model="artworkName" required>
@@ -38,5 +38,5 @@
       <input type="file" name="artworkItem" ngf-select="selectFiles($files)" multiple ngf-keep="true" accept="image/*" ngf-max-size="10MB" required style="display: none;">
     </label>
 
-    <button type="submit" class="btn btn-primary" ng-disabled="uploadForm.$invalid || !files.length > 0" ng-click="uploadFiles(files)">Submit</button>
+    <button type="submit" class="btn btn-primary" ng-disabled="!uploadForm.$invalid || !files.length > 0" ng-click="uploadFiles(files)">Submit</button>
   </form>

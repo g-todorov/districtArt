@@ -1,0 +1,39 @@
+<div class="row" ng-controller="createStudioController" ng-init="find()">
+  <div class="col-xs-offset-2 col-xs-8">
+    <h4>Create your own studio</h4>
+
+    <form class="create-studio-form" name="createForm" novalidate>
+      <div class="form-group" ng-class="{'has-error' : createForm.studioName.$invalid && !createForm.studioName.$pristine}">
+        <label>Name</label>
+        <input type="text" class="form-control" name="studioName" ng-model="studioName" required>
+        <p class="error help-block" ng-show="createForm.studioName.$invalid && !createForm.studioName.$pristine">
+          Required!
+        </p>
+      </div>
+
+      <div class="form-group" ng-class="{'has-error' : createForm.studioDescription.$invalid && !createForm.studioDescription.$pristine}">
+        <label>Description</label>
+        <textarea type="text" class="form-control" name="studioDescription" ng-model="studioDescription" required></textarea>
+        <p class="error help-block" ng-show="createForm.studioDescription.$invalid && !createForm.studioDescription.$pristine">
+          Required!
+        </p>
+      </div>
+
+      <div class="form-group" ng-show="userArtworks.length > 0">
+        <label>Select artworks</label>
+        <div class="select-projects-wrapper row">
+          <div class="artwork col-sm-1" ng-repeat="artwork in userArtworks">
+            <a ng-href="#action{{i}}"><img class="cover" ng-click="" ng-src="{{artwork.coverUrl}}"></img>
+              {{artwork.artworkName}}
+            </a>
+            <div class="checkbox">
+              <label><input ng-model="selected" type="checkbox" ng-change="selectProject(artwork, selected, $event)">Add to studio</label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-primary" ng-disabled="createForm.$invalid || !selectedArtworks.length > 0" ng-click="createStudio()">Submit</button>
+    </form>
+  </div>
+</div>

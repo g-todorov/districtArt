@@ -1,7 +1,7 @@
 // Module dependencies.
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
-var ArtWork = mongoose.model('ArtWork');
+var Artwork = mongoose.model('Artwork');
 var errorHandler = require('./errors.server.controller');
 var _ = require('lodash');
 var jwt = require('jwt-simple');
@@ -16,7 +16,6 @@ exports.list = function(req, res) {
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			console.log(users)
 			res.json(users);
 		}
 	});
@@ -86,45 +85,11 @@ exports.authenticate = function(req, res) {
 };
 
 
-// getToken = function (headers) {
-//   if (headers && headers.authorization) {
-//     var parted = headers.authorization.split(' ');
-//     if (parted.length === 2) {
-//       return parted[1];
-//     } else {
-//       return null;
-//     }
-//   } else {
-//     return null;
-//   }
-// };
-
-
 // Show the current User
 exports.read = function(req, res) {
 	res.json(req.user);
 };
 
-// exports.read = function(req, res) {
-// 	res.send('test')
-  // var token = getToken(req.headers);
-  // if (token) {
-  //   var decoded = jwt.decode(token, config.secret);
-  //   User.findOne({
-  //     userName: decoded.userName
-  //   }, function(err, user) {
-  //       if (err) throw err;
-	//
-  //       if (!user) {
-  //         return res.status(403).send({success: false, msg: 'Authentication failed. User not found.'});
-  //       } else {
-  //         res.json(req.user);
-  //       }
-  //   });
-  // } else {
-  //   return res.status(403).send({success: false, msg: 'No token provided.'});
-  // }
-// };
 
 // Update a User
 exports.update = function(req, res) {
@@ -149,7 +114,7 @@ exports.delete = function(req, res) {
 	var user = req.user;
 
 	//remove Artwork dependencies from the user before deleting
-	ArtWork.find({owners: user._id}, function(err, artWorks) {
+	Artwork.find({owners: user._id}, function(err, artWorks) {
 		_.each(artWorks, function(artWork) {
 				if (artWork.owners.length == 1) {
 					artWork.remove(function(err){
@@ -188,8 +153,22 @@ exports.delete = function(req, res) {
 };
 
 
+exports.getUserArtworksById = function (req, res) {
+  Artwork.find({owners: req.user._id}, function(err, artworks) {
+    if (err) return next(err);
+
+    if (!artworks) {
+      return res.status(404).send({
+          message: 'User does not have artworks'
+        });
+    }
+    res.json(artworks);
+  });
+}
+
+
 //User middleware
-exports.userByID = function(req, res, next, id) {
+exports.userById = function(req, res, next, id) {
 
 	if (!mongoose.Types.ObjectId.isValid(id)) {
 		return res.status(400).send({
@@ -198,13 +177,14 @@ exports.userByID = function(req, res, next, id) {
 	}
 
 	User.findById(id).exec(function(err, user) {
-		if (err) return next(err);
+    if (err) return next(err);
 		if (!user) {
 			return res.status(404).send({
-  				message: 'User not found'
-  			});
+				message: 'User not found'
+			});
 		}
 		req.user = user;
+
 		next();
 	});
 };

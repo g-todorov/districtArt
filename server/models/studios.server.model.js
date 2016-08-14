@@ -4,7 +4,11 @@ var Schema = mongoose.Schema;
 
 // Create the StudioSchema.
 var StudioSchema = new Schema({
-  name: {
+  studioName: {
+    type: String,
+    required: true
+  },
+  studioDescription: {
     type: String,
     required: true
   },

@@ -16,7 +16,7 @@
           <li class="dropdown" ng-show="isAuthenticated()">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{getUserName()}}<span class="caret"></span></a>
             <ul class="dropdown-menu">
-              <li><a href="#">Profile</a></li>
+              <li><a ng-click="goTopersonalPage()">Profile</a></li>
               <li role="separator" class="divider"></li>
               <li><a href="#" ng-click="logout()">Logout</a></li>
             </ul>
@@ -33,6 +33,12 @@
               <a href="#" class="btn btn-primary" ng-click="goToUpload()">Upload Artwork</a>
             </div>
           </li>
+
+          <li ng-show="isAuthenticated()" class="create-studio-button">
+            <div class="navbar-btn">
+              <a href="#" class="btn btn-primary" ng-click="goToCreateStudio()">Create Studiо</a>
+            </div>
+          </li>
         </ul>
 
         <ul class="nav navbar-nav navbar-right">
@@ -40,7 +46,10 @@
             <a ui-sref="artworks">Artworks</a>
           </li>
           <li role="presentation" ng-class="{active: isActive('/users')}">
-            <a ui-sref="users">Users</a>
+            <a ui-sref="users">Artists</a>
+          </li>
+          <li role="presentation" ng-class="{active: isActive('/studios')}">
+            <a ui-sref="studios">Studios</a>
           </li>
           <!-- <li role="presentation"><a href="#">Groups</a></li> -->
         </ul>

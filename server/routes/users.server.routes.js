@@ -14,8 +14,9 @@ router.route('/:userId')
 
 router.post('/authenticate', users.authenticate);
 router.post('/register', users.create);
+router.get('/getUserArtworksById/:userId', users.getUserArtworksById);
 
 // Finish by binding the user middleware
-router.param('userId', users.userByID);
+router.param('userId', users.userById);
 
 module.exports = router
