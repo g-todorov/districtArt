@@ -1,5 +1,12 @@
-<div ng-controller="mainController" ng-init="find()">
-  <div ng-repeat="artwork in artworks">
-    <div ng-bind="artwork.name">><div>
+<div class="row" ng-controller="mainController" ng-init="find()">
+  <div class="artwork-grid col-xs-offset-2 col-xs-8">
+    <div class="row">
+      <div class="col-sm-2" ng-repeat="artwork in artworks">
+        <div class="thumb">
+          <img class="cover" ng-src="{{artwork.coverUrl}}">
+          <a ng-bind="artwork.artworkName" ui-sref="details({artworkId: artwork._id})"><a>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

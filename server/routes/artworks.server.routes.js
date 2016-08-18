@@ -1,20 +1,20 @@
 // Module dependencies.
+var artworks = require('../../server/controllers/artworks.server.controller');
 var express = require('express');
 var router = express.Router();
-var artWorks = require('../../server/controllers/artworks.server.controller');
 
-//router.route('/').get(artWorks.test);
 router.route('/')
-  .get(artWorks.list)
-  .post(artWorks.create);
-router.route('/:artWorksId')
-  .get(artWorks.read)
-  .put(artWorks.update)
-  .delete(artWorks.delete);
-router.route('/:artWorksId/owners')
-  .get(artWorks.allOwners);
+  .get(artworks.list)
+  .post(artworks.create);
+router.route('/:artworksId')
+  .get(artworks.read)
+  .put(artworks.update)
+  .delete(artworks.delete);
+router.route('/:artworksId/owners')
+  .get(artworks.allOwners);
+
 
 // Finish by binding the article middleware
-router.param('artWorksId', artWorks.artWorkById);
+router.param('artworksId', artworks.artworkById);
 
 module.exports = router

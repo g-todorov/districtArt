@@ -1,0 +1,59 @@
+<div ng-controller="HeaderController">
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" ui-sref="main">DistrictArt</a>
+      </div>
+
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+          <li class="dropdown" ng-show="isAuthenticated()">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{getUserName()}}<span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a ng-click="goTopersonalPage()">Profile</a></li>
+              <li role="separator" class="divider"></li>
+              <li><a href="#" ng-click="logout()">Logout</a></li>
+            </ul>
+          </li>
+
+          <li ng-hide="isAuthenticated()" class="ng-hide upload-artwork-button">
+            <div class="navbar-btn">
+              <a href="#" class="btn btn-primary" ng-click="goToLogin()" ng-hide="isActive('/login')">Login</a>
+            </div>
+          </li>
+
+          <li ng-show="isAuthenticated()" class="upload-artwork-button">
+            <div class="navbar-btn">
+              <a href="#" class="btn btn-primary" ng-click="goToUpload()">Upload Artwork</a>
+            </div>
+          </li>
+
+          <li ng-show="isAuthenticated()" class="create-studio-button">
+            <div class="navbar-btn">
+              <a href="#" class="btn btn-primary" ng-click="goToCreateStudio()">Create Studiо</a>
+            </div>
+          </li>
+        </ul>
+
+        <ul class="nav navbar-nav navbar-right">
+          <li role="presentation" ng-class="{active: isActive('/artworks')}">
+            <a ui-sref="artworks">Artworks</a>
+          </li>
+          <li role="presentation" ng-class="{active: isActive('/users')}">
+            <a ui-sref="users">Artists</a>
+          </li>
+          <li role="presentation" ng-class="{active: isActive('/studios')}">
+            <a ui-sref="studios">Studios</a>
+          </li>
+          <!-- <li role="presentation"><a href="#">Groups</a></li> -->
+        </ul>
+      </div>
+    </div>
+  </nav>
+</div>

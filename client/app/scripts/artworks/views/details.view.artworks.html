@@ -1,0 +1,20 @@
+<div class="artwork-details row" ng-controller="detailsController" ng-init="find()">
+
+    <div class="col-xs-offset-2 col-xs-2">
+      <div class="row">
+        <div class="col-xs-12">
+          <h4 ng-bind="artwork.artworkName"></h4>
+        </div>
+        <div class="col-xs-12">
+          <p class="wrap-text" ng-bind="artwork.artworkDescription"></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-6" ng-repeat="piece in artworkPieces">
+        <img class="artwork-piece" ng-src="{{piece}}">
+      </div>
+    </div>
+
+</div>

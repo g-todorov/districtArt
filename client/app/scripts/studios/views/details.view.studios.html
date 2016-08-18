@@ -1,0 +1,32 @@
+<div class="studio-details row" ng-controller="studioDetailsController">
+  <div class="col-xs-offset-2 col-xs-2">
+    <div class="row">
+      <div class="col-xs-12">
+        <h4 ng-bind="studio.studioName"></h4>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <p class="wrap-text" ng-bind="studio.studioDescription"></p>
+      </div>
+    </div>
+    <div class="row">
+      <div>
+        <button class="btn btn-primary" type="button" ng-click="showModal()">
+          Invite artists
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="artwork-grid col-xs-6">
+    <div class="row">
+      <div class="col-xs-2" ng-repeat="artwork in studioArtworks">
+        <a ui-sref="details({artworkId: artwork._id})">
+          <img class="cover" ng-click="" ng-src="{{artwork.coverUrl}}">
+          </img>
+          <span>{{artwork.artworkName}}</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

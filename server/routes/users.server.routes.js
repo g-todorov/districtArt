@@ -1,18 +1,22 @@
 // Module dependencies.
 var express = require('express');
+var passport	= require('passport');
 var router = express.Router();
 var users = require('../../server/controllers/users.server.controller');
 
-//router.route('/').get(users.test);
 router.route('/')
   .get(users.list)
-  .post(users.create);
+
 router.route('/:userId')
-  .get(users.read)
+  .get(passport.authenticate('jwt', {session: false}), users.read)
   .put(users.update)
   .delete(users.delete);
 
-// Finish by binding the article middleware
-router.param('userId', users.userByID);
+router.post('/authenticate', users.authenticate);
+router.post('/register', users.create);
+router.get('/getUserArtworksById/:userId', users.getUserArtworksById);
+
+// Finish by binding the user middleware
+router.param('userId', users.userById);
 
 module.exports = router

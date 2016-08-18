@@ -1,0 +1,12 @@
+<div ng-controller="RegisterController">
+    <form class="register-form">
+      <h2 class="register-form-heading">Please Register</h2>
+      <input class="form-control" type="text" placeholder="Name" required="" ng-model="user.userName">
+      <input class="form-control" type="password" placeholder="Password" required="" ng-model="user.password">
+      <button class="btn btn-lg btn-primary btn-block" ng-click="register()">
+        Register
+      </button>
+    </form>
+
+    <!-- <button class="button button-positive button-clear button-full" ui-sref="outside.register">Register now!</button> -->
+</div>

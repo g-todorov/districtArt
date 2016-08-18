@@ -22,42 +22,70 @@ var ApplicationConfiguration = (function() {
 	};
 })();
 
-angular.module(ApplicationConfiguration.applicationModuleName, ApplicationConfiguration.applicationModuleVendorDependencies);
-// angular.module('artsyApp', [
-//     'ngAnimate',
-//     'ngCookies',
-//     'ngResource',
-//     'ngSanitize',
-//     'ngTouch',
-//     'ui.router',
-//     'artworks'
-//   ])
-  // .run(function($rootScope) {
-  //     $rootScope.safeApply = function(fn) {
-  //         var phase = $rootScope.$$phase;
-  //         if (phase === '$apply' || phase === '$digest') {
-  //             if (fn && (typeof(fn) === 'function')) {
-  //                 fn();
-  //             }
-  //         } else {
-  //             this.$apply(fn);
-  //         }
-  //     };
-  //
+angular.module(ApplicationConfiguration.applicationModuleName, ApplicationConfiguration.applicationModuleVendorDependencies)
+// .constant('AUTH_EVENTS', {
+//   notAuthenticated: 'auth-not-authenticated'
+// })
+
+.constant('API_ENDPOINT', {
+  url: 'http://localhost:3000'
+  //  For a simulator use: url: 'http://127.0.0.1:8080/api'
+})
+.config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
+	$locationProvider.html5Mode(true);
+	//$httpProvider.interceptors.push('authInterceptor');
+})
+
+.factory('socket', ['$rootScope', function($rootScope) {
+  var socket = io.connect('http://localhost:3000');
+
+  return {
+    on: function(eventName, callback){
+      socket.on(eventName, callback);
+    },
+    emit: function(eventName, data) {
+      socket.emit(eventName, data);
+    }
+  };
+}])
+.controller('socketCtrl', function($scope, socket) {
+  $scope.newCustomers = [];
+  $scope.currentCustomer = {};
+
+  $scope.test = function() {
+    socket.emit('send-invitation', $scope.currentCustomer);
+  };
+
+  socket.on('notification', function(data) {
+    $scope.$apply(function () {
+      $scope.newCustomers.push(data.customer);
+    });
+  });
+})
+.run(function ($rootScope, $state, AuthService) {
+	// $rootScope.$on('$stateChangeStart', function (event, next) {
+  //   if (!AuthService.isAuthenticated()) {
+  //     console.log(next.name);
+  //     if (next.name !== 'login' && next.name !== 'register') {
+  //       event.preventDefault();
+  //       $state.go('login');
+  //     }
+  //   } else {
+	// 		if (next.name == 'login' || next.name == 'register') {
+	// 			event.preventDefault();
+	// 			$state.go('main');
+	// 		}
+	// 	}
   // });
-  // .config(function ($routeProvider) {
-  //   $routeProvider
-  //     .when('/', {
-  //       templateUrl: 'views/main.html',
-  //       controller: 'MainCtrl',
-  //       controllerAs: 'main'
-  //     })
-  //     .when('/about', {
-  //       templateUrl: 'views/about.html',
-  //       controller: 'AboutCtrl',
-  //       controllerAs: 'about'
-  //     })
-  //     .otherwise({
-  //       redirectTo: '/'
-  //     });
-  // });
+	$rootScope.$on('$stateChangeStart', function (event, next) {
+	  if (AuthService.isAuthenticated()) {
+			if (next.name == 'login' || next.name == 'register') {
+				event.preventDefault();
+				$state.go('main');
+			}
+		}
+		else {
+
+		}
+	});
+});

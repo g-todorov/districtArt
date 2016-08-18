@@ -1,0 +1,20 @@
+<div class="row" ng-controller="personalPageController">
+  <div class="col-xs-offset-2 col-xs-8">
+      <div class="artwork-grid row">
+        <div ng-repeat="artwork in userArtworks">
+          <div class="thumb col-sm-2">
+            <a ui-sref="details({artworkId: artwork._id})">
+              <img class="cover" ng-src="{{artwork.coverUrl}}">
+              {{artwork.artworkName}}
+            </a>
+            <button type="button" class="btn btn-default btn-xs">
+              Edit <span class="glyphicon glyphicon-edit"></span>
+            </button>
+            <button type="button" class="btn btn-danger btn-xs">
+              Remove <span class="glyphicon glyphicon-trash"></span>
+            </button>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>

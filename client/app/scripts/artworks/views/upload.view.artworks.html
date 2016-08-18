@@ -1,0 +1,48 @@
+<div class="row" ng-controller="uploadController">
+  <div class="col-xs-offset-2 col-xs-8">
+
+    <h4>Upload your own artwork</h4>
+
+    <form class="upload-artwork-form" name="uploadForm" novalidate>
+      <div class="form-group" ng-class="{'has-error' : uploadForm.artworkName.$invalid && !uploadForm.artworkName.$pristine}">
+        <label>Name</label>
+        <input type="text" class="form-control" name="artworkName" ng-model="artworkName" required>
+        <p class="error help-block" ng-show="uploadForm.artworkName.$invalid && !uploadForm.artworkName.$pristine">
+          Required!
+        </p>
+      </div>
+
+      <div class="form-group" ng-class="{'has-error' : uploadForm.artworkDescription.$invalid && !uploadForm.artworkDescription.$pristine}">
+        <label>Description</label>
+        <textarea type="text" class="form-control" name="artworkDescription" ng-model="artworkDescription" required></textarea>
+        <p class="error help-block" ng-show="uploadForm.artworkDescription.$invalid && !uploadForm.artworkDescription.$pristine">
+          Required!
+        </p>
+      </div>
+
+      <div class="form-group">
+        <ul ng-repeat="file in files" >
+          <li>
+            <span>{{file.name}}</span>
+            <img ngf-thumbnail="file" ngf-size="{width: 40, height: 40, quality: 0.9}" class="thumb">
+            <button type="button" class="btn btn-danger btn-xs" ng-click="removeFile(file)" ng-show="file">
+              Remove
+              <span class="glyphicon glyphicon-trash"></span>
+            </button>
+          </li>
+        </ul>
+        <span class="progress" ng-show="progress >= 0">
+          <div style="width:{{progress}}%" ng-bind="progress + '%'"></div>
+        </span>
+
+        <!-- <button name="file" ngf-select="selectFiles($files)" multiple ngf-keep="true" accept="image/*">Select Files</button> -->
+        <label class="btn btn-default btn-file">
+          Select artwork pieces
+          <input type="file" name="artworkItem" ngf-select="selectFiles($files)" multiple ngf-keep="true" accept="image/*" ngf-max-size="10MB" required style="display: none;">
+        </label>
+      </div>
+
+      <button type="submit" class="btn btn-primary" ng-disabled="!uploadForm.$invalid || !files.length > 0" ng-click="uploadFiles(files)">Submit</button>
+    </form>
+  </div>
+</div>
