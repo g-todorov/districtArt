@@ -1,6 +1,8 @@
 'use strict';
  
-angular.module('studios').controller('studioDetailsController', ['$scope', 'studiosService', 'Artworks', 'usersService','$state', 'API_ENDPOINT', function ($scope, studiosService, Artworks, usersService, $state, API_ENDPOINT) {
+angular.module('studios').controller('studioDetailsController', ['$scope', 'studiosService', 'Artworks', '$modal', 'usersService','$state', 'API_ENDPOINT',
+  function ($scope, studiosService, Artworks, $modal, usersService, $state, API_ENDPOINT) {
+
     $scope.currentUserId = window.localStorage.getItem('USER_ID');
     $scope.studioArtworks = []
 
@@ -17,10 +19,15 @@ angular.module('studios').controller('studioDetailsController', ['$scope', 'stud
     });
 
 
-    // usersService.query(function(data){
-    //   $scope.users = data
-    // });
+    $scope.showModal = function() {
+      var artistsModal = $modal({
+        templateUrl: 'scripts/components/modal/templates/modal.artists.template.components.html',
+        controller: 'artistsModalController',
+        size: 'lg'
+      });
 
+      artistsModal.$promise.then(artistsModal.show);
+    };
 
     $scope.isAuthorized = function () {
       // if($scope.studio.creator == $scope.currentUserId) {

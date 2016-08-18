@@ -1,4 +1,4 @@
-<div class="row" ng-controller="createStudioController" ng-init="find()">
+<div class="row" ng-controller="createStudioController">
   <div class="col-xs-offset-2 col-xs-8">
     <h4>Create your own studio</h4>
 
@@ -19,17 +19,20 @@
         </p>
       </div>
 
-      <div class="form-group" ng-show="userArtworks.length > 0">
-        <label>Select artworks</label>
+      <div class="form-group">
+        <label ng-show="selectedArtworks.length > 0">Selected artworks</label>
         <div class="select-projects-wrapper row">
-          <div class="artwork col-sm-1" ng-repeat="artwork in userArtworks">
-            <a ng-href="#action{{i}}"><img class="cover" ng-click="" ng-src="{{artwork.coverUrl}}"></img>
+          <div class="artwork col-sm-1" ng-repeat="artwork in selectedArtworks">
+            <a ng-href="#action{{i}}">
+              <img class="cover" ng-click="" ng-src="{{artwork.coverUrl}}"></img>
               {{artwork.artworkName}}
             </a>
-            <div class="checkbox">
-              <label><input ng-model="selected" type="checkbox" ng-change="selectProject(artwork, selected, $event)">Add to studio</label>
-            </div>
           </div>
+        </div>
+        <div>
+          <button class="btn btn-primary" type="button" ng-click="showModal()" ng-show="userArtworks.length > 0">
+            Select artworks
+          </button>
         </div>
       </div>
 

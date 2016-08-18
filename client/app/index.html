@@ -88,11 +88,14 @@
     <script src="bower_components/ng-file-upload/ng-file-upload.js"></script>
     <script src="bower_components/angular-strap/dist/angular-strap.js"></script>
     <script src="bower_components/angular-strap/dist/angular-strap.tpl.js"></script>
+    <script src="bower_components/socket.io-client/socket.io.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
         <script src="app.js"></script>
+        <script src="scripts/invitations/invitations.js"></script>
+        <script src="scripts/invitations/services/main.service.invitations.js"></script>
         <script src="scripts/studios/studios.js"></script>
         <script src="scripts/studios/controllers/create.controller.studios.js"></script>
         <script src="scripts/studios/controllers/main.controller.studios.js"></script>
@@ -116,6 +119,7 @@
         <script src="scripts/components/components.js"></script>
         <script src="scripts/components/header/controllers/header.controller.components.js"></script>
         <script src="scripts/components/modal/controllers/modal.artists.controller.components.js"></script>
+        <script src="scripts/components/modal/controllers/modal.artworks.controller.components.js"></script>
         <!-- <script src="scripts/controllers/main.js"></script>
         <script src="scripts/controllers/about.js"></script> -->
         <!-- endbuild -->

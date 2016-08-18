@@ -34,6 +34,7 @@ module.exports = function(config) {
       'bower_components/ng-file-upload/ng-file-upload.js',
       'bower_components/angular-strap/dist/angular-strap.js',
       'bower_components/angular-strap/dist/angular-strap.tpl.js',
+      'bower_components/socket.io-client/socket.io.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
       "app/scripts/**/*.js",

@@ -1,0 +1,25 @@
+<div class="modal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header" ng-show="title">
+        <button type="button" class="close" aria-label="Close" ng-click="$hide()"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" ng-bind="title"></h4>
+      </div>
+      <div class="artworks-modal modal-body">
+        <div ng-repeat="artwork in userArtworks">
+          <a>
+            <img class="cover" ng-click="" ng-src="{{artwork.coverUrl}}"></img>
+            {{artwork.artworkName}}
+          </a>
+          <label class="pull-right">
+            <input ng-model="artwork.selected" type="checkbox" ng-change="selectArtworks(artwork, artwork.selected, $event)">
+              Add to studio
+            </label>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" ng-click="$hide()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

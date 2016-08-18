@@ -23,11 +23,10 @@ exports.read = function(req, res) {
 exports.create = function(req, res) {
 
   var invitation = new Invitation({
-    studioName: req.body.studioName,
-    studioDescription: req.body.studioDescription,
-    creator: req.body.creator,
-    admins: [req.body.admins],
-    artworks: req.body.selectedArtworks
+    type: req.body.type,
+    status: req.body.status,
+    sendFrom: [req.body.sendFrom],
+    sendTo: req.body.sendTo
   });
 
 

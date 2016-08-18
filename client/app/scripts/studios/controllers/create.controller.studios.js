@@ -1,30 +1,25 @@
-angular.module('studios').controller('createStudioController', ['$scope', '$http', 'studiosService', '$state', 'API_ENDPOINT', 'Upload', 'usersService', function ($scope, $http, studiosService, $state, API_ENDPOINT, Upload, usersService) {
+angular.module('studios').controller('createStudioController', ['$scope', '$rootScope', '$http', '$modal', 'studiosService', '$state', 'API_ENDPOINT', 'Upload', 'usersService',
+  function ($scope, $rootScope, $http, $modal, studiosService, $state, API_ENDPOINT, Upload, usersService) {
+
   $scope.currentUserId = window.localStorage.getItem('USER_ID');
   $scope.selectedArtworks = [];
 
-  $scope.find = function() {
 
-    $http.get(API_ENDPOINT.url + '/users/getUserArtworksById/' + $scope.currentUserId).then(function(result) {
-      $scope.userArtworks = result.data;
+  $http.get(API_ENDPOINT.url + '/users/getUserArtworksById/' + $scope.currentUserId).then(function(result) {
+    $scope.userArtworks = result.data;
 
-      angular.forEach($scope.userArtworks, function(value, key) {
-        value.coverUrl = API_ENDPOINT.url + '/' + 'static/' + value.creator + '/' + value.artworkName + '/' + value.fileSystemNames[0]
-      });
+    angular.forEach($scope.userArtworks, function(value, key) {
+      value.coverUrl = API_ENDPOINT.url + '/' + 'static/' + value.creator + '/' + value.artworkName + '/' + value.fileSystemNames[0]
     });
+  });
 
 
-    usersService.query().$promise.then(function(result) {
-      $scope.users = result.filter(function(value) {
-        return value._id != $scope.currentUserId
-      });
+  usersService.query().$promise.then(function(result) {
+    $scope.users = result.filter(function(value) {
+      return value._id != $scope.currentUserId
     });
+  });
 
-
-  };
-
-  $scope.selectUser = function(user, selected, e) {
-
-  }
 
   $scope.selectProject = function(artwork, selected, e) {
     if (selected) {
@@ -36,8 +31,8 @@ angular.module('studios').controller('createStudioController', ['$scope', '$http
   }
 
 
- $scope.createStudio = function() {
-   var newStudio = new studiosService ({
+  $scope.createStudio = function() {
+    var newStudio = new studiosService ({
      studioName: $scope.studioName,
      studioDescription: $scope.studioDescription,
      creator: $scope.currentUserId,
@@ -45,15 +40,48 @@ angular.module('studios').controller('createStudioController', ['$scope', '$http
      selectedArtworks: $scope.selectedArtworks
    });
 
-   // Redirect after save
    newStudio.$save(function(response) {
-     debugger
-     $state.go('studios');
+      // $state.go('studios');
       //  // Clear form fields
       //  $scope.name = '';
    }, function(errorResponse) {
      $scope.error = errorResponse.data.message;
    });
- };
+
+  };
+
+
+  $scope.$on('add-studio-artworks', function (event, data) {
+    console.log(data)
+    $scope.selectedArtworks = data;
+  });
+
+  // var artworksModal = $modal.open({
+  //   templateUrl: 'scripts/components/modal/templates/modal.artworks.template.components.html',
+  //   controller: 'artworksModalController',
+  //   size: 'lg',
+  //   scope: $scope,
+  //   resolve: {
+  //     someParam: function () {
+  //         return "param"
+  //     }
+  //   }
+  // });
+
+  $scope.showModal = function() {
+    var artworksModal = $modal({
+      templateUrl: 'scripts/components/modal/templates/modal.artworks.template.components.html',
+      controller: 'artworksModalController',
+      size: 'lg',
+      scope: $scope,
+      resolve: {
+        preSelectedArtworks: function () {
+            return $scope.selectedArtworks
+        }
+      }
+    });
+
+    artworksModal.$promise.then(artworksModal.show);
+  };
 
 }]);

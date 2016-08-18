@@ -79,6 +79,11 @@ html, body {
   border: 1px solid #000000;
 }
 
+/*MODALS*/
+.artworks-modal .cover{
+  height: 100px;
+  margin-bottom: 10px;
+}
 
 /*HELPER CLASSES*/
 .wrap-text {

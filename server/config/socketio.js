@@ -18,7 +18,7 @@ function onConnect(socket) {
   });
 
   // Insert sockets below
-  require('../api/comment/comment.socket').register(socket);
+  require('../sockets/invitations.server.sockets').register(socket);
 }
 
 module.exports = function (socketio) {
@@ -36,6 +36,7 @@ module.exports = function (socketio) {
   //   secret: config.secrets.session,
   //   handshake: true
   // }));
+  console.log('socket')
 
   socketio.on('connection', function (socket) {
     socket.address = socket.handshake.address !== null ?

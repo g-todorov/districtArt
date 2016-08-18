@@ -1,11 +1,12 @@
-<div ng-controller="personalPageController" ng-init="findMe()">
-  <div class="container-fluid">
-    <div class="artwork-grid">
-      <div class="row">
+<div class="row" ng-controller="personalPageController">
+  <div class="col-xs-offset-2 col-xs-8">
+      <div class="artwork-grid row">
         <div ng-repeat="artwork in userArtworks">
           <div class="thumb col-sm-2">
-            <img class="cover" ng-src="{{artwork.coverUrl}}">
-            <a ng-bind="artwork.artworkName" ui-sref="details({artworkId: artwork._id})"></a>
+            <a ui-sref="details({artworkId: artwork._id})">
+              <img class="cover" ng-src="{{artwork.coverUrl}}">
+              {{artwork.artworkName}}
+            </a>
             <button type="button" class="btn btn-default btn-xs">
               Edit <span class="glyphicon glyphicon-edit"></span>
             </button>
@@ -15,6 +16,5 @@
           </div>
         </div>
       </div>
-    </div>
   </div>
 </div>
