@@ -5,7 +5,7 @@ var router = express.Router();
 var users = require('../../server/controllers/users.server.controller');
 
 router.route('/')
-  .get(users.list)
+  .get(users.list);
 
 router.route('/:userId')
   .get(passport.authenticate('jwt', {session: false}), users.read)
@@ -19,4 +19,4 @@ router.get('/getUserArtworksById/:userId', users.getUserArtworksById);
 // Finish by binding the user middleware
 router.param('userId', users.userById);
 
-module.exports = router
+module.exports = router;
