@@ -1,4 +1,4 @@
 module.exports = {
-	'secret': 'devdacticIsAwesome',
-	'url' : 'mongodb://localhost/artsy'
-}
+  'secret': 'devdacticIsAwesome',
+  'url' : 'mongodb://localhost/artsy'
+};

@@ -9,11 +9,11 @@ router.route('/')
   .post(studios.create);
 
 router.route('/:studioId')
-  .get(passport.authenticate('jwt', {session: false}), studios.read)
+  .get(passport.authenticate('jwt', {session: false}), studios.read);
 //   .put(studios.update)
 //   .delete(studios.delete);
 
 // Finish by binding the user middleware
 router.param('studioId', studios.studioById);
 
-module.exports = router
+module.exports = router;

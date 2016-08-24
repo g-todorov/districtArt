@@ -10,32 +10,16 @@ var config = require('../config/db'); // get db config file
 
 // List of Users
 exports.list = function(req, res) {
-	User.find().sort('userName').exec(function(err, users) {
-		if (err) {
-			return res.status(400).send({
-				message: errorHandler.getErrorMessage(err)
-			});
-		} else {
-			res.json(users);
-		}
-	});
+  User.find().sort('userName').exec(function(err, users) {
+    if (err) {
+      return res.status(400).send({
+        message: errorHandler.getErrorMessage(err)
+      });
+    } else {
+      res.json(users);
+    }
+  });
 };
-
-
-// Create a User
-// exports.create = function(req, res) {
-// 	var user = new User(req.body);
-//
-// 	user.save(function(err) {
-// 		if (err) {
-// 			return res.status(400).send({
-// 				message: errorHandler.getErrorMessage(err)
-// 			});
-// 		} else {
-// 			res.status(201).json(user);
-// 		}
-// 	});
-// };
 
 
 // create a new user account (POST http://localhost:8080/api/signup)
@@ -46,7 +30,7 @@ exports.create = function(req, res) {
     var newUser = new User({
       userName: req.body.userName,
       password: req.body.password,
-			role: req.body.role
+      role: req.body.role
     });
     // save the user
     newUser.save(function(err) {
@@ -87,69 +71,69 @@ exports.authenticate = function(req, res) {
 
 // Show the current User
 exports.read = function(req, res) {
-	res.json(req.user);
+  res.json(req.user);
 };
 
 
 // Update a User
 exports.update = function(req, res) {
-	var user = req.user;
+  var user = req.user;
 
-	user = _.extend(user, req.body);
+  user = _.extend(user, req.body);
 
-	user.save(function(err) {
-		if (err) {
-			return res.status(400).send({
-				message: errorHandler.getErrorMessage(err)
-			});
-		} else {
-			res.json(user);
-		}
-	});
+  user.save(function(err) {
+    if (err) {
+      return res.status(400).send({
+        message: errorHandler.getErrorMessage(err)
+      });
+    } else {
+      res.json(user);
+    }
+  });
 };
 
 
 // Delete an User
 exports.delete = function(req, res) {
-	var user = req.user;
+  var user = req.user;
 
-	//remove Artwork dependencies from the user before deleting
-	Artwork.find({owners: user._id}, function(err, artWorks) {
-		_.each(artWorks, function(artWork) {
-				if (artWork.owners.length == 1) {
-					artWork.remove(function(err){
-						if (err) {
-							return res.status(400).send({
-								message: errorHandler.getErrorMessage(err)
-							});
-						}
-					});
-				}
-				else {
-					artWork.owners = _.remove(artWork.owners, function(owner){
-						return !owner.equals(user._id);
-					});
-					artWork.save(function(err) {
-						if (err) {
-							return res.status(400).send({
-								message: errorHandler.getErrorMessage(err)
-							});
-						}
-					});
-				}
-		});
-	});
+  //remove Artwork dependencies from the user before deleting
+  Artwork.find({owners: user._id}, function(err, artWorks) {
+    _.each(artWorks, function(artWork) {
+      if (artWork.owners.length == 1) {
+        artWork.remove(function(err){
+          if (err) {
+            return res.status(400).send({
+              message: errorHandler.getErrorMessage(err)
+            });
+          }
+        });
+      }
+      else {
+        artWork.owners = _.remove(artWork.owners, function(owner){
+          return !owner.equals(user._id);
+        });
+        artWork.save(function(err) {
+          if (err) {
+            return res.status(400).send({
+              message: errorHandler.getErrorMessage(err)
+            });
+          }
+        });
+      }
+    });
+  });
 
 
-	user.remove(function(err) {
-		if (err) {
-			return res.status(400).send({
-				message: errorHandler.getErrorMessage(err)
-			});
-		} else {
-			res.json(user);
-		}
-	});
+  user.remove(function(err) {
+    if (err) {
+      return res.status(400).send({
+        message: errorHandler.getErrorMessage(err)
+      });
+    } else {
+      res.json(user);
+    }
+  });
 };
 
 
@@ -169,22 +153,21 @@ exports.getUserArtworksById = function (req, res) {
 
 //User middleware
 exports.userById = function(req, res, next, id) {
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).send({
+    ..message: 'User is invalid'
+    });
+  }
 
-	if (!mongoose.Types.ObjectId.isValid(id)) {
-		return res.status(400).send({
-			message: 'User is invalid'
-		});
-	}
-
-	User.findById(id).exec(function(err, user) {
+  User.findById(id).exec(function(err, user) {
     if (err) return next(err);
-		if (!user) {
-			return res.status(404).send({
-				message: 'User not found'
-			});
-		}
-		req.user = user;
+    if (!user) {
+      return res.status(404).send({
+        message: 'User not found'
+      });
+    }
+    req.user = user;
 
-		next();
-	});
+    next();
+  });
 };
