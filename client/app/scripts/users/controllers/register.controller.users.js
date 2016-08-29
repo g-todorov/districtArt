@@ -8,7 +8,6 @@ angular.module('users')
   };
 
   $scope.register = function() {
-    debugger
     AuthService.register($scope.user).then(function(msg) {
       $state.go('main');
     }, function(errMsg) {

@@ -5,19 +5,32 @@ var Schema = mongoose.Schema;
 var InvitationSchema = new Schema({
   type: {
     type: String,
+    enum: ['invitation', 'application'],
     required: true
   },
-  status: {
+  responseState: {
     type: String,
+    enum: ['pending', 'accepted', 'rejected'],
     required: true
   },
-  sendFrom: {
-    type: [mongoose.Schema.Types.ObjectId],
+  viewState: {
+    type: String,
+    enum: ['read', 'unread'],
     required: true
   },
-  sendTo: {
-    type: [mongoose.Schema.Types.ObjectId],
+  studio: {
+    type: mongoose.Schema.Types.ObjectId,
     required: true
+  },
+  sender: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    ref: 'User'
+  },
+  receiver: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    ref: 'User'
   },
   created: {
     type: Date,

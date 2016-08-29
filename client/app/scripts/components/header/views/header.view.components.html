@@ -22,7 +22,13 @@
             </ul>
           </li>
 
-          <li ng-hide="isAuthenticated()" class="ng-hide upload-artwork-button">
+          <li ng-class="notifications.length > 0 ? 'new-notifications': 'notifications'" ng-show="isAuthenticated()">
+            <div class="navbar-btn">
+              <span class="glyphicon glyphicon-inbox" ng-click="openNotificationsModal()"></span>
+            </div>
+          </li>
+
+          <li ng-hide="isAuthenticated()" class="ng-hide login-button">
             <div class="navbar-btn">
               <a href="#" class="btn btn-primary" ng-click="goToLogin()" ng-hide="isActive('/login')">Login</a>
             </div>

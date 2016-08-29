@@ -13,6 +13,11 @@ router.route('/:invitationId')
 //   .put(studios.update)
 //   .delete(studios.delete);
 
+//router.get('/:invitationId/accept', invitations.acceptInvitation);
+router.put('/:invitationId/reject', invitations.rejectInvitation);
+
+router.get('/getInvitationByReceiver/:userId', invitations.getInvitationByReceiver);
+
 // Finish by binding the user middleware
 router.param('invitationId', invitations.invitationById);
 

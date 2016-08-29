@@ -17,10 +17,11 @@ exports.register = function(socket) {
   });
 }
 
-function onSave(socket, doc, cb) {
-  socket.emit('thing:save', doc);
+function onSave(socket, doc) {
+  // console.log(doc)
+  socket.emit('newNotification', doc);
 }
 
-function onRemove(socket, doc, cb) {
+function onRemove(socket, doc) {
   socket.emit('thing:remove', doc);
 }

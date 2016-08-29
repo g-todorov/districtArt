@@ -76,7 +76,7 @@ angular.module('studios').controller('createStudioController', ['$scope', '$root
       scope: $scope,
       resolve: {
         preSelectedArtworks: function () {
-            return $scope.selectedArtworks
+          return $scope.selectedArtworks
         }
       }
     });

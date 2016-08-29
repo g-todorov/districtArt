@@ -1,0 +1,27 @@
+<div class="modal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header" ng-show="title">
+        <button type="button" class="close" aria-label="Close" ng-click="$hide()"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" ng-bind="title"></h4>
+      </div>
+      <div class="modal-body">
+        <div ng-repeat="notification in notifications" ng-init="getStudioName(notification.studio); getUserName(notification.sender)">
+          <div class="clearfix" ng-show="notification.type == 'invitation'">
+            <p class="pull-left">
+              You were invited to join
+              <a>{{studioNamesMap[notification.studio]}}</a>
+              by
+              <a>{{userNamesMap[notification.sender]}}</a>
+            </p>
+            <button type="button" class="btn btn-default pull-right" ng-click="rejectInvitation(notification._id)">Reject</button>
+            <button type="button" class="btn btn-default pull-right" ng-click="acceptInvitation()">Accept</button>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click="$hide()">OK</button>
+      </div>
+    </div>
+  </div>
+</div>

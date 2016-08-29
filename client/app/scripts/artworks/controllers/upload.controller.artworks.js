@@ -1,7 +1,7 @@
-//inject angular file upload directives and services.
-// var app = angular.module('fileUpload', ['ngFileUpload']);
+'use strict';
 
 angular.module('artworks').controller('uploadController', ['$scope', 'Artworks', '$state', 'API_ENDPOINT', 'Upload', function ($scope, Artworks, $state, API_ENDPOINT, Upload) {
+
   $scope.selectFiles = function (files) {
       $scope.files = files;
   };
@@ -14,28 +14,27 @@ angular.module('artworks').controller('uploadController', ['$scope', 'Artworks',
   $scope.uploadFiles = function (files) {
 
     if (files) {
-        Upload.upload({
-            url: API_ENDPOINT.url + '/artworks',
-            arrayKey: '',
-            data: {
-              details: {
-                userId: window.localStorage.getItem('USER_ID'),
-                artworkName: $scope.artworkName,
-                artworkDescription: $scope.artworkDescription
-              },
-              files: files
-            }
-        }).then(function (response) {
-            $state.go('details', {artworkId: response.data._id});
-
-        }, function (response) {
-            if (response.status > 0) {
-                $scope.errorMsg = response.status + ': ' + response.data;
-            }
-        }, function (evt) {
-            $scope.progress =
-                Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
-        });
+      Upload.upload({
+        url: API_ENDPOINT.url + '/artworks',
+        arrayKey: '',
+        data: {
+          details: {
+            userId: window.localStorage.getItem('USER_ID'),
+            artworkName: $scope.artworkName,
+            artworkDescription: $scope.artworkDescription
+          },
+          files: files
+        }
+      }).then(function (response) {
+        $state.go('details', {artworkId: response.data._id});
+      }, function (response) {
+        if (response.status > 0) {
+          $scope.errorMsg = response.status + ': ' + response.data;
+        }
+      }, function (evt) {
+        $scope.progress =
+          Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
+      });
     }
   };
 }]);

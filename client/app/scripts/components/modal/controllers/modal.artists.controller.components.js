@@ -1,6 +1,8 @@
 'use strict';
  
-angular.module('Components').controller('artistsModalController', ['$scope', 'socket', '$modal', 'studiosService', 'Invitations', 'usersService', '$state', 'API_ENDPOINT', function ($scope, socket, $modal, studiosService, Invitations, usersService, $state, API_ENDPOINT) {
+angular.module('Components').controller('artistsModalController', ['$scope', 'socket', '$modal', 'studiosService', 'Notifications', 'usersService', '$state', 'API_ENDPOINT', 'getStudioId',
+  function ($scope, socket, $modal, studiosService, Notifications, usersService, $state, API_ENDPOINT, getStudioId) {
+
     $scope.currentUserId = window.localStorage.getItem('USER_ID');
     $scope.selectedUsers = [];
     $scope.users = []
@@ -25,21 +27,26 @@ angular.module('Components').controller('artistsModalController', ['$scope', 'so
 
 
     $scope.sendInvitations = function() {
-      var newInvitation = new Invitations ({
-        type: 'invitation',
-        status: 'unread',
-        sendFrom: [$scope.currentUserId],
-        sendTo: $scope.selectedUsers
+
+      angular.forEach($scope.selectedUsers, function(value, key) {
+        var newInvitation = new Notifications.notificationsResource ({
+          type: 'invitation',
+          viewState: 'unread',
+          responseState: 'pending',
+          studio: getStudioId,
+          sender: $scope.currentUserId,
+          receiver: value
+        });
+
+        newInvitation.$save(function(response) {
+           // $state.go('studios');
+           //  // Clear form fields
+           //  $scope.name = '';
+        }, function(errorResponse) {
+          $scope.error = errorResponse.data.message;
+        });
       });
 
-
-      newInvitation.$save(function(response) {
-        $state.go('studios');
-         //  // Clear form fields
-         //  $scope.name = '';
-      }, function(errorResponse) {
-        $scope.error = errorResponse.data.message;
-      });
     };
 
   }
