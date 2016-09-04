@@ -9,7 +9,7 @@ router.route('/')
   .post(studios.create);
 
 router.route('/:studioId')
-  .get(passport.authenticate('jwt', {session: false}), studios.read);
+  .get(studios.read);
 //   .put(studios.update)
 //   .delete(studios.delete);
 

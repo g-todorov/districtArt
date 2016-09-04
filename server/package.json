@@ -27,6 +27,7 @@
   "devDependencies": {
     "eslint": "^3.0.1",
     "grunt": "^1.0.1",
+    "grunt-nodemon": "^0.4.2",
     "gruntify-eslint": "^3.0.0",
     "jit-grunt": "^0.10.0"
   }

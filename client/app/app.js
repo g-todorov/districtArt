@@ -48,35 +48,7 @@ angular.module(ApplicationConfiguration.applicationModuleName, ApplicationConfig
     }
   };
 }])
-.controller('socketCtrl', function($scope, socket) {
-  $scope.newCustomers = [];
-  $scope.currentCustomer = {};
-
-  $scope.test = function() {
-    socket.emit('send-invitation', $scope.currentCustomer);
-  };
-
-  socket.on('notification', function(data) {
-    $scope.$apply(function () {
-      $scope.newCustomers.push(data.customer);
-    });
-  });
-})
 .run(function ($rootScope, $state, AuthService) {
-	// $rootScope.$on('$stateChangeStart', function (event, next) {
-  //   if (!AuthService.isAuthenticated()) {
-  //     console.log(next.name);
-  //     if (next.name !== 'login' && next.name !== 'register') {
-  //       event.preventDefault();
-  //       $state.go('login');
-  //     }
-  //   } else {
-	// 		if (next.name == 'login' || next.name == 'register') {
-	// 			event.preventDefault();
-	// 			$state.go('main');
-	// 		}
-	// 	}
-  // });
 	$rootScope.$on('$stateChangeStart', function (event, next) {
 	  if (AuthService.isAuthenticated()) {
 			if (next.name == 'login' || next.name == 'register') {

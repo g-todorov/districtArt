@@ -1,12 +1,11 @@
 'use strict';
  
-angular.module('studios').controller('artworksModalController', ['$rootScope', '$scope', '$timeout', '$http', 'socket', '$modal', 'preSelectedArtworks', 'studiosService', 'Invitations', 'Artworks', '$state', 'API_ENDPOINT',
+angular.module('Components').controller('artworksModalController', ['$rootScope', '$scope', '$timeout', '$http', 'socket', '$modal', 'preSelectedArtworks', 'studiosService', 'Invitations', 'Artworks', '$state', 'API_ENDPOINT',
   function ($rootScope, $scope, $timeout, $http, socket, $modal, preSelectedArtworks, studiosService, Invitations, Artworks, $state, API_ENDPOINT) {
 
     $scope.currentUserId = window.localStorage.getItem('USER_ID');
     $scope.userArtworks = [];
     $scope.selectedArtworks = preSelectedArtworks;
-
     $scope.title = 'Select artworks'
 
 
@@ -30,16 +29,6 @@ angular.module('studios').controller('artworksModalController', ['$rootScope', '
         $scope.selectedArtworks.splice(index, 1)
       }
     }
-
-
-    // $scope.clearArtworks = function() {
-    //   $scope.selectedArtworks = []
-    // }
-
-
-    // $scope.sendArtworks = function() {
-    //     $scope.$emit('add-studio-artworks', $scope.selectedArtworks);
-    // };
 
   }
 ]);

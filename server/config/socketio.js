@@ -36,14 +36,14 @@ module.exports = function (socketio) {
   //   secret: config.secrets.session,
   //   handshake: true
   // }));
-  console.log('socket')
 
   socketio.on('connection', function (socket) {
-    socket.address = socket.handshake.address !== null ?
-            socket.handshake.address.address + ':' + socket.handshake.address.port :
-            process.env.DOMAIN;
-
-    socket.connectedAt = new Date();
+    // socket.address = socket.handshake.address !== null ?
+    //         socket.handshake.address.address + ':' + socket.handshake.address.port :
+    //         process.env.DOMAIN;
+    //
+    // socket.connectedAt = new Date();
+    console.log(socket.id)
 
     // Call onDisconnect.
     socket.on('disconnect', function () {

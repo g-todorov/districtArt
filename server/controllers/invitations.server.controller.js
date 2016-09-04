@@ -24,9 +24,11 @@ exports.create = function(req, res) {
 
   var invitation = new Invitation({
     type: req.body.type,
-    status: req.body.status,
-    sendFrom: [req.body.sendFrom],
-    sendTo: req.body.sendTo
+    viewState: req.body.viewState,
+    responseState: req.body.responseState,
+    studio: req.body.studio,
+    sender: req.body.sender,
+    receiver: req.body.receiver
   });
 
 
@@ -40,6 +42,38 @@ exports.create = function(req, res) {
     }
   });
 
+};
+
+
+exports.rejectInvitation = function(req, res){
+  var invitation = req.invitation;
+  console.log(invitation, 'reject')
+
+  // user = _.extend(user, req.body);
+  //
+  // user.save(function(err) {
+  //   if (err) {
+  //     return res.status(400).send({
+  //       message: errorHandler.getErrorMessage(err)
+  //     });
+  //   } else {
+  //     res.json(user);
+  //   }
+  // });
+};
+
+
+exports.getInvitationByReceiver = function(req, res) {
+  Invitation.find({receiver: req.params.userId}, function(err, invitation) {
+    if (err) return next(err);
+
+    if (!invitation) {
+      return res.status(404).send({
+          message: 'Invitations does not have receiver'
+        });
+    }
+    res.json(invitation);
+  });
 };
 
 

@@ -137,6 +137,7 @@ exports.delete = function(req, res) {
 };
 
 
+//Probably should be moved to artworks on refactored
 exports.getUserArtworksById = function (req, res) {
   Artwork.find({owners: req.user._id}, function(err, artworks) {
     if (err) return next(err);
@@ -155,7 +156,7 @@ exports.getUserArtworksById = function (req, res) {
 exports.userById = function(req, res, next, id) {
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(400).send({
-    ..message: 'User is invalid'
+      message: 'User is invalid'
     });
   }
 
