@@ -1,7 +1,11 @@
 'use strict';
  
-angular.module('Components').controller('HeaderController', ['$scope', 'AuthService', '$state', '$location', '$modal', 'Notifications', 'socket',
-  function ($scope, AuthService, $state, $location, $modal, Notifications, socket) {
+angular.module('Components').controller('HeaderController', ['$scope', 'AuthService', '$state', '$location', '$modal', 'Notifications', 'socket', '_',
+  function ($scope, AuthService, $state, $location, $modal, Notifications, socket, _) {
+
+    $scope.notifications = [];
+    $scope.newNotifications = [];
+
 
     $scope.isAuthenticated = function () {
       return AuthService.isAuthenticated();
@@ -44,20 +48,48 @@ angular.module('Components').controller('HeaderController', ['$scope', 'AuthServ
     };
 
 
-    //TODO move this to another controller
-    if(AuthService.isAuthenticated() == true) {
-      Notifications.getNotificationsByUserId().then(function(data) {
-        $scope.notifications = data;
-      }, function(errMsg) {
-        console.log(errMsg);
-      });
+    // Ensure that socket connection is open
+    if(!socket.connected) {
+      socket.connect();
     }
 
-
-    socket.on('newNotification', function(data) {
+    socket.on('invitationsList', function(data) {
+      $scope.newNotifications = [];
       $scope.$apply(function () {
-        console.log(data)
-        // $scope.newCustomers.push(data.customer);
+        angular.forEach(data, function(value, key) {
+          if (value.viewState == 'unread') {
+            this.push(value);
+          }
+        }, $scope.newNotifications);
+        $scope.notifications = data
+      });
+    });
+
+
+    socket.on('newNotification', function(data){
+      $scope.$apply(function () {
+        if(data.viewState == 'unread') {
+          $scope.newNotifications.push(data);
+          $scope.notifications.push(data);
+        }
+        else if (data.viewState == 'read') {
+          var newNotificationIndex = _.findIndex($scope.newNotifications, function(value) {
+            return value._id == data._id
+          });
+
+          if(newNotificationIndex > -1) {
+            $scope.newNotifications.splice(newNotificationIndex, 1);
+          }
+
+          var notificationIndex = _.findIndex($scope.notifications, function(value) {
+            return value._id == data._id
+          });
+
+          if(notificationIndex > -1) {
+            $scope.notifications.splice(notificationIndex, 1);
+            $scope.notifications.push(data);
+          }
+        }
       });
     });
 

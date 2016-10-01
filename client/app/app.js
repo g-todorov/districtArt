@@ -23,30 +23,45 @@ var ApplicationConfiguration = (function() {
 })();
 
 angular.module(ApplicationConfiguration.applicationModuleName, ApplicationConfiguration.applicationModuleVendorDependencies)
-// .constant('AUTH_EVENTS', {
-//   notAuthenticated: 'auth-not-authenticated'
-// })
-
 .constant('API_ENDPOINT', {
   url: 'http://localhost:3000'
   //  For a simulator use: url: 'http://127.0.0.1:8080/api'
 })
-.config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
+.config(function ($locationProvider) {
 	$locationProvider.html5Mode(true);
-	//$httpProvider.interceptors.push('authInterceptor');
 })
+.factory('socket', ['$rootScope', 'AuthService', function($rootScope, AuthService) {
+  var socket;
+  var connected = false;
 
-.factory('socket', ['$rootScope', function($rootScope) {
-  var socket = io.connect('http://localhost:3000');
+  var connect = function() {
+    if (AuthService.isAuthenticated()) {
+      socket = io('http://localhost:3000', {query:'userId=' + AuthService.getUserId()});
+      connected = true;
+    }
+  };
 
-  return {
-    on: function(eventName, callback){
+  var on = function(eventName, callback){
+    if (socket) {
       socket.on(eventName, callback);
-    },
-    emit: function(eventName, data) {
+    }
+  };
+
+  var emit = function(eventName, data) {
+    if (socket) {
       socket.emit(eventName, data);
     }
   };
+
+  connect()
+
+  return {
+    connect: connect,
+    connected: connected,
+    on: on,
+    emit: emit
+  };
+
 }])
 .run(function ($rootScope, $state, AuthService) {
 	$rootScope.$on('$stateChangeStart', function (event, next) {

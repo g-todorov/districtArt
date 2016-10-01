@@ -7,21 +7,49 @@
 // var invitation = require('../models/invitations.server.model');
 var mongoose = require('mongoose');
 var Invitation = mongoose.model('Invitation');
+var deferred = require('deferred');
 
-exports.register = function(socket) {
-  Invitation.schema.post('save', function (doc) {
-    onSave(socket, doc);
-  });
-  Invitation.schema.post('remove', function (doc) {
-    onRemove(socket, doc);
-  });
-}
+var connectedUsers;
+var socketIo;
 
-function onSave(socket, doc) {
-  // console.log(doc)
-  socket.emit('newNotification', doc);
-}
+exports.register = function(currSocketIo) {
+  if(!socketIo){
+    socketIo = currSocketIo
+  }
+};
+
+
+exports.update = function(socket, currConnectedUsers) {
+  connectedUsers = currConnectedUsers;
+
+  var invitationsByID = Invitation.find({'receiver': { $in: [socket.userId]}}, function(err, docs){
+    socket.emit('invitationsList', docs);
+  });
+
+};
+
+
+Invitation.schema.post('save', function (doc) {
+  console.log('save')
+  onSave(doc);
+});
+
+
+Invitation.schema.post('remove', function (doc) {
+  onRemove(socket, doc);
+});
+
+
+function onSave (doc) {
+  socketIo.to(connectedUsers[doc.receiver]).emit('newNotification', doc);
+};
+
 
 function onRemove(socket, doc) {
-  socket.emit('thing:remove', doc);
+  socket.emit('removeNotification', doc);
 }
+
+
+exports.deregister = function (socket) {
+
+};

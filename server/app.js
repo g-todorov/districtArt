@@ -15,10 +15,6 @@ var server = http.createServer(app);
 var io = require('socket.io').listen(server);
 
 
-//config SocketIo
-require('./config/socketio')(io);
-
-
 // Add Middleware necessary for REST API's
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
@@ -62,6 +58,9 @@ app.use(require('./routes'));
 // app.use(function(req, res) {
 //     res.sendFile(path.join(__dirname, '../client/app/index.html'));
 // });
+
+//config SocketIo
+require('./config/socketio')(io);
 
 /*eslint no-console: 2*/
 console.log('Listening on port 3000...');

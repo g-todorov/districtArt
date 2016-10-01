@@ -1,7 +1,7 @@
 'use strict';
  
-angular.module('Components').controller('artworksModalController', ['$rootScope', '$scope', '$timeout', '$http', 'socket', '$modal', 'preSelectedArtworks', 'studiosService', 'Invitations', 'Artworks', '$state', 'API_ENDPOINT',
-  function ($rootScope, $scope, $timeout, $http, socket, $modal, preSelectedArtworks, studiosService, Invitations, Artworks, $state, API_ENDPOINT) {
+angular.module('Components').controller('artworksModalController', ['$rootScope', '$scope', '$timeout', '$http', 'socket', '$modal', 'preSelectedArtworks', 'studiosService', 'Artworks', '$state', 'API_ENDPOINT',
+  function ($rootScope, $scope, $timeout, $http, socket, $modal, preSelectedArtworks, studiosService, Artworks, $state, API_ENDPOINT) {
 
     $scope.currentUserId = window.localStorage.getItem('USER_ID');
     $scope.userArtworks = [];

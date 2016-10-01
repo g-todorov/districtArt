@@ -56,17 +56,6 @@ angular.module('studios').controller('createStudioController', ['$scope', '$root
     $scope.selectedArtworks = data;
   });
 
-  // var artworksModal = $modal.open({
-  //   templateUrl: 'scripts/components/modal/templates/modal.artworks.template.components.html',
-  //   controller: 'artworksModalController',
-  //   size: 'lg',
-  //   scope: $scope,
-  //   resolve: {
-  //     someParam: function () {
-  //         return "param"
-  //     }
-  //   }
-  // });
 
   $scope.showModal = function() {
     var artworksModal = $modal({

@@ -14,16 +14,19 @@ var StudioSchema = new Schema({
   },
   creator: {
     type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
     required: true
   },
-  admins: {
-    type: [mongoose.Schema.Types.ObjectId],
+  admins: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
     required: true
-  },
-  artworks: {
-    type: [mongoose.Schema.Types.ObjectId],
+  }],
+  artworks: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Artwork',
     required: true
-  },
+  }],
   created: {
     type: Date,
     default: Date.now

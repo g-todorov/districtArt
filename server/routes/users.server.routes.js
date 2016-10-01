@@ -15,6 +15,7 @@ router.route('/:userId')
 router.post('/authenticate', users.authenticate);
 router.post('/register', users.create);
 router.get('/getUserArtworksById/:userId', users.getUserArtworksById);
+router.get('/checkIfUserIsInvited/:userId', users.checkIfUserIsInvited);
 
 // Finish by binding the user middleware
 router.param('userId', users.userById);

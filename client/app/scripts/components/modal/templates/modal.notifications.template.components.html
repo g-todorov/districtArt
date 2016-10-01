@@ -7,7 +7,7 @@
       </div>
       <div class="modal-body">
         <div ng-repeat="notification in notifications" ng-init="getStudioName(notification.studio); getUserName(notification.sender)">
-          <div class="clearfix" ng-show="notification.type == 'invitation'">
+          <div class="clearfix" ng-show="notification.type == 'invitation' && notification.responseState == 'pending'">
             <p class="pull-left">
               You were invited to join
               <a>{{studioNamesMap[notification.studio]}}</a>
@@ -15,8 +15,21 @@
               <a>{{userNamesMap[notification.sender]}}</a>
             </p>
             <button type="button" class="btn btn-default pull-right" ng-click="rejectInvitation(notification._id)">Reject</button>
-            <button type="button" class="btn btn-default pull-right" ng-click="acceptInvitation()">Accept</button>
+            <button type="button" class="btn btn-default pull-right" ng-click="acceptInvitation(notification._id)">Accept</button>
           </div>
+          <div class="clearfix" ng-show="notification.type == 'invitation' && notification.responseState != 'pending'">
+            <p class="pull-left">
+              You were invited to join
+              <a>{{studioNamesMap[notification.studio]}}</a>
+              by
+              <a>{{userNamesMap[notification.sender]}}</a>
+            </p>
+            <button type="button" class="btn btn-default pull-right disabled" ng-show="notification.responseState == 'rejected'">Rejected</button>
+            <button type="button" class="btn btn-default pull-right disabled" ng-show="notification.responseState == 'accepted'">Accepted</button>
+          </div>
+        </div>
+        <div ng-show="notifications.length == 0">
+          There are no notifications.
         </div>
       </div>
       <div class="modal-footer">
