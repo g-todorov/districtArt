@@ -4,23 +4,11 @@
 angular.module('invitations').factory('Notifications', ['$resource', '$q', '$http', 'API_ENDPOINT', 'AuthService',
   function($resource, $q, $http, API_ENDPOINT, AuthService) {
 
-    var notificationsResource = $resource(API_ENDPOINT.url + '/invitations/:id', { id: '@_id'}, {
+    var notificationsResource = $resource(API_ENDPOINT.url + '/invitations/:invitationId', { invitationId: '@_id'}, {
       update: {
         method: 'PUT'
       }
     });
-
-
-    var rejectInvitation = function(notificationId){
-      debugger
-      return $q(function(resolve, reject) {
-        $http.put(API_ENDPOINT.url + '/invitations/' + notificationId + '/reject').then(function(result) {
-          resolve(result.data);
-        }, function(error){
-          reject(error);
-        });
-      });
-    }
 
 
     var getNotificationsByUserId = function(){
@@ -36,8 +24,7 @@ angular.module('invitations').factory('Notifications', ['$resource', '$q', '$htt
 
     return {
       notificationsResource: notificationsResource,
-      getNotificationsByUserId: getNotificationsByUserId,
-      rejectInvitation: rejectInvitation
+      getNotificationsByUserId: getNotificationsByUserId
     };
 	}
 ]);

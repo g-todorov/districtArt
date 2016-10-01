@@ -44,6 +44,23 @@ exports.create = function(req, res) {
 };
 
 
+exports.addNewAdmin = function(req, res) {
+  var studio = req.studio
+  var newAdminId = req.body.newAdminId;
+  req.studio.admins.push(newAdminId);
+
+  studio.save(function(err) {
+    if (err) {
+      return res.status(400).send({
+        message: errorHandler.getErrorMessage(err)
+      });
+    } else {
+      res.status(201).json(studio);
+    }
+  });
+};
+
+
 // Studios middleware
 exports.studioById = function(req, res, next, id) {
 

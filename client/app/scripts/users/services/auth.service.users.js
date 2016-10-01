@@ -48,12 +48,14 @@ angular.module('users').service('AuthService', function($q, $http, API_ENDPOINT)
     $http.defaults.headers.common.Authorization = authToken;
   }
 
+
   function destroyUserCredentials() {
     authToken = undefined;
     isAuthenticated = false;
     $http.defaults.headers.common.Authorization = undefined;
     window.localStorage.removeItem(LOCAL_TOKEN_KEY);
   }
+
 
   var register = function(user) {
     return $q(function(resolve, reject) {
@@ -68,12 +70,14 @@ angular.module('users').service('AuthService', function($q, $http, API_ENDPOINT)
     });
   };
 
+
   var login = function(user) {
     return $q(function(resolve, reject) {
       $http.post(API_ENDPOINT.url + '/users/authenticate', user).then(function(result) {
         if (result.data.success) {
           storeUserCredentials(result.data.token);
           storeUserData(result.data.user._id, result.data.user.userName);
+          // socket.connect(result.data.user._id)
           resolve(result.data.msg);
         } else {
           reject(result.data.msg);

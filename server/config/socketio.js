@@ -5,23 +5,30 @@
 'use strict';
 
 // var config = require('./environment');
+var connectedUsers = [];
+// var registeredInvitations = false;
 
 // When the user disconnects.. perform this
 function onDisconnect(socket) {
+  // var index = connectedUsers[socket.userId];
+  // connectedUsers.splice(index, 1);
+  require('../sockets/invitations.server.sockets').deregister();
+  // socket.removeAllListeners('connection');
+  delete connectedUsers[socket.userId]; // remove the client from the array
 }
 
 // When the user connects.. perform this
 function onConnect(socket) {
   // When the client emits 'info', this listens and executes
-  socket.on('info', function (data) {
-    console.info('[%s] %s', socket.address, JSON.stringify(data, null, 2));
-  });
-
+  //socket.emit('info', socket.id);
   // Insert sockets below
-  require('../sockets/invitations.server.sockets').register(socket);
+  // if (!registeredInvitations) {
+    require('../sockets/invitations.server.sockets').update(socket, connectedUsers);
+  //   registeredInvitations = true;
+  // }
 }
 
-module.exports = function (socketio) {
+module.exports = function (socketIo) {
   // socket.io (v1.x.x) is powered by debug.
   // In order to see all the debug output, set DEBUG (in server/config/local.env.js) to including the desired scope.
   //
@@ -36,14 +43,18 @@ module.exports = function (socketio) {
   //   secret: config.secrets.session,
   //   handshake: true
   // }));
+  require('../sockets/invitations.server.sockets').register(socketIo);
 
-  socketio.on('connection', function (socket) {
+
+  socketIo.on('connection', function (socket) {
     // socket.address = socket.handshake.address !== null ?
     //         socket.handshake.address.address + ':' + socket.handshake.address.port :
     //         process.env.DOMAIN;
     //
     // socket.connectedAt = new Date();
-    console.log(socket.id)
+    socket.userId = socket.handshake.query.userId
+    connectedUsers[socket.handshake.query.userId] = socket.id
+
 
     // Call onDisconnect.
     socket.on('disconnect', function () {
@@ -53,6 +64,6 @@ module.exports = function (socketio) {
 
     // Call onConnect.
     onConnect(socket);
-    console.info('[%s] CONNECTED', socket.address);
+    console.info('[%s] CONNECTED', socket.address, socket.id);
   });
 };

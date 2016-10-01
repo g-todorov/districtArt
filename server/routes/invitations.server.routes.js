@@ -9,12 +9,9 @@ router.route('/')
   .post(invitations.create);
 
 router.route('/:invitationId')
-  .get(passport.authenticate('jwt', {session: false}), invitations.read)
-//   .put(studios.update)
+  .get(invitations.read)
+  .put(passport.authenticate('jwt', {session: false}), invitations.update);
 //   .delete(studios.delete);
-
-//router.get('/:invitationId/accept', invitations.acceptInvitation);
-router.put('/:invitationId/reject', invitations.rejectInvitation);
 
 router.get('/getInvitationByReceiver/:userId', invitations.getInvitationByReceiver);
 

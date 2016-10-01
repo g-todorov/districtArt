@@ -2,6 +2,7 @@
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
 var Artwork = mongoose.model('Artwork');
+var Invitation = mongoose.model('Invitation');
 var errorHandler = require('./errors.server.controller');
 var _ = require('lodash');
 var jwt = require('jwt-simple');
@@ -149,6 +150,45 @@ exports.getUserArtworksById = function (req, res) {
     }
     res.json(artworks);
   });
+}
+
+
+exports.checkIfUserIsInvited = function (req, res) {
+  Invitation.findOne({
+      receiver: { $in: [req.user._id]},
+      studio: { $in: [req.query.studioId]},
+      responseState: 'pending'
+    }).exec(function (err, invitation){
+      if (err) {
+        return res.status(400).send({
+          message: errorHandler.getErrorMessage(err)
+        });
+      } else {
+        console.log(invitation)
+        if (invitation) {
+          res.json({invited: true})
+        } else {
+          res.json({invited: false})
+        }
+      }
+  });
+
+  // User.find().exec(function(err, user) {
+  //   if (err) {
+  //     return res.status(400).send({
+  //       message: errorHandler.getErrorMessage(err)
+  //     });
+  //   } else {
+  //     Studio.find({admins: })
+  //   }
+  //
+  //   if (!artworks) {
+  //     return res.status(404).send({
+  //         message: 'User does not have artworks'
+  //       });
+  //   }
+  //   res.json(artworks);
+  // });
 }
 
 

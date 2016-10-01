@@ -1,9 +1,8 @@
 'use strict';
  
-angular.module('Components').controller('artistsModalController', ['$scope', 'socket', '$modal', 'studiosService', 'Notifications', 'usersService', '$state', 'API_ENDPOINT', 'getStudioId',
-  function ($scope, socket, $modal, studiosService, Notifications, usersService, $state, API_ENDPOINT, getStudioId) {
-
-    $scope.currentUserId = window.localStorage.getItem('USER_ID');
+angular.module('Components').controller('artistsModalController', ['$scope', 'socket', '$modal', 'studiosService', 'Notifications', 'usersService', '$state', 'API_ENDPOINT', 'studioData', 'AuthService', '$http',
+  function ($scope, socket, $modal, studiosService, Notifications, usersService, $state, API_ENDPOINT, studioData, AuthService, $http) {
+    $scope.currentUserId = AuthService.getUserId();
     $scope.selectedUsers = [];
     $scope.users = []
     $scope.title = 'Select artists'
@@ -20,20 +19,26 @@ angular.module('Components').controller('artistsModalController', ['$scope', 'so
 
 
     usersService.query().$promise.then(function(result) {
-      $scope.users = result.filter(function(value) {
-        return value._id != $scope.currentUserId
-      });
+      angular.forEach(result, function(value){
+        var self = this
+        if (value._id != $scope.currentUserId && studioData.admins.indexOf(value._id) == -1) {
+          $http.get(API_ENDPOINT.url + '/users/checkIfUserIsInvited/' + value._id, {params: {studioId: studioData._id}}).then(function(result) {
+            if (result.data.invited == false) {
+              self.push(value);
+            }
+          });
+        }
+      }, $scope.users);
     });
 
 
     $scope.sendInvitations = function() {
-
       angular.forEach($scope.selectedUsers, function(value, key) {
         var newInvitation = new Notifications.notificationsResource ({
           type: 'invitation',
           viewState: 'unread',
           responseState: 'pending',
-          studio: getStudioId,
+          studio: studioData._id,
           sender: $scope.currentUserId,
           receiver: value
         });
@@ -46,7 +51,6 @@ angular.module('Components').controller('artistsModalController', ['$scope', 'so
           $scope.error = errorResponse.data.message;
         });
       });
-
     };
 
   }

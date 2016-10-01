@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var Invitation = mongoose.model('Invitation');
 var errorHandler = require('./errors.server.controller');
+var _ = require('lodash')
 
 exports.list = function(req, res) {
   Invitation.find().sort('created').exec(function(err, invitations) {
@@ -45,25 +46,29 @@ exports.create = function(req, res) {
 };
 
 
-exports.rejectInvitation = function(req, res){
+exports.update = function(req, res){
   var invitation = req.invitation;
-  console.log(invitation, 'reject')
+  invitation = _.extend(invitation, req.body);
 
-  // user = _.extend(user, req.body);
-  //
-  // user.save(function(err) {
-  //   if (err) {
-  //     return res.status(400).send({
-  //       message: errorHandler.getErrorMessage(err)
-  //     });
-  //   } else {
-  //     res.json(user);
-  //   }
-  // });
+  invitation.save(function(err) {
+    if (err) {
+      return res.status(400).send({
+        message: errorHandler.getErrorMessage(err)
+      });
+    } else {
+      res.json(invitation);
+    }
+  });
 };
 
 
 exports.getInvitationByReceiver = function(req, res) {
+  if (!mongoose.Types.ObjectId.isValid(req.params.userId)) {
+    return res.status(400).send({
+      message: 'User ID is invalid'
+    });
+  }
+
   Invitation.find({receiver: req.params.userId}, function(err, invitation) {
     if (err) return next(err);
 

@@ -22,9 +22,10 @@
             </ul>
           </li>
 
-          <li ng-class="notifications.length > 0 ? 'new-notifications': 'notifications'" ng-show="isAuthenticated()">
-            <div class="navbar-btn">
+          <li ng-class="newNotifications.length > 0 ? 'new-notifications': 'notifications'" ng-show="isAuthenticated()">
+            <div class="navbar-text">
               <span class="glyphicon glyphicon-inbox" ng-click="openNotificationsModal()"></span>
+              <span class="notifications-count badge" ng-show="newNotifications.length > 0">{{newNotifications.length}}</span>
             </div>
           </li>
 
