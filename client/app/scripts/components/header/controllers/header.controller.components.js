@@ -39,7 +39,7 @@ angular.module('Components').controller('HeaderController', ['$scope', 'AuthServ
 
 
     $scope.goTopersonalPage = function () {
-      $state.go('personal-page', {userId: window.localStorage.getItem('USER_ID')});
+      $state.go('user-details', {userId: window.localStorage.getItem('USER_ID')});
     };
 
 

@@ -5,11 +5,11 @@ Prototype project for my Master's degree thesis.
 
 ## server-side
 
-### Node.js with express and socket.io
-### MongoDb with Mongoose
-### Grunt task runner
+#### Node.js with express and socket.io
+#### MongoDb with Mongoose
+#### Grunt task runner
 
 ## client-side
 
-### AngularJS 1 along with Yeoman, Bower and Grunt
-### Karma test runner
+#### AngularJS 1 along with Yeoman, Bower and Grunt
+#### Karma test runner

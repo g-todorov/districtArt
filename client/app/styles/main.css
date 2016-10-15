@@ -19,19 +19,19 @@ html, body {
   padding-right: 15px;
 }
 
-/* Custom page header */
+/*NAVBAR*/
+.navbar .user-menu {
+  max-width: 200px;
+}
 
 .navbar .new-notifications {
-  color: red;
+  color: red !important;
 }
 
-/* Make the masthead heading the same height as the navigation */
-.header h3 {
-  margin-top: 0;
-  margin-bottom: 0;
-  line-height: 40px;
-  padding-bottom: 19px;
+.navbar .upload-artwork-button {
+  margin-right: 10px;
 }
+/* Make the masthead heading the same height as the navigation */
 
 .login-form, .register-form  {
   max-width: 380px;
@@ -75,10 +75,6 @@ html, body {
   width:100%;
 }
 
-.artwork-grid .cover, .create-studio-form .cover {
-  width: 100%;
-  border: 1px solid #000000;
-}
 
 /*MODALS*/
 .artworks-modal .cover{
@@ -89,4 +85,11 @@ html, body {
 /*HELPER CLASSES*/
 .wrap-text {
   word-break: break-word;
+}
+
+.ellipsis {
+  display: block;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }

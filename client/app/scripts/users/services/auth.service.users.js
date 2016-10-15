@@ -101,6 +101,7 @@ angular.module('users').service('AuthService', function($q, $http, API_ENDPOINT)
     register: register,
     logout: logout,
     isAuthenticated: function() {return isAuthenticated;},
-    getUserId: function() {return userId;}
+    getUserId: function() {return userId;},
+    getUserName: function() {return userName}
   };
 })

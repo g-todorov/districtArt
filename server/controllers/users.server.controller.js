@@ -140,23 +140,22 @@ exports.delete = function(req, res) {
 
 //Probably should be moved to artworks on refactored
 exports.getUserArtworksById = function (req, res) {
-  Artwork.find({owners: req.user._id}, function(err, artworks) {
-    if (err) return next(err);
-
-    if (!artworks) {
-      return res.status(404).send({
-          message: 'User does not have artworks'
-        });
+  Artwork.find({owners: { $in: [req.user._id]}}, function(err, artworks) {
+    if (err) {
+      return res.status(400).send({
+        message: errorHandler.getErrorMessage(err)
+      });
+    } else {
+      res.json(artworks);
     }
-    res.json(artworks);
   });
 }
 
 
 exports.checkIfUserIsInvited = function (req, res) {
   Invitation.findOne({
-      receiver: { $in: [req.user._id]},
-      studio: { $in: [req.query.studioId]},
+      receiver:{ $in: [req.user._id]},
+      studio:{ $in: [req.query.studioId]},
       responseState: 'pending'
     }).exec(function (err, invitation){
       if (err) {
@@ -172,23 +171,6 @@ exports.checkIfUserIsInvited = function (req, res) {
         }
       }
   });
-
-  // User.find().exec(function(err, user) {
-  //   if (err) {
-  //     return res.status(400).send({
-  //       message: errorHandler.getErrorMessage(err)
-  //     });
-  //   } else {
-  //     Studio.find({admins: })
-  //   }
-  //
-  //   if (!artworks) {
-  //     return res.status(404).send({
-  //         message: 'User does not have artworks'
-  //       });
-  //   }
-  //   res.json(artworks);
-  // });
 }
 
 
