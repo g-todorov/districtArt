@@ -1,21 +1,23 @@
 <div class="artwork-details row" ng-controller="detailsController" ng-init="find()">
-
-    <div class="col-xs-offset-2 col-xs-2">
-      <div class="row">
-        <div class="col-xs-12">
-          <h4 ng-bind="artwork.artworkName"></h4>
-        </div>
-        <div class="col-xs-12">
-          <p class="wrap-text" ng-bind="artwork.artworkDescription"></p>
-        </div>
-      </div>
-    </div>
-    <div class="col-xs-6">
-      <div class="row" ng-repeat="piece in artworkPieces">
-        <div class="col-xs-12">
-          <img class="artwork-piece" ng-src="{{piece}}">
+  <div class="col-xs-offset-2 col-xs-2">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="panel panel-default">
+          <div class="panel-heading">Description</div>
+          <div class="panel-body ellipsis" ng-bind="artwork.artworkDescription">
+          </div>
         </div>
       </div>
     </div>
-
+  </div>
+  <div class="col-xs-6">
+    <div class="row">
+      <div class="panel panel-default">
+        <div class="panel-heading ellipsis" ng-bind="artwork.artworkName"></div>
+        <div class="panel-body">
+          <img ng-repeat="piece in artworkPieces" class="artwork-piece" ng-src="{{piece}}">
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

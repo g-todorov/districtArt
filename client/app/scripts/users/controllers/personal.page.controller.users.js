@@ -1,9 +1,10 @@
 'use strict';
  
-angular.module('users').controller('personalPageController', ['$scope', '$http', 'usersService', 'AuthService', 'API_ENDPOINT',
-  function ($scope, $http, usersService, AuthService, API_ENDPOINT) {
+angular.module('users').controller('personalPageController', ['$scope', '$state', '$http', 'usersService', 'AuthService', 'API_ENDPOINT',
+  function ($scope, $state, $http, usersService, AuthService, API_ENDPOINT) {
 
-    $scope.currentUserId = window.localStorage.getItem('USER_ID');
+    //$scope.currentUserId = window.localStorage.getItem('USER_ID');
+    $scope.currentUserId = $state.params.userId;
 
 
     usersService.get({ id: $scope.currentUserId }, function(data) {

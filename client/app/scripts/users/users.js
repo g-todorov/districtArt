@@ -4,7 +4,7 @@
 ApplicationConfiguration.registerModule('users');
 
 // Setting up route
-angular.module('users').config(function($stateProvider, $urlRouterProvider) {
+angular.module('users', ['ui.identicon', 'wu.masonry']).config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
     .state('login', {
       url: '/login',
@@ -20,7 +20,7 @@ angular.module('users').config(function($stateProvider, $urlRouterProvider) {
       url: '/users',
       templateUrl: 'scripts/users/views/list.view.users.html',
     })
-   .state('personal-page', {
+   .state('user-details', {
       url: '/users/:userId',
       templateUrl: 'scripts/users/views/personal.page.view.users.html'
     });

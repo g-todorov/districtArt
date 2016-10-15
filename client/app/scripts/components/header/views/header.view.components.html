@@ -14,7 +14,11 @@
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
           <li class="dropdown" ng-show="isAuthenticated()">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{getUserName()}}<span class="caret"></span></a>
+            <a href="#" class="dropdown-toggle user-menu ellipsis" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+              <identicon username="user.userName" size="18" />
+              {{getUserName()}}
+              <span class="caret"></span>
+            </a>
             <ul class="dropdown-menu">
               <li><a ng-click="goTopersonalPage()">Profile</a></li>
               <li role="separator" class="divider"></li>

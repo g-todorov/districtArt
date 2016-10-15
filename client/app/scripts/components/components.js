@@ -1,4 +1,4 @@
 'use strict';
 
 //register users module
-ApplicationConfiguration.registerModule('Components', ['lodash']);
+ApplicationConfiguration.registerModule('Components', ['lodash', 'ui.identicon']);

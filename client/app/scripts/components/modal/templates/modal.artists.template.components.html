@@ -6,9 +6,18 @@
         <h4 class="modal-title" ng-bind="title"></h4>
       </div>
       <div class="modal-body">
-        <div ng-repeat="user in users">
-          <span ng-bind="user.userName"></span>
-          <label><input ng-model="selected" type="checkbox" ng-change="inviteArtist(user, selected, $event)">Invite to studio</label>
+        <div class="row" ng-repeat="user in users">
+          <div class="col-xs-4">
+            <a ui-sref="user-details({userId: user._id})" target="_blank">
+              <identicon username="user.userName" size="100" />
+              <span ng-bind="user.userName"></span>
+            </a>
+          </div>
+          <div class="col-xs-4">
+          </div>
+          <div class="col-xs-4">
+            <label><input ng-model="selected" type="checkbox" ng-change="inviteArtist(user, selected, $event)">Invite to studio</label>
+          </div>
         </div>
       </div>
       <div class="modal-footer">

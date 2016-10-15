@@ -1,6 +1,16 @@
-<div ng-controller="usersController" ng-init="getUsers()">
-    <div>Users</div>
-    <div ng-repeat="user in users">
-        <div ng-bind="user.userName"><div>
+<div class="row" ng-controller="usersController">
+  <div class="artwork-grid col-xs-offset-2 col-xs-8">
+    <div class="row">
+      <div masonry>
+        <div class="col-sm-2 masonry-brick" ng-repeat="user in users">
+          <div class="thumbnail">
+            <identicon username="user.userName" size="100" />
+            <div class="caption">
+              <a class="ellipsis" ng-bind="user.userName" ui-sref="user-details({userId: user._id})"></a>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 </div>
