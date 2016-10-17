@@ -3,7 +3,6 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 // Create the ArtworkSchema.
-// mongoose.Schema.Types.ObjectId
 var ArtworkSchema = new Schema({
   artworkName: {
     type: String,
@@ -13,8 +12,16 @@ var ArtworkSchema = new Schema({
     type: String,
     required: true
   },
-  fileSystemNames: {
-    type: [],
+  files: [{
+    fileSystemName: {
+      type: String,
+      required: true
+    },
+    projectItemTitle: String,
+    projectItemDescription: String
+  }],
+  visibility: {
+    type: String,
     required: true
   },
   creator: {

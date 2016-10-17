@@ -41,26 +41,26 @@
 
           <li ng-show="isAuthenticated()" class="upload-artwork-button">
             <div class="navbar-btn">
-              <a href="#" class="btn btn-primary" ng-click="goToUpload()">Upload Artwork</a>
+              <a href="#" class="btn btn-primary" ng-click="goToUpload()">Create Project</a>
             </div>
           </li>
 
           <li ng-show="isAuthenticated()" class="create-studio-button">
             <div class="navbar-btn">
-              <a href="#" class="btn btn-primary" ng-click="goToCreateStudio()">Create Studiо</a>
+              <a href="#" class="btn btn-primary" ng-click="goToCreateStudio()">Create Team</a>
             </div>
           </li>
         </ul>
 
         <ul class="nav navbar-nav navbar-right">
           <li role="presentation" ng-class="{active: isActive('/artworks')}">
-            <a ui-sref="artworks">Artworks</a>
+            <a ui-sref="artworks">Projects</a>
           </li>
           <li role="presentation" ng-class="{active: isActive('/users')}">
-            <a ui-sref="users">Artists</a>
+            <a ui-sref="users">Users</a>
           </li>
           <li role="presentation" ng-class="{active: isActive('/studios')}">
-            <a ui-sref="studios">Studios</a>
+            <a ui-sref="studios">Teams</a>
           </li>
           <!-- <li role="presentation"><a href="#">Groups</a></li> -->
         </ul>

@@ -1,8 +1,7 @@
-<div class="row" ng-controller="personalPageController">
+<div class="row" ng-controller="PersonalPageController">
   <div class="col-xs-offset-2 col-xs-2">
     <div class="row">
       <div class="col-xs-12">
-        <!-- <h4 ng-bind="studio.studioName"></h4> -->
         <div class="panel panel-default">
           <div class="panel-heading">Personal Data</div>
           <div class="panel-body ellipsis" ng-bind="studio.studioDescription">
@@ -13,7 +12,7 @@
   </div>
   <div class="artwork-grid col-xs-6">
     <div class="row">
-      <div class="col-sm-2" ng-repeat="artwork in userArtworks">
+      <div class="col-sm-2" ng-repeat="artwork in userArtworks" ng-hide="artwork.hideProject">
         <div class="thumbnail">
           <img class="cover" ng-src="{{artwork.coverUrl}}">
           <div class="caption">

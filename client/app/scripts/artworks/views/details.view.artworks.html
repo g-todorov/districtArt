@@ -1,10 +1,39 @@
-<div class="artwork-details row" ng-controller="detailsController" ng-init="find()">
+<div class="artwork-details row" ng-controller="ProjectDetailsCtrl">
   <div class="col-xs-offset-2 col-xs-2">
     <div class="row">
       <div class="col-xs-12">
         <div class="panel panel-default">
           <div class="panel-heading">Description</div>
           <div class="panel-body ellipsis" ng-bind="artwork.artworkDescription">
+          </div>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-heading">Visibility</div>
+          <div class="panel-body ellipsis" ng-bind="artwork.visibility" ng-show="viewMode == 'read'">
+          </div>
+          <div class="panel-body ellipsis" ng-show="viewMode == 'edit'">
+            <input
+              bs-switch
+              ng-model="artwork.visibility"
+              type="checkbox"
+              switch-on-text="public"
+              switch-off-text="private"
+              switch-change="onVisibilityChange()"
+              ng-true-value="'public'"
+              ng-false-value="'private'">
+          </div>
+        </div>
+        <div class="panel panel-default" ng-show="isAuthorized()">
+          <div class="panel-heading">Options</div>
+          <div class="panel-body">
+            <button type="button" class="btn btn-primary" ng-click="enterEditMode()" ng-show="viewMode == 'read'">
+              Edit Mode
+              <span class="glyphicon glyphicon-edit"></span>
+            </button>
+            <button type="button" class="btn btn-primary" ng-click="saveChanges()" ng-show="viewMode == 'edit'">
+              Save Changes
+              <span class="glyphicon glyphicon-floppy-save"></span>
+            </button>
           </div>
         </div>
       </div>
@@ -15,7 +44,17 @@
       <div class="panel panel-default">
         <div class="panel-heading ellipsis" ng-bind="artwork.artworkName"></div>
         <div class="panel-body">
-          <img ng-repeat="piece in artworkPieces" class="artwork-piece" ng-src="{{piece}}">
+          <div ng-repeat="item in artwork.files" >
+            <div class="panel panel-default" ng-show="item.projectItemTitle">
+              <div class="panel-body" ng-bind="item.projectItemTitle">
+              </div>
+            </div>
+            <img class="artwork-piece" ng-src="{{item.datailUrl}}">
+            <div class="panel panel-default" ng-show="item.projectItemDescription">
+              <div class="panel-body" ng-bind="item.projectItemDescription">
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

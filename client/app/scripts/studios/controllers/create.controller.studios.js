@@ -1,5 +1,9 @@
-angular.module('studios').controller('createStudioController', ['$scope', '$rootScope', '$http', '$modal', 'studiosService', '$state', 'API_ENDPOINT', 'Upload', 'usersService',
-  function ($scope, $rootScope, $http, $modal, studiosService, $state, API_ENDPOINT, Upload, usersService) {
+'use strict';
+
+angular.module('studios').controller('CreateStudioCtrl', CreateStudioCtrl);
+CreateStudioCtrl.$inject = ['$scope', '$rootScope', '$http', '$modal', 'studiosService', '$state', 'API_ENDPOINT', 'Upload', 'usersService'];
+
+function CreateStudioCtrl($scope, $rootScope, $http, $modal, studiosService, $state, API_ENDPOINT, Upload, usersService) {
 
   $scope.currentUserId = window.localStorage.getItem('USER_ID');
   $scope.selectedArtworks = [];
@@ -9,7 +13,7 @@ angular.module('studios').controller('createStudioController', ['$scope', '$root
     $scope.userArtworks = result.data;
 
     angular.forEach($scope.userArtworks, function(value, key) {
-      value.coverUrl = API_ENDPOINT.url + '/' + 'static/' + value.creator + '/' + value.artworkName + '/' + value.fileSystemNames[0]
+      value.coverUrl = API_ENDPOINT.url + '/static/' + value.creator + '/' + value.artworkName + '/' + value.files[0].fileSystemName
     });
   });
 
@@ -60,7 +64,7 @@ angular.module('studios').controller('createStudioController', ['$scope', '$root
   $scope.showModal = function() {
     var artworksModal = $modal({
       templateUrl: 'scripts/components/modal/templates/modal.artworks.template.components.html',
-      controller: 'artworksModalController',
+      controller: 'ProjectsModalCtrl',
       size: 'lg',
       scope: $scope,
       resolve: {
@@ -72,5 +76,4 @@ angular.module('studios').controller('createStudioController', ['$scope', '$root
 
     artworksModal.$promise.then(artworksModal.show);
   };
-
-}]);
+};

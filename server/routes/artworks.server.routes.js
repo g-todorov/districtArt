@@ -1,4 +1,3 @@
-// Module dependencies.
 var artworks = require('../../server/controllers/artworks.server.controller');
 var express = require('express');
 var router = express.Router();
@@ -14,7 +13,6 @@ router.route('/:artworksId/owners')
   .get(artworks.allOwners);
 
 
-// Finish by binding the article middleware
 router.param('artworksId', artworks.artworkById);
 
 module.exports = router

@@ -4,7 +4,7 @@
 ApplicationConfiguration.registerModule('artworks')
 
 // Setting up route
-angular.module('artworks', ['ngFileUpload', 'wu.masonry']).config(function($urlRouterProvider, $stateProvider) {
+angular.module('artworks', ['ngFileUpload', 'wu.masonry', 'frapontillo.bootstrap-switch']).config(function($urlRouterProvider, $stateProvider) {
   // Artworks state routing
   $stateProvider
     .state('artworks', {
