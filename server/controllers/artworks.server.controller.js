@@ -1,16 +1,14 @@
-// Module dependencies.
 var mongoose = require('mongoose');
 var Artwork = mongoose.model('Artwork');
 var User = mongoose.model('User');
-//var users = require('./users.server.controller')
+
 var errorHandler = require('./errors.server.controller');
-var utilities = require ('./utilities.server.controller');
 var _ = require('lodash')
-var util = require('util');
 var fs = require('fs');
 var upload = require('../config/storage');
+var util = require('util');
+var utilities = require ('./utilities.server.controller');
 
-// List of Artworks
 exports.list = function(req, res) {
   Artwork.find().sort('artworkName').exec(function(err, artworks) {
     if (err) {
@@ -24,18 +22,36 @@ exports.list = function(req, res) {
 };
 
 
+// exports.listPublicProjects = function(req, res) {
+//   User.find({'owners': {$in: req.query.userId}}, function(err, docs){
+//     if (err) {
+//       return res.status(400).send({
+//         message: errorHandler.getErrorMessage(err)
+//       });
+//     } else {
+//       res.json(docs);
+//     }
+//   });
+// }
+
+
 // Create an Artwork
 exports.create = function(req, res) {
   upload(req, res, function (err) {
     if (err) {
-      console.log ("An error occurred when uploading")
-      return
+      return res.status(400).send({
+        message: errorHandler.getErrorMessage(err)
+      });
     }
+
+    var filesDictionary = req.body.details.filesDictionary
+    var files = _.toArray(filesDictionary);
 
     var artwork = new Artwork({
       artworkName: req.body.details.artworkName,
       artworkDescription: req.body.details.artworkDescription,
-      fileSystemNames: req.body.details.fileSystemNames,
+      visibility: req.body.details.visibility,
+      files: files,
       creator: req.body.details.userId,
       owners: [req.body.details.userId]
     });
@@ -61,17 +77,18 @@ exports.read = function(req, res) {
 
 // Update a ArtWork
 exports.update = function(req, res) {
-  var artWork = req.artWork;
-  req.body.owners = utilities.remapIds(req.body.owners);
-  artWork = _.extend(artWork, req.body);
+  var artwork = req.artwork;
+  console.log(req.body)
+  // req.body.owners = utilities.remapIds(req.body.owners);
+  artwork = _.extend(artwork, req.body);
 
-  artWork.save(function(err) {
+  artwork.save(function(err) {
     if (err) {
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
       });
     } else {
-      res.json(artWork);
+      res.json(artwork);
     }
   });
 };

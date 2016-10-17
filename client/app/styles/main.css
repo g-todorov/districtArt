@@ -78,8 +78,20 @@ html, body {
 
 /*MODALS*/
 .artworks-modal .cover{
-  height: 100px;
-  margin-bottom: 10px;
+  width: 100%;
+}
+
+.artworks-modal .thumbnail {
+  transition: border .2s ease-in-out;
+}
+
+.artworks-modal .thumbnail:hover {
+  border-color: #337ab7;
+}
+
+
+.artworks-modal .thumbnail.active {
+  border-color: #337ab7;
 }
 
 /*HELPER CLASSES*/

@@ -1,5 +1,6 @@
 var multer  = require('multer');
 var fs = require('fs-extra');
+var _ = require('lodash');
 
 var storage = multer.diskStorage({
   destination: function (req, file, next) {
@@ -23,18 +24,20 @@ var storage = multer.diskStorage({
     })
   },
   filename: function (req, file, next) {
+    // console.log(req.body.details);
+    // console.log(file)
+
     var datetimestamp = Date.now();
     var fileExtension = '.' + file.originalname.split('.')[file.originalname.split('.').length -1];
     var fileSystemName = file.originalname.replace(fileExtension, '-' + datetimestamp + fileExtension);
 
-    //pass fileSystemNames to the controller
-    if (!req.body.details.fileSystemNames) {
-      req.body.details.fileSystemNames = [];
-    }
-    req.body.details.fileSystemNames.push(fileSystemName);
+    _.assignIn(req.body.details.filesDictionary[file.originalname],
+      {'fileSystemName': fileSystemName}
+    )
+
 
     next(null, fileSystemName);
   }
 });
 
-module.exports = multer({ storage: storage }).array('files', 10);
+module.exports = multer({storage: storage}).array('files', 10);

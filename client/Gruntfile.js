@@ -206,7 +206,18 @@ module.exports = function (grunt) {
           'overrides': {
             'socket.io-client': {
               'main': 'socket.io.js'
+          },
+          "ev-emitter": {
+            "dependencies": {
+              "jquery-bridget": "~2.0.0"
             }
+          },
+          "outlayer": {
+            "main": [
+              "item.js",
+              "outlayer.js"
+            ]
+          }
           }
         }
       },

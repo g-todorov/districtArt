@@ -5,16 +5,21 @@
         <button type="button" class="close" aria-label="Close" ng-click="$hide()"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" ng-bind="title"></h4>
       </div>
-      <div class="artworks-modal modal-body">
-        <div ng-repeat="artwork in userArtworks">
-          <a>
-            <img class="cover" ng-click="" ng-src="{{artwork.coverUrl}}"></img>
-            {{artwork.artworkName}}
-          </a>
-          <label class="pull-right">
-            <input ng-model="artwork.selected" type="checkbox" ng-change="selectArtworks(artwork, artwork.selected, $event)">
-              Add to studio
+      <div class="artworks-modal modal-body clearfix">
+        <div class="col-sm-2" ng-repeat="artwork in userArtworks">
+          <div class="thumbnail" ng-class="{active: artwork.selected}">
+            <label>
+              <img class="cover" ng-click="" ng-src="{{artwork.coverUrl}}">
+              <div class="caption ellipsis">
+                <a ng-bind="artwork.artworkName" ui-sref="details({artworkId: artwork._id})" target="_blank"></a>
+                <input
+                  type="checkbox"
+                  ng-model="artwork.selected"
+                  ng-change="selectArtworks(artwork, artwork.selected, $event)"
+                  ng-style="{display:'none'}">
+              </div>
             </label>
+          </div>
         </div>
       </div>
       <div class="modal-footer">
