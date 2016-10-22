@@ -18,9 +18,16 @@ var InvitationSchema = new Schema({
     enum: ['read', 'unread'],
     required: true
   },
-  studio: {
-    type: mongoose.Schema.Types.ObjectId,
-    required: true
+  domain: {
+    id: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true
+    },
+    type: {
+      type: String,
+      num: ['team', 'project'],
+      required: true
+    }
   },
   sender: {
     type: mongoose.Schema.Types.ObjectId,

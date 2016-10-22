@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var Invitation = mongoose.model('Invitation');
 var errorHandler = require('./errors.server.controller');
-var _ = require('lodash')
+var _ = require('lodash');
 
 exports.list = function(req, res) {
   Invitation.find().sort('created').exec(function(err, invitations) {
@@ -22,16 +22,14 @@ exports.read = function(req, res) {
 
 
 exports.create = function(req, res) {
-
   var invitation = new Invitation({
     type: req.body.type,
     viewState: req.body.viewState,
     responseState: req.body.responseState,
-    studio: req.body.studio,
+    domain: req.body.domain,
     sender: req.body.sender,
     receiver: req.body.receiver
   });
-
 
   invitation.save(function(err) {
     if (err) {
@@ -42,7 +40,6 @@ exports.create = function(req, res) {
       res.status(201).json(invitation);
     }
   });
-
 };
 
 
@@ -82,9 +79,7 @@ exports.getInvitationByReceiver = function(req, res) {
 };
 
 
-// Invitations middleware
 exports.invitationById = function(req, res, next, id) {
-
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(400).send({
       message: 'Invitation is invalid'

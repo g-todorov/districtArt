@@ -8,13 +8,11 @@ angular.module('users', ['ui.identicon', 'wu.masonry']).config(function($statePr
   $stateProvider
     .state('login', {
       url: '/login',
-      templateUrl: 'scripts/users/views/login.html',
-      controller: 'login'
+      templateUrl: 'scripts/users/views/login.html'
     })
     .state('register', {
       url: '/register',
-      templateUrl: 'scripts/users/views/register.html',
-      controller: 'login'
+      templateUrl: 'scripts/users/views/register.html'
     })
     .state('users', {
       url: '/users',

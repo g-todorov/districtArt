@@ -1,4 +1,3 @@
-// Module dependencies.
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
 var Artwork = mongoose.model('Artwork');
@@ -6,10 +5,9 @@ var Invitation = mongoose.model('Invitation');
 var errorHandler = require('./errors.server.controller');
 var _ = require('lodash');
 var jwt = require('jwt-simple');
-var config = require('../config/db'); // get db config file
+var config = require('../config/db');
 
 
-// List of Users
 exports.list = function(req, res) {
   User.find().sort('userName').exec(function(err, users) {
     if (err) {
@@ -23,7 +21,6 @@ exports.list = function(req, res) {
 };
 
 
-// create a new user account (POST http://localhost:8080/api/signup)
 exports.create = function(req, res) {
   if (!req.body.userName || !req.body.password) {
     res.json({success: false, msg: 'Please pass name and password.'});
@@ -44,7 +41,6 @@ exports.create = function(req, res) {
 };
 
 
-// route to authenticate a user (POST http://localhost:8080/api/authenticate)
 exports.authenticate = function(req, res) {
   User.findOne({
     userName: req.body.userName
@@ -70,16 +66,14 @@ exports.authenticate = function(req, res) {
 };
 
 
-// Show the current User
 exports.read = function(req, res) {
+  req.user.password = undefined
   res.json(req.user);
 };
 
 
-// Update a User
 exports.update = function(req, res) {
   var user = req.user;
-
   user = _.extend(user, req.body);
 
   user.save(function(err) {
@@ -94,10 +88,8 @@ exports.update = function(req, res) {
 };
 
 
-// Delete an User
 exports.delete = function(req, res) {
   var user = req.user;
-
   //remove Artwork dependencies from the user before deleting
   Artwork.find({owners: user._id}, function(err, artWorks) {
     _.each(artWorks, function(artWork) {
@@ -138,43 +130,59 @@ exports.delete = function(req, res) {
 };
 
 
-//Probably should be moved to artworks on refactored
-exports.getUserArtworksById = function (req, res) {
-  Artwork.find({owners: { $in: [req.user._id]}}, function(err, artworks) {
+exports.checkIfUserApplied = function(req, res) {
+  Invitation.findOne({
+    'domain.id': {$in: [req.query.domainId]},
+    'domain.type': {$in: [req.query.domainType]},
+    responseState: 'pending'
+  }, function (err, invitation){
     if (err) {
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
       });
+    }
+
+    if(!invitation) {
+      res.json({applied: false})
     } else {
-      res.json(artworks);
+      if((invitation.sender.equals(req.user._id) && invitation.type == 'application') || (invitation.receiver.equals(req.user._id) && invitation.type == 'invitation')){
+        res.json({applied: true})
+      }
     }
   });
 }
 
 
-exports.checkIfUserIsInvited = function (req, res) {
-  Invitation.findOne({
-      receiver:{ $in: [req.user._id]},
-      studio:{ $in: [req.query.studioId]},
-      responseState: 'pending'
-    }).exec(function (err, invitation){
+exports.getNotRequestedUsers = function(req, res) {
+  Invitation.find({
+    'domain.id': {$in: [req.query.domainId]},
+    'domain.type': {$in: [req.query.domainType]},
+    responseState: 'pending'})
+  .exec(function(err, invitations){
+    invitedUsers = invitations.map(function(invitation){
+      if(invitation.type == 'application') {
+        return invitation.sender
+      } else if(invitation.type == 'invitation'){
+        return invitation.receiver
+      }
+    })
+    invitedUsers.push(req.user._id)
+    User.find({
+      _id: {$nin: invitedUsers}
+    })
+    .exec(function(err, users){
       if (err) {
         return res.status(400).send({
           message: errorHandler.getErrorMessage(err)
         });
       } else {
-        console.log(invitation)
-        if (invitation) {
-          res.json({invited: true})
-        } else {
-          res.json({invited: false})
-        }
+        res.json(users);
       }
-  });
+    })
+  })
 }
 
 
-//User middleware
 exports.userById = function(req, res, next, id) {
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(400).send({
@@ -190,7 +198,6 @@ exports.userById = function(req, res, next, id) {
       });
     }
     req.user = user;
-
     next();
   });
 };

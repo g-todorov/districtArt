@@ -22,20 +22,19 @@ exports.list = function(req, res) {
 };
 
 
-// exports.listPublicProjects = function(req, res) {
-//   User.find({'owners': {$in: req.query.userId}}, function(err, docs){
-//     if (err) {
-//       return res.status(400).send({
-//         message: errorHandler.getErrorMessage(err)
-//       });
-//     } else {
-//       res.json(docs);
-//     }
-//   });
-// }
+exports.getArtworksByUserId = function(req, res) {
+  Artwork.find({owners: { $in: [req.query.userId]}}, function(err, artworks) {
+    if (err) {
+      return res.status(400).send({
+        message: errorHandler.getErrorMessage(err)
+      });
+    } else {
+      res.json(artworks);
+    }
+  });
+}
 
 
-// Create an Artwork
 exports.create = function(req, res) {
   upload(req, res, function (err) {
     if (err) {
@@ -69,16 +68,13 @@ exports.create = function(req, res) {
 };
 
 
-// Show the current ArtWork
 exports.read = function(req, res) {
   res.json(req.artwork);
 };
 
 
-// Update a ArtWork
 exports.update = function(req, res) {
   var artwork = req.artwork;
-  console.log(req.body)
   // req.body.owners = utilities.remapIds(req.body.owners);
   artwork = _.extend(artwork, req.body);
 
@@ -94,7 +90,23 @@ exports.update = function(req, res) {
 };
 
 
-// Delete an ArtWork
+exports.addNewOwner = function(req, res) {
+  var artwork = req.artwork
+  var newOwnerId = req.body.newOwnerId;
+  req.artwork.owners.push(newOwnerId);
+
+  artwork.save(function(err) {
+    if (err) {
+      return res.status(400).send({
+        message: errorHandler.getErrorMessage(err)
+      });
+    } else {
+      res.status(201).json(artwork);
+    }
+  });
+};
+
+
 exports.delete = function(req, res) {
   var artWork = req.artWork;
 
@@ -110,7 +122,6 @@ exports.delete = function(req, res) {
 };
 
 
-// Returns all owners of the artWork
 exports.allOwners = function (req, res) {
   User.find({'_id': { $in: req.artWork.owners}}, function(err, docs){
     if (err) {
@@ -124,10 +135,6 @@ exports.allOwners = function (req, res) {
 };
 
 
-// TODO update only artwork owner
-
-
-// ArtWork middleware
 exports.artworkById = function(req, res, next, id) {
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
