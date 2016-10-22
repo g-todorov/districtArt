@@ -15,7 +15,6 @@ router.route('/:invitationId')
 
 router.get('/getInvitationByReceiver/:userId', invitations.getInvitationByReceiver);
 
-// Finish by binding the user middleware
 router.param('invitationId', invitations.invitationById);
 
 module.exports = router

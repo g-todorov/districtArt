@@ -4,7 +4,8 @@
       <div class="col-xs-12">
         <div class="panel panel-default">
           <div class="panel-heading">Personal Data</div>
-          <div class="panel-body ellipsis" ng-bind="studio.studioDescription">
+          <div class="panel-body ellipsis">
+            <span>Member since: </span><span ng-bind="date | date: 'MM/dd/yyyy'"></span>
           </div>
         </div>
       </div>
@@ -13,14 +14,10 @@
   <div class="artwork-grid col-xs-6">
     <div class="row">
       <div class="col-sm-2" ng-repeat="artwork in userArtworks" ng-hide="artwork.hideProject">
-        <div class="thumbnail">
+        <a class="thumbnail" ui-sref="artwork-details({artworkId: artwork._id})" >
           <img class="cover" ng-src="{{artwork.coverUrl}}">
-          <div class="caption">
-            <a class="ellipsis" ui-sref="details({artworkId: artwork._id})">
-              {{artwork.artworkName}}
-            </a>
-          </div>
-        </div>
+          <span class="ellipsis" ng-bind="artwork.artworkName"></span>
+        </a>
       </div>
     </div>
   </div>

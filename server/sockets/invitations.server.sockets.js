@@ -25,12 +25,10 @@ exports.update = function(socket, currConnectedUsers) {
   var invitationsByID = Invitation.find({'receiver': { $in: [socket.userId]}}, function(err, docs){
     socket.emit('invitationsList', docs);
   });
-
 };
 
 
 Invitation.schema.post('save', function (doc) {
-  console.log('save')
   onSave(doc);
 });
 
@@ -42,6 +40,9 @@ Invitation.schema.post('remove', function (doc) {
 
 function onSave (doc) {
   socketIo.to(connectedUsers[doc.receiver]).emit('newNotification', doc);
+  if(doc.responseState == 'accepted' || doc.responseState == 'rejected') {
+    socketIo.to(connectedUsers[doc.sender]).emit('newNotification', doc);
+  }
 };
 
 

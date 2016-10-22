@@ -77,7 +77,6 @@ angular.module('users').service('AuthService', function($q, $http, API_ENDPOINT)
         if (result.data.success) {
           storeUserCredentials(result.data.token);
           storeUserData(result.data.user._id, result.data.user.userName);
-          // socket.connect(result.data.user._id)
           resolve(result.data.msg);
         } else {
           reject(result.data.msg);

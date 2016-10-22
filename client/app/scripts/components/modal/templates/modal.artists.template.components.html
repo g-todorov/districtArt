@@ -7,15 +7,19 @@
       </div>
       <div class="modal-body">
         <div class="row" ng-repeat="user in users">
-          <div class="col-xs-4">
-            <a ui-sref="user-details({userId: user._id})" target="_blank">
+          <div class="col-xs-2">
+            <div class="thumbnail">
               <identicon username="user.userName" size="100" />
-              <span ng-bind="user.userName"></span>
-            </a>
+              <div class="caption ellipsis">
+                <a ui-sref="user-details({userId: user._id})" target="_blank">
+                  <span ng-bind="user.userName"></span>
+                </a>
+              </div>
+            </div>
           </div>
-          <div class="col-xs-4">
+          <div class="col-xs-8">
           </div>
-          <div class="col-xs-4">
+          <div class="col-xs-2">
             <label><input ng-model="selected" type="checkbox" ng-change="inviteArtist(user, selected, $event)">Invite to studio</label>
           </div>
         </div>

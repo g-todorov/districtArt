@@ -1,6 +1,9 @@
-angular.module('users')
+'use strict';
 
-.controller('login', function($scope, AuthService, $state) {
+angular.module('users').controller('LoginCtrl', LoginCtrl);
+LoginCtrl.$inject = ['$scope', '$window', 'AuthService', '$state', 'socket'];
+
+function LoginCtrl($scope, $window, AuthService, $state, socket) {
   $scope.user = {
     userName: '',
     password: ''
@@ -8,7 +11,9 @@ angular.module('users')
 
   $scope.login = function() {
     AuthService.login($scope.user).then(function(msg) {
+      $window.location.reload();
       $state.go('main');
+      socket.connect()
     }, function(errMsg) {
         console.log(errMsg)
     });
@@ -17,4 +22,4 @@ angular.module('users')
   $scope.goToRegister = function () {
     $state.go('register');
   }
-})
+}

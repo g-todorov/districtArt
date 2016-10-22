@@ -4,20 +4,18 @@ angular.module('users').controller('PersonalPageController', PersonalPageControl
 PersonalPageController.$inject = ['$scope', '$state', '$http', 'usersService', 'AuthService', 'API_ENDPOINT'];
 
 function PersonalPageController($scope, $state, $http, usersService, AuthService, API_ENDPOINT) {
-  var currentUserId = AuthService.getUserId();
-  $scope.currentUserId = $state.params.userId;
+  var userProfileId = $state.params.userId;
 
-
-  usersService.get({ id: $scope.currentUserId }, function(data) {
-    $scope.currentUser = data;
+  usersService.get({ id: userProfileId }, function(data) {
+    $scope.userDetails = data;
+    $scope.date = data.created
   });
 
 
-  $http.get(API_ENDPOINT.url + '/users/getUserArtworksById/' + $scope.currentUserId).then(function(result) {
+  $http.get(API_ENDPOINT.url + '/artworks/getArtworksByUserId/', {params: {userId: userProfileId}}).then(function(result) {
     $scope.userArtworks = result.data;
-
     angular.forEach($scope.userArtworks, function(value, key) {
-      if (value.visibility == 'private' && value.owners.indexOf(currentUserId) == -1) {
+      if (value.visibility == 'private' && value.owners.indexOf(userProfileId) == -1) {
         value.hideProject = true
       }
       else {

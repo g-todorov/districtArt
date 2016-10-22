@@ -9,7 +9,7 @@ function CreateStudioCtrl($scope, $rootScope, $http, $modal, studiosService, $st
   $scope.selectedArtworks = [];
 
 
-  $http.get(API_ENDPOINT.url + '/users/getUserArtworksById/' + $scope.currentUserId).then(function(result) {
+  $http.get(API_ENDPOINT.url + '/artworks/getArtworksByUserId/', {params: {userId: $scope.currentUserId}}).then(function(result) {
     $scope.userArtworks = result.data;
 
     angular.forEach($scope.userArtworks, function(value, key) {
@@ -45,9 +45,7 @@ function CreateStudioCtrl($scope, $rootScope, $http, $modal, studiosService, $st
    });
 
    newStudio.$save(function(response) {
-      // $state.go('studios');
-      //  // Clear form fields
-      //  $scope.name = '';
+      $state.go('studio-details', {studioId: response._id});
    }, function(errorResponse) {
      $scope.error = errorResponse.data.message;
    });
