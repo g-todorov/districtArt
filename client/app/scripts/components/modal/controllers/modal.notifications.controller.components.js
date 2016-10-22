@@ -1,55 +1,85 @@
 'use strict';
 
-angular.module('Components').controller('notificationsModalController', ['$scope', '$http', '$q', 'getNotifications', 'studiosService', 'API_ENDPOINT', '_', 'Notifications',
-  function($scope, $http, $q, getNotifications, studiosService, API_ENDPOINT, _, Notifications) {
+angular.module('Components').controller('NotificationsModalCtrl', NotificationsModalCtrl);
+NotificationsModalCtrl.$inject = ['$scope', '$http', '$q', 'getNotifications', 'studiosService', 'API_ENDPOINT', '_', 'Notifications'];
 
-    $scope.notifications = getNotifications;
-    $scope.studioNamesMap = {};
-    $scope.userNamesMap = {};
+function NotificationsModalCtrl($scope, $http, $q, getNotifications, studiosService, API_ENDPOINT, _, Notifications) {
+  $scope.notifications = getNotifications;
+  $scope.studioNamesMap = {};
+  $scope.userNamesMap = {};
 
-    $scope.getStudioName = _.memoize(function (studioId) {
-      $http.get(API_ENDPOINT.url + '/studios/' + studioId).then(function(result) {
-        $scope.studioNamesMap[studioId] = result.data.studioName;
-      });
+  $scope.getStudioName = _.memoize(function (domain) {
+    var domainUrl = ''
+    var domainDataName = ''
+    if(domain.type == 'team') {
+      domainUrl = 'studios'
+      domainDataName = 'studioName'
+    }
+    else {
+      domainUrl = 'artworks'
+      domainDataName = 'artworkName'
+    }
+
+    $http.get(API_ENDPOINT.url + '/' + domainUrl + '/' + domain.id).then(function(result) {
+      $scope.studioNamesMap[domain.id] = result.data[domainDataName];
+    });
+  });
+
+  $scope.getUserName = _.memoize(function (userId) {
+    $http.get(API_ENDPOINT.url + '/users/' + userId).then(function(result) {
+      $scope.userNamesMap[userId] = result.data.userName;
+    });
+  });
+
+
+  $scope.rejectInvitation = function(notificationId) {
+    var updatedInvitation = new Notifications.notificationsResource ({
+      viewState: 'read',
+      responseState: 'rejected'
     });
 
-    $scope.getUserName = _.memoize(function (userId) {
-      $http.get(API_ENDPOINT.url + '/users/' + userId).then(function(result) {
-        $scope.userNamesMap[userId] = result.data.userName;
-      });
+    updatedInvitation.$update({invitationId: notificationId}, function() {
+      console.log('Successfully updated a notification!');
+    }, function(errorResponse) {
+      console.log(errorResponse);
+    });
+  }
+
+
+  $scope.acceptInvitation = function(notificationId) {
+    var updatedInvitation = new Notifications.notificationsResource ({
+      viewState: 'read',
+      responseState: 'accepted'
     });
 
+    updatedInvitation.$update({invitationId: notificationId}, function(data) {
+      var url = ''
+      var updatedData = {}
 
-    $scope.rejectInvitation = function(notificationId) {
-      var updatedInvitation = new Notifications.notificationsResource ({
-        viewState: 'read',
-        responseState: 'rejected'
+      if(data.domain.type == 'team') {
+        url = API_ENDPOINT.url + '/studios/addNewAdmin/' + data.domain.id
+        if(data.type == 'invitation') {
+          updatedData.newAdminId = data.receiver
+        } else if(data.type == 'application') {
+          updatedData.newAdminId = data.sender
+        }
+      } else if (data.domain.type == 'project') {
+        url = API_ENDPOINT.url + '/artworks/addNewOwner/' + data.domain.id
+        if(data.type == 'invitation') {
+          updatedData.newOwnerId = data.receiver
+        } else if(data.type == 'application') {
+          updatedData.newOwnerId = data.sender
+        }
+      }
+
+      $http.put(url, updatedData)
+      .then(function(result) {
+        console.log('Added new user');
       });
 
-      updatedInvitation.$update({invitationId: notificationId}, function() {
-        console.log('Successfully updated a notification!');
+      console.log('Successfully updated a notification!');
       }, function(errorResponse) {
         console.log(errorResponse);
-      });
-    }
-
-
-    $scope.acceptInvitation = function(notificationId) {
-      var updatedInvitation = new Notifications.notificationsResource ({
-        viewState: 'read',
-        responseState: 'accepted'
-      });
-
-      updatedInvitation.$update({invitationId: notificationId}, function(data) {
-        $http.put(API_ENDPOINT.url + '/studios/addNewAdmin/' + data.studio, {newAdminId: data.receiver}).then(function(result) {
-          console.log('Added new user');
-          //$scope.studioNamesMap[studioId] = result.studioName
-        });
-        console.log('Successfully updated a notification!');
-        }, function(errorResponse) {
-          console.log(errorResponse);
-      });
-    }
-
+    });
   }
-]);
+}

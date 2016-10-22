@@ -10,7 +10,7 @@ function ProjectsModalCtrl($scope, $http, preSelectedArtworks, AuthService, Artw
   $scope.title = 'Select artworks'
 
 
-  $http.get(API_ENDPOINT.url + '/users/getUserArtworksById/' + $scope.currentUserId).then(function(result) {
+  $http.get(API_ENDPOINT.url + '/artworks/getArtworksByUserId/', {params: {userId: $scope.currentUserId}}).then(function(result) {
     $scope.userArtworks = result.data;
 
     angular.forEach($scope.userArtworks, function(value, key) {

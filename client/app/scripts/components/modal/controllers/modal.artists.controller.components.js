@@ -1,9 +1,9 @@
 'use strict';
  
 angular.module('Components').controller('UsersModalCtrl', UsersModalCtrl);
-UsersModalCtrl.$inject = ['$scope', '$http', '$modal', 'Notifications', 'usersService', '$state', 'API_ENDPOINT', 'studioData', 'AuthService'];
+UsersModalCtrl.$inject = ['$scope', '$http', '$modal', 'Notifications', 'usersService', '$state', 'API_ENDPOINT', 'domainData', 'AuthService'];
 
-function UsersModalCtrl($scope, $http, $modal, Notifications, usersService, $state, API_ENDPOINT, studioData, AuthService) {
+function UsersModalCtrl($scope, $http, $modal, Notifications, usersService, $state, API_ENDPOINT, domainData, AuthService) {
   $scope.currentUserId = AuthService.getUserId();
   $scope.selectedUsers = [];
   $scope.users = []
@@ -19,17 +19,14 @@ function UsersModalCtrl($scope, $http, $modal, Notifications, usersService, $sta
   };
 
 
-  usersService.query().$promise.then(function(result) {
-    angular.forEach(result, function(value){
-      var self = this
-      if (value._id != $scope.currentUserId && studioData.admins.indexOf(value._id) == -1) {
-        $http.get(API_ENDPOINT.url + '/users/checkIfUserIsInvited/' + value._id, {params: {studioId: studioData._id}}).then(function(result) {
-          if (result.data.invited == false) {
-            self.push(value);
-          }
-        });
-      }
-    }, $scope.users);
+  $http.get(API_ENDPOINT.url + '/users/getNotRequestedUsers/' + $scope.currentUserId, {
+    params: {
+      domainId: domainData.id,
+      domainType: domainData.type
+    }
+  })
+  .then(function(result) {
+    $scope.users = result.data;
   });
 
 
@@ -39,18 +36,15 @@ function UsersModalCtrl($scope, $http, $modal, Notifications, usersService, $sta
         type: 'invitation',
         viewState: 'unread',
         responseState: 'pending',
-        studio: studioData._id,
+        domain: {
+          id: domainData.id,
+          type: domainData.type
+        },
         sender: $scope.currentUserId,
         receiver: value
       });
 
-      newInvitation.$save(function(response) {
-         // $state.go('studios');
-         //  // Clear form fields
-         //  $scope.name = '';
-      }, function(errorResponse) {
-        $scope.error = errorResponse.data.message;
-      });
+      newInvitation.$save();
     });
   };
 }

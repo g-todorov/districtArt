@@ -43,7 +43,7 @@ function CreateProjectCtrl($scope, Artworks, $state, API_ENDPOINT, Upload) {
           files: files
         }
       }).then(function (response) {
-        $state.go('details', {artworkId: response.data._id});
+        $state.go('artwork-details', {artworkId: response.data._id});
       }, function (response) {
         if (response.status > 0) {
           $scope.errorMsg = response.status + ': ' + response.data;

@@ -1,6 +1,9 @@
-angular.module('users')
+'use strict';
 
-.controller('RegisterController', function($scope, AuthService, $state) {
+angular.module('users').controller('RegisterCtrl', RegisterCtrl);
+RegisterCtrl.$inject = ['$scope', 'AuthService', '$state'];
+
+function RegisterCtrl($scope, AuthService, $state) {
   $scope.user = {
     userName: '',
     password: '',
@@ -14,5 +17,4 @@ angular.module('users')
         console.log(errMsg)
     });
   };
-
-})
+}

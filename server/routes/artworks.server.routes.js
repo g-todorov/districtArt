@@ -5,6 +5,9 @@ var router = express.Router();
 router.route('/')
   .get(artworks.list)
   .post(artworks.create);
+
+router.get('/getArtworksByUserId', artworks.getArtworksByUserId);
+
 router.route('/:artworksId')
   .get(artworks.read)
   .put(artworks.update)
@@ -12,6 +15,7 @@ router.route('/:artworksId')
 router.route('/:artworksId/owners')
   .get(artworks.allOwners);
 
+router.put('/addNewOwner/:artworksId', artworks.addNewOwner)
 
 router.param('artworksId', artworks.artworkById);
 

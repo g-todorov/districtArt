@@ -21,7 +21,6 @@ exports.read = function(req, res) {
 
 
 exports.create = function(req, res) {
-
   var studio = new Studio({
     studioName: req.body.studioName,
     studioDescription: req.body.studioDescription,
