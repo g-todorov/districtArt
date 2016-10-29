@@ -1,8 +1,6 @@
-// Module dependencies.
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-// Create the ArtworkSchema.
 var ArtworkSchema = new Schema({
   artworkName: {
     type: String,
@@ -38,5 +36,4 @@ var ArtworkSchema = new Schema({
   }
 });
 
-// Expose the model to other objects (similar to a 'public' setter).
 mongoose.model('Artwork', ArtworkSchema);

@@ -1,10 +1,7 @@
-// Module dependencies.
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var bcrypt = require('bcrypt');
+var bcrypt = require('bcryptjs');
 
-
-// Create the UserSchema.
 var UserSchema = new Schema({
   userName: {
     type: String,
@@ -29,9 +26,6 @@ var UserSchema = new Schema({
 });
 
 
-/**
- * Hook a pre save method to hash the password
- */
 UserSchema.pre('save', function (next) {
    var user = this;
    if (this.isModified('password') || this.isNew) {
@@ -63,5 +57,4 @@ UserSchema.methods.comparePassword = function (passw, cb) {
  };
 
 
-// Expose the model to other objects (similar to a 'public' setter).
 mongoose.model('User', UserSchema);

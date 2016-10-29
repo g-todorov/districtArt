@@ -15,7 +15,6 @@ router.route('/:studioId')
 
 router.put('/addNewAdmin/:studioId', studios.addNewAdmin)
 
-// Finish by binding the user middleware
 router.param('studioId', studios.studioById);
 
 module.exports = router;

@@ -29,7 +29,7 @@ angular.module(ApplicationConfiguration.applicationModuleName, ApplicationConfig
 .config(function ($locationProvider) {
 	$locationProvider.html5Mode(true);
 })
-.factory('socket', ['$rootScope', 'AuthService', function($rootScope, AuthService) {
+.factory('socket', ['AuthService', function(AuthService) {
   var socket;
   var connected = false;
 
@@ -68,7 +68,6 @@ angular.module(ApplicationConfiguration.applicationModuleName, ApplicationConfig
     emit: emit,
     disconnect: disconnect
   };
-
 }])
 .run(function ($rootScope, $state, AuthService) {
   $rootScope.$on('$stateChangeStart', function (event, next) {

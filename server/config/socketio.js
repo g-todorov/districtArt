@@ -2,13 +2,11 @@
 
 var connectedUsers = [];
 
-// When the user disconnects.. perform this
 function onDisconnect(socket) {
   require('../sockets/invitations.server.sockets').deregister();
   delete connectedUsers[socket.userId];
 }
 
-// When the user connects.. perform this
 function onConnect(socket) {
   require('../sockets/invitations.server.sockets').update(socket, connectedUsers);
 }
@@ -32,23 +30,16 @@ module.exports = function (socketIo) {
 
 
   socketIo.on('connection', function (socket) {
-    // socket.address = socket.handshake.address !== null ?
-    //         socket.handshake.address.address + ':' + socket.handshake.address.port :
-    //         process.env.DOMAIN;
-    //
-    // socket.connectedAt = new Date();
     socket.userId = socket.handshake.query.userId
     connectedUsers[socket.handshake.query.userId] = socket.id
 
 
-    // Call onDisconnect.
     socket.on('disconnect', function () {
       onDisconnect(socket);
-      console.info('[%s] DISCONNECTED', socket.address, socket.id);
+      console.info('[%s] DISCONNECTED', socket.id);
     });
 
-    // Call onConnect.
     onConnect(socket);
-    console.info('[%s] CONNECTED', socket.address, socket.id);
+    console.info('[%s] CONNECTED', socket.id);
   });
 };
