@@ -30,7 +30,7 @@ exports.create = function(req, res) {
       password: req.body.password,
       role: req.body.role
     });
-    // save the user
+
     newUser.save(function(err) {
       if (err) {
         return res.json({success: false, msg: 'Username already exists.'});

@@ -1,8 +1,6 @@
-// Module dependencies.
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-// Create the StudioSchema.
 var StudioSchema = new Schema({
   studioName: {
     type: String,
@@ -33,5 +31,4 @@ var StudioSchema = new Schema({
   }
 });
 
-// Expose the model to other objects (similar to a 'public' setter).
 mongoose.model('Studio', StudioSchema);

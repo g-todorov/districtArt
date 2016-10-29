@@ -1,4 +1,3 @@
-// Module dependencies.
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
@@ -45,5 +44,4 @@ var InvitationSchema = new Schema({
   }
 });
 
-// Expose the model to other objects (similar to a 'public' setter).
 mongoose.model('Invitation', InvitationSchema);

@@ -1,13 +1,7 @@
-/**
- * Broadcast updates to client when the model changes
- */
-
 'use strict';
 
-// var invitation = require('../models/invitations.server.model');
 var mongoose = require('mongoose');
 var Invitation = mongoose.model('Invitation');
-var deferred = require('deferred');
 
 var connectedUsers;
 var socketIo;

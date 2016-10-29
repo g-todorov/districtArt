@@ -1,4 +1,3 @@
-//Get unique error field name
 var getUniqueErrorMessage = function(err) {
   var output;
 
@@ -13,7 +12,7 @@ var getUniqueErrorMessage = function(err) {
   return output;
 };
 
-//Get the error message from error object
+
 exports.getErrorMessage = function(err) {
   var message = '';
 
@@ -31,6 +30,5 @@ exports.getErrorMessage = function(err) {
       if (err.errors[errName].message) message = err.errors[errName].message;
     }
   }
-
   return message;
 };

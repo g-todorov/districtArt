@@ -6,11 +6,10 @@ var fs = require('fs');
 var passport	= require('passport');
 var cors = require('cors');
 var path = require('path');
+var http = require('http');
 
 // Create the application.
 var app = express();
-var http = require('http');
-
 var server = http.createServer(app);
 var io = require('socket.io').listen(server);
 
@@ -20,7 +19,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
 
-//CORS Support
+// CORS Support
 app.use(cors());
 
 
@@ -55,11 +54,9 @@ app.use(passport.initialize());
 
 // Load the routes.
 app.use(require('./routes'));
-// app.use(function(req, res) {
-//     res.sendFile(path.join(__dirname, '../client/app/index.html'));
-// });
 
-//config SocketIo
+
+// Config SocketIo
 require('./config/socketio')(io);
 
 /*eslint no-console: 2*/
