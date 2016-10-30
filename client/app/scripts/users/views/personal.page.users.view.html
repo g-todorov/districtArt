@@ -1,0 +1,24 @@
+<div class="row" ng-controller="PersonalPageController">
+  <div class="col-xs-offset-2 col-xs-2">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="panel panel-default">
+          <div class="panel-heading">Personal Data</div>
+          <div class="panel-body ellipsis">
+            <span>Member since: </span><span ng-bind="date | date: 'MM/dd/yyyy'"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="project-grid col-xs-6">
+    <div class="row">
+      <div class="col-sm-2" ng-repeat="project in userProjects" ng-hide="project.hideProject">
+        <a class="thumbnail" ui-sref="project-details({projectId: project._id})" >
+          <img class="cover" ng-src="{{project.coverUrl}}">
+          <span class="ellipsis" ng-bind="project.projectName"></span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

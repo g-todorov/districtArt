@@ -8,18 +8,18 @@ angular.module('users', ['ui.identicon', 'wu.masonry']).config(function($statePr
   $stateProvider
     .state('login', {
       url: '/login',
-      templateUrl: 'scripts/users/views/login.html'
+      templateUrl: 'scripts/users/views/login.users.view.html'
     })
     .state('register', {
       url: '/register',
-      templateUrl: 'scripts/users/views/register.html'
+      templateUrl: 'scripts/users/views/register.users.view.html'
     })
-    .state('users', {
+    .state('users-list', {
       url: '/users',
-      templateUrl: 'scripts/users/views/list.view.users.html',
+      templateUrl: 'scripts/users/views/list.users.view.html',
     })
    .state('user-details', {
       url: '/users/:userId',
-      templateUrl: 'scripts/users/views/personal.page.view.users.html'
+      templateUrl: 'scripts/users/views/personal.page.users.view.html'
     });
 })

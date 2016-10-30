@@ -23,7 +23,7 @@
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
-    <div ng-include="'scripts/components/header/views/header.view.components.html'"></div>
+    <div ng-include="'scripts/components/header/views/header.components.view.html'"></div>
     <div class="container-fluid">
       <div ui-view></div>
     </div>
@@ -84,32 +84,32 @@
 
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
         <script src="app.js"></script>
-        <script src="scripts/invitations/invitations.js"></script>
-        <script src="scripts/invitations/services/main.service.invitations.js"></script>
-        <script src="scripts/studios/studios.js"></script>
-        <script src="scripts/studios/controllers/create.controller.studios.js"></script>
-        <script src="scripts/studios/controllers/main.controller.studios.js"></script>
-        <script src="scripts/studios/controllers/details.controller.studios.js"></script>
-        <script src="scripts/studios/services/studios.service.studios.js"></script>
-        <script src="scripts/artworks/artworks.js"></script>
-        <script src="scripts/artworks/controllers/main.controller.artworks.js"></script>
-        <script src="scripts/artworks/controllers/upload.controller.artworks.js"></script>
-        <script src="scripts/artworks/controllers/details.controller.artworks.js"></script>
-        <script src="scripts/artworks/services/main.service.artworks.js"></script>
+        <script src="scripts/requests/requests.js"></script>
+        <script src="scripts/requests/services/main.requests.service.js"></script>
+        <script src="scripts/teams/teams.js"></script>
+        <script src="scripts/teams/controllers/create.teams.controller.js"></script>
+        <script src="scripts/teams/controllers/list.teams.controller.js"></script>
+        <script src="scripts/teams/controllers/details.teams.controller.js"></script>
+        <script src="scripts/teams/services/resource.teams.service.js"></script>
+        <script src="scripts/projects/projects.js"></script>
+        <script src="scripts/projects/controllers/list.projects.controller.js"></script>
+        <script src="scripts/projects/controllers/upload.projects.controller.js"></script>
+        <script src="scripts/projects/controllers/details.projects.controller.js"></script>
+        <script src="scripts/projects/services/resource.projects.service.js"></script>
         <script src="scripts/users/users.js"></script>
-        <script src="scripts/users/controllers/auth.login.controller.users.js"></script>
-        <script src="scripts/users/controllers/register.controller.users.js"></script>
-        <script src="scripts/users/controllers/users.controller.users.js"></script>
-        <script src="scripts/users/controllers/personal.page.controller.users.js"></script>
-        <script src="scripts/users/services/auth.service.users.js"></script>
-        <script src="scripts/users/services/users.service.users.js"></script>
+        <script src="scripts/users/controllers/login.users.controller.js"></script>
+        <script src="scripts/users/controllers/register.users.controller.js"></script>
+        <script src="scripts/users/controllers/list.users.controller.js"></script>
+        <script src="scripts/users/controllers/personal.page.users.controller.js"></script>
+        <script src="scripts/users/services/auth.users.service.js"></script>
+        <script src="scripts/users/services/resource.users.service.js"></script>
         <script src="scripts/main/main.js"></script>
         <script src="scripts/main/controllers/layout.controller.main.js"></script>
         <script src="scripts/components/components.js"></script>
-        <script src="scripts/components/header/controllers/header.controller.components.js"></script>
-        <script src="scripts/components/modal/controllers/modal.artists.controller.components.js"></script>
-        <script src="scripts/components/modal/controllers/modal.artworks.controller.components.js"></script>
-        <script src="scripts/components/modal/controllers/modal.notifications.controller.components.js"></script>
+        <script src="scripts/components/header/controllers/header.components.controller.js"></script>
+        <script src="scripts/components/modal/controllers/modal.users.components.controller.js"></script>
+        <script src="scripts/components/modal/controllers/modal.projects.components.controller.js"></script>
+        <script src="scripts/components/modal/controllers/modal.requests.components.controller.js"></script>
         <!-- <script src="scripts/controllers/main.js"></script>
         <script src="scripts/controllers/about.js"></script> -->
         <!-- endbuild -->

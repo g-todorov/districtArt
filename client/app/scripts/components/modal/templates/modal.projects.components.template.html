@@ -1,0 +1,30 @@
+<div class="modal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header" ng-show="title">
+        <button type="button" class="close" aria-label="Close" ng-click="$hide()"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" ng-bind="title"></h4>
+      </div>
+      <div class="projects-modal modal-body clearfix">
+        <div class="col-sm-2" ng-repeat="project in userProjects">
+          <div class="thumbnail" ng-class="{active: project.selected}">
+            <label>
+              <img class="cover" ng-click="" ng-src="{{project.coverUrl}}">
+              <div class="caption ellipsis">
+                <a ng-bind="project.projectName" ui-sref="details({projectId: project._id})" target="_blank"></a>
+                <input
+                  type="checkbox"
+                  ng-model="project.selected"
+                  ng-change="selectProjects(project, project.selected, $event)"
+                  ng-style="{display:'none'}">
+              </div>
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" ng-click="$hide()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

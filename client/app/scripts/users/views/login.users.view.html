@@ -1,0 +1,13 @@
+<div ng-controller="LoginCtrl">
+  <form class="login-form">
+    <h2 class="login-form-heading">Please login</h2>
+    <input class="form-control" type="text" placeholder="Name" required="" ng-model="user.userName">
+    <input class="form-control" type="password" placeholder="Password" required="" ng-model="user.password">
+    <button class="btn btn-lg btn-primary btn-block" ng-click="login()">
+      Login
+    </button>
+    <button class="btn btn-lg btn-default btn-block" ng-click="goToRegister()">
+      Go to register page
+    </button>
+  </form>
+</div>

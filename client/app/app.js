@@ -72,13 +72,10 @@ angular.module(ApplicationConfiguration.applicationModuleName, ApplicationConfig
 .run(function ($rootScope, $state, AuthService) {
   $rootScope.$on('$stateChangeStart', function (event, next) {
     if (AuthService.isAuthenticated()) {
-      if (next.name == 'login' || next.name == 'register') {
+      if (next.name == 'login' || next.name == 'register' || next.name == 'main') {
         event.preventDefault();
-        $state.go('main');
+        $state.go('projects-list');
       }
-    }
-    else {
-
     }
   });
 });

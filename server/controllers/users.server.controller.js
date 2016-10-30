@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
-var Artwork = mongoose.model('Artwork');
-var Invitation = mongoose.model('Invitation');
+var Project = mongoose.model('Project');
+var Request = mongoose.model('Request');
 var errorHandler = require('./errors.server.controller');
 var _ = require('lodash');
 var jwt = require('jwt-simple');
@@ -90,11 +90,11 @@ exports.update = function(req, res) {
 
 exports.delete = function(req, res) {
   var user = req.user;
-  //remove Artwork dependencies from the user before deleting
-  Artwork.find({owners: user._id}, function(err, artWorks) {
-    _.each(artWorks, function(artWork) {
-      if (artWork.owners.length == 1) {
-        artWork.remove(function(err){
+  //remove Project dependencies from the user before deleting
+  Project.find({owners: user._id}, function(err, projects) {
+    _.each(projects, function(project) {
+      if (project.owners.length == 1) {
+        project.remove(function(err){
           if (err) {
             return res.status(400).send({
               message: errorHandler.getErrorMessage(err)
@@ -103,10 +103,10 @@ exports.delete = function(req, res) {
         });
       }
       else {
-        artWork.owners = _.remove(artWork.owners, function(owner){
+        project.owners = _.remove(project.owners, function(owner){
           return !owner.equals(user._id);
         });
-        artWork.save(function(err) {
+        project.save(function(err) {
           if (err) {
             return res.status(400).send({
               message: errorHandler.getErrorMessage(err)
@@ -131,21 +131,21 @@ exports.delete = function(req, res) {
 
 
 exports.checkIfUserApplied = function(req, res) {
-  Invitation.findOne({
+  Request.findOne({
     'domain.id': {$in: [req.query.domainId]},
     'domain.type': {$in: [req.query.domainType]},
     responseState: 'pending'
-  }, function (err, invitation){
+  }, function (err, request){
     if (err) {
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
       });
     }
 
-    if(!invitation) {
+    if(!request) {
       res.json({applied: false})
     } else {
-      if((invitation.sender.equals(req.user._id) && invitation.type == 'application') || (invitation.receiver.equals(req.user._id) && invitation.type == 'invitation')){
+      if((request.sender.equals(req.user._id) && request.type == 'application') || (request.receiver.equals(req.user._id) && request.type == 'request')){
         res.json({applied: true})
       }
     }
@@ -154,16 +154,16 @@ exports.checkIfUserApplied = function(req, res) {
 
 
 exports.getNotRequestedUsers = function(req, res) {
-  Invitation.find({
+  Request.find({
     'domain.id': {$in: [req.query.domainId]},
     'domain.type': {$in: [req.query.domainType]},
     responseState: 'pending'})
-  .exec(function(err, invitations){
-    invitedUsers = invitations.map(function(invitation){
-      if(invitation.type == 'application') {
-        return invitation.sender
-      } else if(invitation.type == 'invitation'){
-        return invitation.receiver
+  .exec(function(err, requests){
+    invitedUsers = requests.map(function(request){
+      if(request.type == 'application') {
+        return request.sender
+      } else if(request.type == 'request'){
+        return request.receiver
       }
     })
     invitedUsers.push(req.user._id)
