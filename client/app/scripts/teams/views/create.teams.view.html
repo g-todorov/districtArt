@@ -1,0 +1,43 @@
+<div class="row" ng-controller="CreateTeamCtrl">
+  <div class="col-xs-offset-2 col-xs-8">
+    <div class="panel panel-default">
+      <div class="panel-heading">Create your project</div>
+      <div class="panel-body">
+        <form class="create-team-form" name="createForm" novalidate>
+          <div class="form-group" ng-class="{'has-error' : createForm.teamName.$invalid && !createForm.teamName.$pristine}">
+            <label>Name</label>
+            <input type="text" class="form-control" name="teamName" ng-model="teamName" required>
+            <p class="error help-block" ng-show="createForm.teamName.$invalid && !createForm.teamName.$pristine">
+              Required!
+            </p>
+          </div>
+          <div class="form-group" ng-class="{'has-error' : createForm.teamDescription.$invalid && !createForm.teamDescription.$pristine}">
+            <label>Description</label>
+            <textarea type="text" class="form-control" name="teamDescription" ng-model="teamDescription" required></textarea>
+            <p class="error help-block" ng-show="createForm.teamDescription.$invalid && !createForm.teamDescription.$pristine">
+              Required!
+            </p>
+          </div>
+          <div class="form-group">
+            <label ng-show="selectedProjects.length > 0">Selected projects</label>
+            <div class="row">
+              <div class="project col-sm-1" ng-repeat="project in selectedProjects">
+                <div class="thumbnail">
+                  <img class="cover" ng-click="" ng-src="{{project.coverUrl}}">
+                  <div class="caption ellipsis">
+                    <a ng-bind="project.projectName" ui-sref="details({projectId: project._id})"></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <button class="btn btn-primary" type="button" ng-click="showModal()" ng-show="userProjects.length > 0">
+                Select projects
+              </button>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary" ng-disabled="createForm.$invalid || !selectedProjects.length > 0" ng-click="createTeam()">Submit</button>
+        </form>
+      </div>
+  </div>
+</div>

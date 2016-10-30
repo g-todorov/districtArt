@@ -24,11 +24,11 @@ html, body {
   max-width: 200px;
 }
 
-.navbar .new-notifications {
+.navbar .new-requests {
   color: red !important;
 }
 
-.navbar .upload-artwork-button {
+.navbar .upload-project-button {
   margin-right: 10px;
 }
 /* Make the masthead heading the same height as the navigation */
@@ -53,6 +53,19 @@ html, body {
   border-top-right-radius: 0;
 }
 
+.register-form input[type="password"] {
+  margin-bottom: -1px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+
+.login-form input[type="email"], .register-form input[type="email"] {
+  margin-bottom: 20px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
 .login-form-heading, .register-form-heading  {
   margin-bottom: 30px;
 }
@@ -66,31 +79,31 @@ html, body {
 
 
 /* ARTWORK*/
-.upload-artwork-form ul {
+.upload-project-form ul {
   list-style: none;
   padding: 0;
 }
 
-.artwork-details .artwork-piece{
+.project-details .project-piece{
   width:100%;
 }
 
 
 /*MODALS*/
-.artworks-modal .cover{
+.projects-modal .cover{
   width: 100%;
 }
 
-.artworks-modal .thumbnail {
+.projects-modal .thumbnail {
   transition: border .2s ease-in-out;
 }
 
-.artworks-modal .thumbnail:hover {
+.projects-modal .thumbnail:hover {
   border-color: #337ab7;
 }
 
 
-.artworks-modal .thumbnail.active {
+.projects-modal .thumbnail.active {
   border-color: #337ab7;
 }
 

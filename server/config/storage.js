@@ -7,15 +7,15 @@ var storage = multer.diskStorage({
     // This folder is set only for prototype purposes. Storing in cloud is better solution i.e.
     var rootPath = './uploads/';
     var userId = req.body.details.userId;
-    var artworkName = req.body.details.artworkName;
-    var artWorkFolderPath = rootPath + userId + '/' + artworkName;
+    var projectName = req.body.details.projectName;
+    var projectFolderPath = rootPath + userId + '/' + projectName;
 
-    fs.ensureDir(artWorkFolderPath, function (err) {
+    fs.ensureDir(projectFolderPath, function (err) {
       if (err) {
         console.log(err);
       }
       else {
-        next(null, artWorkFolderPath);
+        next(null, projectFolderPath);
       }
     })
   },

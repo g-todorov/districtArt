@@ -1,0 +1,15 @@
+<div class="row teams-grid" ng-controller="teamsListController">
+  <div class="col-xs-offset-2 col-xs-8">
+    <div class="row" ng-hide="!projects.length > 0">
+      <div class="thumb col-sm-2" ng-repeat="team in teams">
+        <a ng-bind="team.teamName" ui-sref="team-details({teamId: team._id})"></a>
+      </div>
+    </div>
+    <div class="row">
+      <div class="jumbotron">
+        <h1>The are now public teams to show</h1>
+      </div>
+    </div>
+  </div>
+  </div>
+</div>

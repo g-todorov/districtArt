@@ -1,8 +1,8 @@
 'use strict';
  
-angular.module('Main')
+angular.module('Main').controller('LayoutController', LayoutController);
+LayoutController.$inject = ['$scope', '$http', 'AuthService', 'API_ENDPOINT', '$state'];
 
-  .controller('LayoutController', ['$scope', '$http', 'AuthService', 'API_ENDPOINT', '$state', function ($scope, $http, AuthService, API_ENDPOINT, $state) {
-    $scope.authenticated = AuthService.isAuthenticated()
-  }
-]);
+function LayoutController($scope, $http, AuthService, API_ENDPOINT, $state) {
+  $scope.authenticated = AuthService.isAuthenticated();
+}

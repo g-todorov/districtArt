@@ -1,0 +1,33 @@
+<div class="modal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header" ng-show="title">
+        <button type="button" class="close" aria-label="Close" ng-click="$hide()"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" ng-bind="title"></h4>
+      </div>
+      <div class="modal-body">
+        <div class="row" ng-repeat="user in users">
+          <div class="col-xs-2">
+            <div class="thumbnail">
+              <identicon username="user.userName" size="100" />
+              <div class="caption ellipsis">
+                <a ui-sref="user-details({userId: user._id})" target="_blank">
+                  <span ng-bind="user.userName"></span>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-8">
+          </div>
+          <div class="col-xs-2">
+            <label><input ng-model="selected" type="checkbox" ng-change="inviteUser(user, selected, $event)">Invite to team</label>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click="$hide()">Close</button>
+        <button type="button" class="btn btn-primary" ng-click="sendRequests(); $hide()">Invite</button>
+      </div>
+    </div>
+  </div>
+</div>

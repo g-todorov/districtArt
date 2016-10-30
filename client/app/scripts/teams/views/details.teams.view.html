@@ -1,0 +1,55 @@
+<div class="team-details row" ng-controller="TeamDetailsCtrl">
+  <div class="col-xs-offset-2 col-xs-2">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="panel panel-default">
+          <div class="panel-heading">Description</div>
+          <div class="panel-body ellipsis" ng-bind="team.teamDescription">
+          </div>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-heading">Visibility</div>
+          <div class="panel-body ellipsis" ng-bind="team.visibility" ng-show="viewMode == 'read'">
+          </div>
+          <div class="panel-body ellipsis" ng-show="viewMode == 'edit'">
+            <input
+              bs-switch
+              ng-model="team.visibility"
+              type="checkbox"
+              switch-on-text="public"
+              switch-off-text="private"
+              switch-change="onVisibilityChange()"
+              ng-true-value="'public'"
+              ng-false-value="'private'">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="panel panel-default">
+          <div class="panel-heading">Actions</div>
+          <div class="panel-body">
+            <button class="btn btn-primary" type="button" ng-show="isAuthorized()"  ng-click="showModal()">
+              Invite people
+            </button>
+            <button class="btn btn-primary" type="button" ng-show="isAuthenticated() && !isAuthorized()" ng-disabled="applied" ng-click="apply()">
+              Apply
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="project-grid col-xs-6">
+    <div class="row">
+      <div class="col-xs-2" ng-repeat="project in teamProjects">
+        <a class="thumbnail" ui-sref="project-details({projectId: project._id})">
+          <img class="cover" ng-click="" ng-src="{{project.coverUrl}}">
+          </img>
+          <span class="ellipsis" ng-bind="project.projectName"></span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

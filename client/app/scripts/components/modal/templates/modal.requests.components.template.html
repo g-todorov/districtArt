@@ -1,0 +1,50 @@
+<div class="modal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header" ng-show="title">
+        <button type="button" class="close" aria-label="Close" ng-click="$hide()"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" ng-bind="title"></h4>
+      </div>
+      <div class="modal-body">
+        <div ng-repeat="requests in requests" ng-init="getTeamName(requests.domain); getUserName(requests.sender)">
+          <div class="clearfix" ng-show="requests.responseState == 'pending'">
+            <p class="pull-left" ng-show="requests.type == 'invitation'">
+              You were invited to join
+              <a>{{teamNamesMap[requests.domain.id]}}</a>
+              by
+              <a>{{userNamesMap[requests.sender]}}</a>
+            </p>
+            <p class="pull-left" ng-show="requests.type == 'application'">
+              <a>{{userNamesMap[requests.sender]}}</a>
+              applied to join
+              <a>{{teamNamesMap[requests.domain.id]}}</a>
+            </p>
+            <button type="button" class="btn btn-default pull-right" ng-click="rejectRequest(requests._id)">Reject</button>
+            <button type="button" class="btn btn-default pull-right" ng-click="acceptRequest(requests._id)">Accept</button>
+          </div>
+          <div class="clearfix" ng-show="requests.responseState != 'pending'">
+            <p class="pull-left" ng-show="requests.type == 'invitation'">
+              You were invited to join
+              <a>{{teamNamesMap[requests.domain.id]}}</a>
+              by
+              <a>{{userNamesMap[requests.sender]}}</a>
+            </p>
+            <p class="pull-left" ng-show="requests.type == 'application'">
+              <a>{{userNamesMap[requests.sender]}}</a>
+              applied to join
+              <a>{{teamNamesMap[requests.domain.id]}}</a>
+            </p>
+            <button type="button" class="btn btn-default pull-right disabled" ng-show="requests.responseState == 'rejected'">Rejected</button>
+            <button type="button" class="btn btn-default pull-right disabled" ng-show="requests.responseState == 'accepted'">Accepted</button>
+          </div>
+        </div>
+        <div ng-show="requests.length == 0">
+          There are no requests.
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click="$hide()">OK</button>
+      </div>
+    </div>
+  </div>
+</div>

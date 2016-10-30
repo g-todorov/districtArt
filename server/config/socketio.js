@@ -3,12 +3,12 @@
 var connectedUsers = [];
 
 function onDisconnect(socket) {
-  require('../sockets/invitations.server.sockets').deregister();
+  require('../sockets/requests.server.sockets').deregister();
   delete connectedUsers[socket.userId];
 }
 
 function onConnect(socket) {
-  require('../sockets/invitations.server.sockets').update(socket, connectedUsers);
+  require('../sockets/requests.server.sockets').update(socket, connectedUsers);
 }
 
 module.exports = function (socketIo) {
@@ -26,7 +26,7 @@ module.exports = function (socketIo) {
   //   secret: config.secrets.session,
   //   handshake: true
   // }));
-  require('../sockets/invitations.server.sockets').register(socketIo);
+  require('../sockets/requests.server.sockets').register(socketIo);
 
 
   socketIo.on('connection', function (socket) {
@@ -36,10 +36,10 @@ module.exports = function (socketIo) {
 
     socket.on('disconnect', function () {
       onDisconnect(socket);
-      console.info('[%s] DISCONNECTED', socket.id);
+      console.info('[socket] DISCONNECTED', socket.id);
     });
 
     onConnect(socket);
-    console.info('[%s] CONNECTED', socket.id);
+    console.info('[socket] CONNECTED', socket.id);
   });
 };
