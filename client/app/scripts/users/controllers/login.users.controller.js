@@ -15,7 +15,7 @@ function LoginCtrl($scope, $window, AuthService, $state, socket) {
       $state.go('projects-list');
       socket.connect()
     }, function(errMsg) {
-        console.log(errMsg)
+      $scope.error = errMsg;
     });
   };
 

@@ -14,9 +14,9 @@
   <div class="project-grid col-xs-6">
     <div class="row">
       <div class="col-sm-2" ng-repeat="project in userProjects" ng-hide="project.hideProject">
-        <a class="thumbnail" ui-sref="project-details({projectId: project._id})" >
+        <a class="thumbnail link ellipsis" ui-sref="project-details({projectId: project._id})" >
           <img class="cover" ng-src="{{project.coverUrl}}">
-          <span class="ellipsis" ng-bind="project.projectName"></span>
+          <span class="label" ng-bind="project.projectName"></span>
         </a>
       </div>
     </div>

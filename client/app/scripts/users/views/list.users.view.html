@@ -3,12 +3,10 @@
     <div class="row">
       <div masonry>
         <div class="col-sm-2 masonry-brick" ng-repeat="user in users">
-          <div class="thumbnail">
+          <a class="thumbnail link ellipsis" ui-sref="user-details({userId: user._id})">
             <identicon username="user.userName" size="100" />
-            <div class="caption">
-              <a class="ellipsis" ng-bind="user.userName" ui-sref="user-details({userId: user._id})"></a>
-            </div>
-          </div>
+            <span class="label" ng-bind="user.userName"></span>
+          </a>
         </div>
       </div>
     </div>

@@ -1,12 +1,12 @@
 'use strict';
 
 angular.module('teams').controller('CreateTeamCtrl', CreateTeamCtrl);
-CreateTeamCtrl.$inject = ['$scope', '$rootScope', '$http', '$modal', 'teamsService', '$state', 'API_ENDPOINT', 'Upload', 'usersService'];
+CreateTeamCtrl.$inject = ['$scope', '$rootScope', '$http', '$modal', 'teamsService', '$state', 'API_ENDPOINT', 'Upload', 'usersService', 'AuthService'];
 
-function CreateTeamCtrl($scope, $rootScope, $http, $modal, teamsService, $state, API_ENDPOINT, Upload, usersService) {
-
-  $scope.currentUserId = window.localStorage.getItem('USER_ID');
+function CreateTeamCtrl($scope, $rootScope, $http, $modal, teamsService, $state, API_ENDPOINT, Upload, usersService, AuthService) {
+  $scope.currentUserId = AuthService.getUserId();
   $scope.selectedProjects = [];
+  $scope.visibility = 'public'
 
 
   $http.get(API_ENDPOINT.url + '/projects/getProjectsByUserId/', {params: {userId: $scope.currentUserId}}).then(function(result) {
@@ -25,14 +25,14 @@ function CreateTeamCtrl($scope, $rootScope, $http, $modal, teamsService, $state,
   });
 
 
-  $scope.selectProject = function(project, selected, e) {
-    if (selected) {
-      $scope.selectedProjects.push(project._id);
-    } else {
-      var index = $scope.selectedProjects.indexOf(project._id);
-      $scope.selectedProjects.splice(index, 1)
-    }
-  }
+  // $scope.selectProject = function(project, selected, e) {
+  //   if (selected) {
+  //     $scope.selectedProjects.push(project._id);
+  //   } else {
+  //     var index = $scope.selectedProjects.indexOf(project._id);
+  //     $scope.selectedProjects.splice(index, 1)
+  //   }
+  // }
 
 
   $scope.createTeam = function() {
@@ -41,7 +41,8 @@ function CreateTeamCtrl($scope, $rootScope, $http, $modal, teamsService, $state,
      teamDescription: $scope.teamDescription,
      creator: $scope.currentUserId,
      admins: [$scope.currentUserId],
-     selectedProjects: $scope.selectedProjects
+     selectedProjects: $scope.selectedProjects,
+     visibility: $scope.visibility
    });
 
    newTeam.$save(function(response) {
@@ -61,7 +62,7 @@ function CreateTeamCtrl($scope, $rootScope, $http, $modal, teamsService, $state,
 
   $scope.showModal = function() {
     var projectsModal = $modal({
-      templateUrl: 'scripts/components/modal/templates/modal.projects.template.components.html',
+      templateUrl: 'scripts/components/modal/templates/modal.projects.components.template.html',
       controller: 'ProjectsModalCtrl',
       size: 'lg',
       scope: $scope,

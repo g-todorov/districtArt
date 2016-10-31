@@ -33,15 +33,15 @@ Request.schema.post('remove', function (doc) {
 
 
 function onSave (doc) {
-  socketIo.to(connectedUsers[doc.receiver]).emit('newNotification', doc);
+  socketIo.to(connectedUsers[doc.receiver]).emit('newRequest', doc);
   if(doc.responseState == 'accepted' || doc.responseState == 'rejected') {
-    socketIo.to(connectedUsers[doc.sender]).emit('newNotification', doc);
+    socketIo.to(connectedUsers[doc.sender]).emit('newRequest', doc);
   }
 };
 
 
 function onRemove(socket, doc) {
-  socket.emit('removeNotification', doc);
+  socket.emit('removeRequest', doc);
 }
 
 

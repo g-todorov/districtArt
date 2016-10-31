@@ -56,7 +56,7 @@ function HeaderCtrl($scope, $rootScope, $window, AuthService, $state, $location,
     socket.connect();
   }
 
-  socket.on('invitationsList', function(data) {
+  socket.on('requestsList', function(data) {
     $scope.newRequests = [];
     $rootScope.$apply(function () {
       angular.forEach(data, function(value, key) {
@@ -100,7 +100,7 @@ function HeaderCtrl($scope, $rootScope, $window, AuthService, $state, $location,
 
   $scope.openRequestsModal = function() {
     var requestsModal = $modal({
-      templateUrl: 'scripts/components/modal/templates/modal.requests.template.components.html',
+      templateUrl: 'scripts/components/modal/templates/modal.requests.components.template.html',
       controller: 'RequestsModalCtrl',
       resolve: {
         getRequests: function () {

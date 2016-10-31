@@ -32,7 +32,7 @@ function UsersModalCtrl($scope, $http, $modal, Requests, usersService, $state, A
 
   $scope.sendRequests = function() {
     angular.forEach($scope.selectedUsers, function(value, key) {
-      var newRequest = new Requests.RequestsResource ({
+      var newRequest = new Requests.requestsResource ({
         type: 'invitation',
         viewState: 'unread',
         responseState: 'pending',
