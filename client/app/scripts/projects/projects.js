@@ -18,6 +18,5 @@ angular.module('projects', ['ngFileUpload', 'wu.masonry', 'mgcrea.ngStrap', 'fra
         templateUrl: 'scripts/projects/views/details.projects.view.html'
       });
 
-      // Redirect to home view when route not found
       $urlRouterProvider.otherwise('/');
 });

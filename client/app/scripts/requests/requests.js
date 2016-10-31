@@ -1,3 +1,3 @@
 'use strict';
 
-ApplicationConfiguration.registerModule('invitations')
+ApplicationConfiguration.registerModule('requests')

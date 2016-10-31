@@ -6,10 +6,21 @@
 }
 
 html, body {
-    margin: 0;
-    height: 100%;
+  margin: 0;
+  height: 100%;
 }
 
+.thumbnail span.label {
+  transition: color .2s ease-in-out;
+  color: #777;
+}
+.thumbnail:hover span.label {
+  color: #333;
+}
+
+.thumbnail.link:hover, .thumbnail.link:active, .thumbnail.link:focus  {
+  text-decoration: none;
+}
 
 /* Everything but the jumbotron gets side spacing for mobile first views */
 .header,
@@ -31,6 +42,11 @@ html, body {
 .navbar .upload-project-button {
   margin-right: 10px;
 }
+
+.navbar .notifications {
+  cursor: pointer;
+}
+
 /* Make the masthead heading the same height as the navigation */
 
 .login-form, .register-form  {
@@ -41,7 +57,7 @@ html, body {
   border: 1px solid rgba(0,0,0,0.1)
 }
 
-.login-form input[type="text"], .register-form input[type="text"]{
+.login-form input[type="text"], .register-form input[type="text"] {
   margin-bottom: -1px;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
@@ -66,7 +82,7 @@ html, body {
   border-top-right-radius: 0;
 }
 
-.login-form-heading, .register-form-heading  {
+.login-form-heading, .register-form-heading {
   margin-bottom: 30px;
 }
 

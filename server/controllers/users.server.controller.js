@@ -145,7 +145,7 @@ exports.checkIfUserApplied = function(req, res) {
     if(!request) {
       res.json({applied: false})
     } else {
-      if((request.sender.equals(req.user._id) && request.type == 'application') || (request.receiver.equals(req.user._id) && request.type == 'request')){
+      if((request.sender.equals(req.user._id) && request.type == 'application') || (request.receiver.equals(req.user._id) && request.type == 'invitation')){
         res.json({applied: true})
       }
     }
@@ -162,7 +162,7 @@ exports.getNotRequestedUsers = function(req, res) {
     invitedUsers = requests.map(function(request){
       if(request.type == 'application') {
         return request.sender
-      } else if(request.type == 'request'){
+      } else if(request.type == 'invitation'){
         return request.receiver
       }
     })

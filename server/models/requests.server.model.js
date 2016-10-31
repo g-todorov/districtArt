@@ -4,7 +4,7 @@ var Schema = mongoose.Schema;
 var RequestSchema = new Schema({
   type: {
     type: String,
-    enum: ['request', 'application'],
+    enum: ['invitation', 'application'],
     required: true
   },
   responseState: {

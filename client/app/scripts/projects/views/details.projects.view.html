@@ -23,21 +23,21 @@
               ng-false-value="'private'">
           </div>
         </div>
-        <div class="panel panel-default">
+        <div class="panel panel-default" ng-show="isAuthenticated()">
           <div class="panel-heading">Options</div>
           <div class="panel-body">
-            <button type="button" class="btn btn-primary" ng-show="isAuthorized()" ng-click="enterEditMode()" ng-show="viewMode == 'read'">
+            <button type="button" class="btn btn-primary" ng-show="isAuthorized() && viewMode == 'read'" ng-click="enterEditMode()">
               Edit Mode
               <span class="glyphicon glyphicon-edit"></span>
             </button>
-            <button type="button" class="btn btn-primary" ng-show="isAuthorized()" ng-click="saveChanges()" ng-show="viewMode == 'edit'">
+            <button type="button" class="btn btn-primary" ng-show="isAuthorized() && viewMode == 'edit'" ng-click="saveChanges()">
               Save Changes
               <span class="glyphicon glyphicon-floppy-save"></span>
             </button>
             <button class="btn btn-primary" type="button" ng-show="isAuthorized()" ng-click="showModal()">
               Invite people
             </button>
-            <button class="btn btn-primary" type="button" ng-show="isAuthenticated() && !isAuthorized()" ng-disabled="applied" ng-click="apply()">
+            <button class="btn btn-primary" type="button" ng-show="!isAuthorized()" ng-disabled="applied" ng-click="apply()">
               Apply
             </button>
           </div>

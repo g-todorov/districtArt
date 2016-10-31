@@ -36,6 +36,14 @@
               </button>
             </div>
           </div>
+          <div class="radio" ng-class="">
+            <label class="radio-inline">
+              <input type="radio" ng-model="visibility" value="public">Public
+            </label>
+            <label class="radio-inline">
+              <input type="radio" ng-model="visibility" value="private">Private
+            </label>
+          </div>
           <button type="submit" class="btn btn-primary" ng-disabled="createForm.$invalid || !selectedProjects.length > 0" ng-click="createTeam()">Submit</button>
         </form>
       </div>

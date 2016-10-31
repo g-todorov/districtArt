@@ -26,7 +26,8 @@ exports.create = function(req, res) {
     teamDescription: req.body.teamDescription,
     creator: req.body.creator,
     admins: [req.body.admins],
-    projects: req.body.selectedProjects
+    projects: req.body.selectedProjects,
+    visibility: req.body.visibility
   });
 
 

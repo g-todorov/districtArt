@@ -4,7 +4,7 @@ angular.module('Components').controller('RequestsModalCtrl', RequestsModalCtrl);
 RequestsModalCtrl.$inject = ['$scope', '$http', '$q', 'getRequests', 'teamsService', 'API_ENDPOINT', '_', 'Requests'];
 
 function RequestsModalCtrl($scope, $http, $q, getRequests, teamsService, API_ENDPOINT, _, Requests) {
-  $scope.Requests = getRequests;
+  $scope.requests = getRequests;
   $scope.teamNamesMap = {};
   $scope.userNamesMap = {};
 
@@ -32,13 +32,13 @@ function RequestsModalCtrl($scope, $http, $q, getRequests, teamsService, API_END
   });
 
 
-  $scope.rejectRequest = function(requestsId) {
-    var updatedRequest = new Requests.RequestsResource ({
+  $scope.rejectRequest = function(requestId) {
+    var updatedRequest = new Requests.requestsResource ({
       viewState: 'read',
       responseState: 'rejected'
     });
 
-    updatedRequest.$update({invitationId: requestsId}, function() {
+    updatedRequest.$update({requestId: requestId}, function() {
       console.log('Successfully updated a requests!');
     }, function(errorResponse) {
       console.log(errorResponse);
@@ -46,16 +46,15 @@ function RequestsModalCtrl($scope, $http, $q, getRequests, teamsService, API_END
   }
 
 
-  $scope.acceptRequest = function(requestsId) {
-    var updatedRequest = new Requests.RequestsResource ({
+  $scope.acceptRequest = function(requestId) {
+    var updatedRequest = new Requests.requestsResource ({
       viewState: 'read',
       responseState: 'accepted'
     });
 
-    updatedRequest.$update({invitationId: requestsId}, function(data) {
+    updatedRequest.$update({requestId: requestId}, function(data) {
       var url = ''
       var updatedData = {}
-
       if(data.domain.type == 'team') {
         url = API_ENDPOINT.url + '/teams/addNewAdmin/' + data.domain.id
         if(data.type == 'invitation') {

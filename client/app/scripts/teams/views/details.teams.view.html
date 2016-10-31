@@ -27,13 +27,13 @@
     </div>
     <div class="row">
       <div class="col-xs-12">
-        <div class="panel panel-default">
+        <div class="panel panel-default" ng-show="isAuthenticated()">
           <div class="panel-heading">Actions</div>
           <div class="panel-body">
             <button class="btn btn-primary" type="button" ng-show="isAuthorized()"  ng-click="showModal()">
               Invite people
             </button>
-            <button class="btn btn-primary" type="button" ng-show="isAuthenticated() && !isAuthorized()" ng-disabled="applied" ng-click="apply()">
+            <button class="btn btn-primary" type="button" ng-show="!isAuthorized()" ng-disabled="applied" ng-click="apply()">
               Apply
             </button>
           </div>
@@ -44,10 +44,10 @@
   <div class="project-grid col-xs-6">
     <div class="row">
       <div class="col-xs-2" ng-repeat="project in teamProjects">
-        <a class="thumbnail" ui-sref="project-details({projectId: project._id})">
+        <a class="thumbnail link ellipsis" ui-sref="project-details({projectId: project._id})">
           <img class="cover" ng-click="" ng-src="{{project.coverUrl}}">
           </img>
-          <span class="ellipsis" ng-bind="project.projectName"></span>
+          <span class="label" ng-bind="project.projectName"></span>
         </a>
       </div>
     </div>

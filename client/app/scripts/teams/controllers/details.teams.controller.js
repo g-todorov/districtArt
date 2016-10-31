@@ -76,7 +76,7 @@ function TeamDetailsCtrl($scope, $rootScope, $http, $state, teamsService, Projec
 
   $scope.showModal = function() {
     var usersModal = $modal({
-      templateUrl: 'scripts/components/modal/templates/modal.users.template.components.html',
+      templateUrl: 'scripts/components/modal/templates/modal.users.components.template.html',
       controller: 'UsersModalCtrl',
       size: 'lg',
       resolve: {

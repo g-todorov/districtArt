@@ -24,10 +24,12 @@
               <li><a href="#" ng-click="logout()">Logout</a></li>
             </ul>
           </li>
-          <li ng-class="newRequests.length > 0 ? 'new-requests': 'requests'" ng-show="isAuthenticated()">
-            <div class="navbar-text">
-              <span class="glyphicon glyphicon-inbox" ng-click="openRequestsModal()"></span>
-              <span class="requests-count badge" ng-show="newRequests.length > 0">{{newRequests.length}}</span>
+          <li ng-show="isAuthenticated()">
+            <div class="navbar-text" ng-class="newRequests.length > 0 ? 'new-requests': 'requests'" >
+              <span ng-click="openRequestsModal()">
+                <span class="glyphicon glyphicon-inbox"></span>
+                <span class="requests-count badge" ng-show="newRequests.length > 0">{{newRequests.length}}</span>
+              </span>
             </div>
           </li>
           <li ng-hide="isAuthenticated()" class="ng-hide login-button">
