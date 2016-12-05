@@ -25,14 +25,14 @@ function CreateTeamCtrl($scope, $rootScope, $http, $modal, teamsService, $state,
   });
 
 
-  $scope.selectProject = function(project, selected, e) {
-    if (selected) {
-      $scope.selectedProjects.push(project._id);
-    } else {
-      var index = $scope.selectedProjects.indexOf(project._id);
-      $scope.selectedProjects.splice(index, 1)
-    }
-  }
+  // $scope.selectProject = function(project, selected, e) {
+  //   if (selected) {
+  //     $scope.selectedProjects.push(project._id);
+  //   } else {
+  //     var index = $scope.selectedProjects.indexOf(project._id);
+  //     $scope.selectedProjects.splice(index, 1)
+  //   }
+  // }
 
 
   $scope.createTeam = function() {
