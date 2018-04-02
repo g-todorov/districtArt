@@ -17,7 +17,7 @@ var storage = multer.diskStorage({
       else {
         next(null, projectFolderPath);
       }
-    })
+    });
   },
   filename: function (req, file, next) {
     var datetimestamp = Date.now();
@@ -26,7 +26,7 @@ var storage = multer.diskStorage({
 
     _.assignIn(req.body.details.filesDictionary[file.originalname],
       {'fileSystemName': fileSystemName}
-    )
+    );
 
     next(null, fileSystemName);
   }

@@ -20,7 +20,6 @@ exports.list = function(req, res) {
   });
 };
 
-
 exports.create = function(req, res) {
   if (!req.body.userName || !req.body.password) {
     res.json({success: false, msg: 'Please pass name and password.'});
@@ -39,7 +38,6 @@ exports.create = function(req, res) {
     });
   }
 };
-
 
 exports.authenticate = function(req, res) {
   User.findOne({
@@ -65,12 +63,10 @@ exports.authenticate = function(req, res) {
   });
 };
 
-
 exports.read = function(req, res) {
-  req.user.password = undefined
+  req.user.password = undefined;
   res.json(req.user);
 };
-
 
 exports.update = function(req, res) {
   var user = req.user;
@@ -86,7 +82,6 @@ exports.update = function(req, res) {
     }
   });
 };
-
 
 exports.delete = function(req, res) {
   var user = req.user;
@@ -117,7 +112,6 @@ exports.delete = function(req, res) {
     });
   });
 
-
   user.remove(function(err) {
     if (err) {
       return res.status(400).send({
@@ -128,7 +122,6 @@ exports.delete = function(req, res) {
     }
   });
 };
-
 
 exports.checkIfUserApplied = function(req, res) {
   Request.findOne({
@@ -143,30 +136,31 @@ exports.checkIfUserApplied = function(req, res) {
     }
 
     if(!request) {
-      res.json({applied: false})
+      res.json({applied: false});
     } else {
       if((request.sender.equals(req.user._id) && request.type == 'application') || (request.receiver.equals(req.user._id) && request.type == 'invitation')){
-        res.json({applied: true})
+        res.json({applied: true});
       }
     }
   });
-}
-
+};
 
 exports.getNotRequestedUsers = function(req, res) {
   Request.find({
     'domain.id': {$in: [req.query.domainId]},
     'domain.type': {$in: [req.query.domainType]},
     responseState: 'pending'})
-  .exec(function(err, requests){
-    invitedUsers = requests.map(function(request){
+  .exec(function(err, requests) {
+    var invitedUsers = requests.map(function(request){
       if(request.type == 'application') {
-        return request.sender
+        return request.sender;
       } else if(request.type == 'invitation'){
-        return request.receiver
+        return request.receiver;
       }
-    })
-    invitedUsers.push(req.user._id)
+    });
+
+    invitedUsers.push(req.user._id);
+
     User.find({
       _id: {$nin: invitedUsers}
     })
@@ -178,10 +172,9 @@ exports.getNotRequestedUsers = function(req, res) {
       } else {
         res.json(users);
       }
-    })
-  })
-}
-
+    });
+  });
+};
 
 exports.userById = function(req, res, next, id) {
   if (!mongoose.Types.ObjectId.isValid(id)) {

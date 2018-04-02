@@ -30,8 +30,8 @@ module.exports = function (socketIo) {
 
 
   socketIo.on('connection', function (socket) {
-    socket.userId = socket.handshake.query.userId
-    connectedUsers[socket.handshake.query.userId] = socket.id
+    socket.userId = socket.handshake.query.userId;
+    connectedUsers[socket.handshake.query.userId] = socket.id;
 
 
     socket.on('disconnect', function () {

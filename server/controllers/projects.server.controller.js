@@ -3,11 +3,8 @@ var Project = mongoose.model('Project');
 var User = mongoose.model('User');
 
 var errorHandler = require('./errors.server.controller');
-var _ = require('lodash')
-var fs = require('fs');
+var _ = require('lodash');
 var upload = require('../config/storage');
-var util = require('util');
-var utilities = require ('./utilities.server.controller');
 
 exports.list = function(req, res) {
   Project.find().sort('projectName').exec(function(err, projects) {
@@ -21,7 +18,6 @@ exports.list = function(req, res) {
   });
 };
 
-
 exports.getProjectsByUserId = function(req, res) {
   Project.find({owners: { $in: [req.query.userId]}}, function(err, projects) {
     if (err) {
@@ -32,8 +28,7 @@ exports.getProjectsByUserId = function(req, res) {
       res.json(projects);
     }
   });
-}
-
+};
 
 exports.create = function(req, res) {
   upload(req, res, function (err) {
@@ -43,7 +38,7 @@ exports.create = function(req, res) {
       });
     }
 
-    var filesDictionary = req.body.details.filesDictionary
+    var filesDictionary = req.body.details.filesDictionary;
     var files = _.toArray(filesDictionary);
 
     var project = new Project({
@@ -64,14 +59,12 @@ exports.create = function(req, res) {
         res.status(201).json(project);
       }
     });
-  })
+  });
 };
-
 
 exports.read = function(req, res) {
   res.json(req.project);
 };
-
 
 exports.update = function(req, res) {
   var project = req.project;
@@ -89,9 +82,8 @@ exports.update = function(req, res) {
   });
 };
 
-
 exports.addNewOwner = function(req, res) {
-  var project = req.project
+  var project = req.project;
   var newOwnerId = req.body.newOwnerId;
   req.project.owners.push(newOwnerId);
 
@@ -105,7 +97,6 @@ exports.addNewOwner = function(req, res) {
     }
   });
 };
-
 
 exports.delete = function(req, res) {
   var project = req.project;
@@ -121,7 +112,6 @@ exports.delete = function(req, res) {
   });
 };
 
-
 exports.allOwners = function (req, res) {
   User.find({'_id': { $in: req.project.owners}}, function(err, docs){
     if (err) {
@@ -133,7 +123,6 @@ exports.allOwners = function (req, res) {
     }
   });
 };
-
 
 exports.projectById = function(req, res, next, id) {
 

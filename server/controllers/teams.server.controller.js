@@ -45,7 +45,7 @@ exports.create = function(req, res) {
 
 
 exports.addNewAdmin = function(req, res) {
-  var team = req.team
+  var team = req.team;
   var newAdminId = req.body.newAdminId;
   req.team.admins.push(newAdminId);
 

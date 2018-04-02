@@ -15,11 +15,9 @@ exports.list = function(req, res) {
   });
 };
 
-
 exports.read = function(req, res) {
   res.json(req.request);
 };
-
 
 exports.create = function(req, res) {
   var request = new Request({
@@ -42,7 +40,6 @@ exports.create = function(req, res) {
   });
 };
 
-
 exports.update = function(req, res){
   var request = req.request;
   request = _.extend(request, req.body);
@@ -58,7 +55,6 @@ exports.update = function(req, res){
   });
 };
 
-
 exports.getRequestByReceiver = function(req, res) {
   if (!mongoose.Types.ObjectId.isValid(req.params.userId)) {
     return res.status(400).send({
@@ -67,12 +63,13 @@ exports.getRequestByReceiver = function(req, res) {
   }
 
   Request.find({receiver: req.params.userId}, function(err, request) {
+    // early retrun should be refactored
     if (err) return next(err);
 
     if (!request) {
       return res.status(404).send({
-          message: 'Requests does not have receiver'
-        });
+        message: 'Requests does not have receiver'
+      });
     }
     res.json(request);
   });
